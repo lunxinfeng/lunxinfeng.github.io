@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="Hexo, NexT" />
+  <meta name="keywords" content="Android,Material," />
 
 
 
@@ -80,6 +80,7 @@
 
 
 <meta name="description" content="自定义Behavior  自定义Behavior一般有两种情况：  某个view监听另一个view的状态变化，例如大小、位置、显示状态等。 某个view监听CoordinatorLayout里的滑动状态。    上面这两句话出自亓斌大神博客，然后我自己在学习过程中做了些实践。   首先看第一种，其实就是上面那个例子，FloatingActionButton怎么跟随自己的布局上下移动？很明显，这个效">
+<meta name="keywords" content="Android,Material">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Material之CoordinatorLayout + Behavior笔记（二）">
 <meta property="og:url" content="http://yoursite.com/2018/01/27/Material之CoordinatorLayout-Behavior笔记（二）/index.html">
@@ -87,7 +88,7 @@
 <meta property="og:description" content="自定义Behavior  自定义Behavior一般有两种情况：  某个view监听另一个view的状态变化，例如大小、位置、显示状态等。 某个view监听CoordinatorLayout里的滑动状态。    上面这两句话出自亓斌大神博客，然后我自己在学习过程中做了些实践。   首先看第一种，其实就是上面那个例子，FloatingActionButton怎么跟随自己的布局上下移动？很明显，这个效">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="http://upload-images.jianshu.io/upload_images/1215918-bbf0d9249a01b382.gif?imageMogr2/auto-orient/strip">
-<meta property="og:updated_time" content="2018-01-27T04:11:25.538Z">
+<meta property="og:updated_time" content="2018-01-27T07:33:05.718Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Material之CoordinatorLayout + Behavior笔记（二）">
 <meta name="twitter:description" content="自定义Behavior  自定义Behavior一般有两种情况：  某个view监听另一个view的状态变化，例如大小、位置、显示状态等。 某个view监听CoordinatorLayout里的滑动状态。    上面这两句话出自亓斌大神博客，然后我自己在学习过程中做了些实践。   首先看第一种，其实就是上面那个例子，FloatingActionButton怎么跟随自己的布局上下移动？很明显，这个效">
@@ -192,6 +193,26 @@
         </li>
       
         
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
         <li class="menu-item menu-item-archives">
           <a href="/archives/" rel="section">
             
@@ -239,7 +260,7 @@
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="风少侠">
       <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="image" content="/uploads/photo.png">
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
@@ -273,6 +294,28 @@
             
           </span>
 
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Android/" itemprop="url" rel="index">
+                    <span itemprop="name">Android</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
           
 
           
@@ -308,6 +351,7 @@
 </ul>
 <p>  上面这两句话出自<a href="http://blog.csdn.net/qibin0506/article/details/50290421" target="_blank" rel="noopener">亓斌大神博客</a>，然后我自己在学习过程中做了些实践。</p>
 <p>  首先看第一种，其实就是上面那个例子，FloatingActionButton怎么跟随自己的布局上下移动？很明显，这个效果类似于系统提供的FloatingActionButton+Snackbar的效果，看一下FloatingActionButton.Behavior源码（只贴了关键部分）:<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment">  * Determine whether the supplied child view has another specific sibling view as a</span></span><br><span class="line"><span class="comment">  * layout dependency.</span></span><br><span class="line"><span class="comment">  *</span></span><br><span class="line"><span class="comment">  * &lt;p&gt;This method will be called at least once in response to a layout request. If it</span></span><br><span class="line"><span class="comment">  * returns true for a given child and dependency view pair, the parent CoordinatorLayout</span></span><br><span class="line"><span class="comment">  * will:&lt;/p&gt;</span></span><br><span class="line"><span class="comment">  * &lt;ol&gt;</span></span><br><span class="line"><span class="comment">  *     &lt;li&gt;Always lay out this child after the dependent child is laid out, regardless</span></span><br><span class="line"><span class="comment">  *     of child order.&lt;/li&gt;</span></span><br><span class="line"><span class="comment">  *     &lt;li&gt;Call &#123;<span class="doctag">@link</span> #onDependentViewChanged&#125; when the dependency view's layout or</span></span><br><span class="line"><span class="comment">  *     position changes.&lt;/li&gt;</span></span><br><span class="line"><span class="comment">  * &lt;/ol&gt;</span></span><br><span class="line"><span class="comment">  *</span></span><br><span class="line"><span class="comment">  * <span class="doctag">@param</span> parent the parent view of the given child</span></span><br><span class="line"><span class="comment">  * <span class="doctag">@param</span> child the child view to test</span></span><br><span class="line"><span class="comment">  * <span class="doctag">@param</span> dependency the proposed dependency of child</span></span><br><span class="line"><span class="comment">  * <span class="doctag">@return</span> true if child's layout depends on the proposed dependency's layout,</span></span><br><span class="line"><span class="comment">  *         false otherwise</span></span><br><span class="line"><span class="comment">  *</span></span><br><span class="line"><span class="comment">  * <span class="doctag">@see</span> #onDependentViewChanged(CoordinatorLayout, android.view.View, android.view.View)</span></span><br><span class="line"><span class="comment">  */</span></span><br><span class="line"> <span class="meta">@Override</span></span><br><span class="line"> <span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">layoutDependsOn</span><span class="params">(CoordinatorLayout parent,</span></span></span><br><span class="line"><span class="function"><span class="params">         FloatingActionButton child, View dependency)</span> </span>&#123;</span><br><span class="line">     <span class="comment">// We're dependent on all SnackbarLayouts (if enabled)</span></span><br><span class="line">     <span class="keyword">return</span> SNACKBAR_BEHAVIOR_ENABLED &amp;&amp; dependency <span class="keyword">instanceof</span> Snackbar.SnackbarLayout;</span><br><span class="line"> &#125;</span><br><span class="line"></span><br><span class="line"> <span class="meta">@Override</span></span><br><span class="line"> <span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">onDependentViewChanged</span><span class="params">(CoordinatorLayout parent, FloatingActionButton child,</span></span></span><br><span class="line"><span class="function"><span class="params">         View dependency)</span> </span>&#123;</span><br><span class="line">     <span class="keyword">if</span> (dependency <span class="keyword">instanceof</span> Snackbar.SnackbarLayout) &#123;</span><br><span class="line">         updateFabTranslationForSnackbar(parent, child, dependency);</span><br><span class="line">     &#125; <span class="keyword">else</span> <span class="keyword">if</span> (dependency <span class="keyword">instanceof</span> AppBarLayout) &#123;</span><br><span class="line">         <span class="comment">// If we're depending on an AppBarLayout we will show/hide it automatically</span></span><br><span class="line">         <span class="comment">// if the FAB is anchored to the AppBarLayout</span></span><br><span class="line">         updateFabVisibility(parent, (AppBarLayout) dependency, child);</span><br><span class="line">     &#125;</span><br><span class="line">     <span class="keyword">return</span> <span class="keyword">false</span>;</span><br><span class="line"> &#125;</span><br></pre></td></tr></table></figure></p>
+<a id="more"></a>
 <ul>
 <li>layoutDependsOn(parent,child,dependency)：决定一个child是否有一个其他特殊的兄弟view（dependency）作为布局依赖，听来比较拗口，其实就是指一个child是否会根据另一个view的参数和状态而改变。这个方法在初始化布局时最少会被调用一次，如果返回true，则父布局(CoordinatorLayout)会不断的调用onDependentViewChanged(parent,child, dependency)来改变该child的参数和状态。</li>
 <li>然后系统会在onDependentViewChanged中判断dependency的类型，进而改变Fab的参数、状态。<br>下面我们来比葫芦画瓢：<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">FloatingBehavior</span> <span class="keyword">extends</span> <span class="title">FloatingActionButton</span>.<span class="title">Behavior</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">layoutDependsOn</span><span class="params">(CoordinatorLayout parent, FloatingActionButton child, View dependency)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">super</span>.layoutDependsOn(parent, child, dependency) || dependency <span class="keyword">instanceof</span> NestedScrollView;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">onDependentViewChanged</span><span class="params">(CoordinatorLayout parent, FloatingActionButton fab, View dependency)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (dependency <span class="keyword">instanceof</span> NestedScrollView) &#123;</span><br><span class="line">            CoordinatorLayout.LayoutParams lp = (CoordinatorLayout.LayoutParams) fab.getLayoutParams();</span><br><span class="line">            <span class="keyword">int</span> fab_BM = lp.bottomMargin;</span><br><span class="line">            <span class="keyword">int</span> distance = fab.getHeight() + fab_BM;</span><br><span class="line">            fab.setY(dependency.getY() - distance);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">super</span>.onDependentViewChanged(parent, fab, dependency);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
@@ -333,6 +377,14 @@
     
 
     <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Android/" rel="tag"># Android</a>
+          
+            <a href="/tags/Material/" rel="tag"># Material</a>
+          
+        </div>
       
 
       
@@ -421,6 +473,10 @@
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
+              <img class="site-author-image" itemprop="image"
+                src="/uploads/photo.png"
+                alt="风少侠" />
+            
               <p class="site-author-name" itemprop="name">风少侠</p>
               <p class="site-description motion-element" itemprop="description"></p>
           </div>
@@ -432,20 +488,54 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">19</span>
+                  <span class="site-state-item-count">18</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
             
 
             
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">6</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
 
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">17</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
             
 
           </nav>
 
           
 
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/lunxinfeng" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://www.jianshu.com/u/41d7604ac57a" target="_blank" title="简书">
+                      
+                        <i class="fa fa-fw fa-paper-plane"></i>简书</a>
+                  </span>
+                
+            </div>
           
 
           

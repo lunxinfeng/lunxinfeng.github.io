@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="Hexo, NexT" />
+  <meta name="keywords" content="Java," />
 
 
 
@@ -80,13 +80,14 @@
 
 
 <meta name="description" content="通过api调用123456789101112131415if (java.awt.Desktop.isDesktopSupported()) &amp;#123;    try &amp;#123;        // 创建一个URI实例        java.net.URI uri = java.net.URI.create(&quot;http://www.jianshu.com&quot;);        // 获取当前系">
+<meta name="keywords" content="Java">
 <meta property="og:type" content="article">
 <meta property="og:title" content="java调用系统默认浏览器打开指定网址">
 <meta property="og:url" content="http://yoursite.com/2018/01/27/java调用系统默认浏览器打开指定网址/index.html">
 <meta property="og:site_name" content="风少侠的个人博客">
 <meta property="og:description" content="通过api调用123456789101112131415if (java.awt.Desktop.isDesktopSupported()) &amp;#123;    try &amp;#123;        // 创建一个URI实例        java.net.URI uri = java.net.URI.create(&quot;http://www.jianshu.com&quot;);        // 获取当前系">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-01-27T04:46:12.042Z">
+<meta property="og:updated_time" content="2018-01-27T07:30:09.784Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="java调用系统默认浏览器打开指定网址">
 <meta name="twitter:description" content="通过api调用123456789101112131415if (java.awt.Desktop.isDesktopSupported()) &amp;#123;    try &amp;#123;        // 创建一个URI实例        java.net.URI uri = java.net.URI.create(&quot;http://www.jianshu.com&quot;);        // 获取当前系">
@@ -190,6 +191,26 @@
         </li>
       
         
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
         <li class="menu-item menu-item-archives">
           <a href="/archives/" rel="section">
             
@@ -237,7 +258,7 @@
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="风少侠">
       <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="image" content="/uploads/photo.png">
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
@@ -272,6 +293,28 @@
           </span>
 
           
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Java/" itemprop="url" rel="index">
+                    <span itemprop="name">Java</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
 
           
             
@@ -300,6 +343,7 @@
 
       
         <h1 id="通过api调用"><a href="#通过api调用" class="headerlink" title="通过api调用"></a>通过api调用</h1><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> (java.awt.Desktop.isDesktopSupported()) &#123;</span><br><span class="line">    <span class="keyword">try</span> &#123;</span><br><span class="line">        <span class="comment">// 创建一个URI实例</span></span><br><span class="line">        java.net.URI uri = java.net.URI.create(<span class="string">"http://www.jianshu.com"</span>);</span><br><span class="line">        <span class="comment">// 获取当前系统桌面扩展</span></span><br><span class="line">        java.awt.Desktop dp = java.awt.Desktop.getDesktop();</span><br><span class="line">        <span class="comment">// 判断系统桌面是否支持要执行的功能</span></span><br><span class="line">        <span class="keyword">if</span> (dp.isSupported(java.awt.Desktop.Action.BROWSE)) &#123;</span><br><span class="line">            <span class="comment">// 获取系统默认浏览器打开链接</span></span><br><span class="line">            dp.browse(uri);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125; <span class="keyword">catch</span> (Exception e) &#123;</span><br><span class="line">        e.printStackTrace();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<a id="more"></a>
 <h1 id="通过cmd命令调用"><a href="#通过cmd命令调用" class="headerlink" title="通过cmd命令调用"></a>通过cmd命令调用</h1><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">try</span> &#123;</span><br><span class="line">    Runtime.getRuntime().exec(</span><br><span class="line">            <span class="string">"cmd /c start http://www.jianshu.com"</span>);</span><br><span class="line">&#125; <span class="keyword">catch</span> (IOException e) &#123;</span><br><span class="line">    e.printStackTrace();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
       
@@ -315,6 +359,12 @@
     
 
     <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Java/" rel="tag"># Java</a>
+          
+        </div>
       
 
       
@@ -403,6 +453,10 @@
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
+              <img class="site-author-image" itemprop="image"
+                src="/uploads/photo.png"
+                alt="风少侠" />
+            
               <p class="site-author-name" itemprop="name">风少侠</p>
               <p class="site-description motion-element" itemprop="description"></p>
           </div>
@@ -414,20 +468,54 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">19</span>
+                  <span class="site-state-item-count">18</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
             
 
             
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">6</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
 
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">17</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
             
 
           </nav>
 
           
 
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/lunxinfeng" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://www.jianshu.com/u/41d7604ac57a" target="_blank" title="简书">
+                      
+                        <i class="fa fa-fw fa-paper-plane"></i>简书</a>
+                  </span>
+                
+            </div>
           
 
           

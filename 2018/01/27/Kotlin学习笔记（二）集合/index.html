@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="Hexo, NexT" />
+  <meta name="keywords" content="Kotlin," />
 
 
 
@@ -80,6 +80,7 @@
 
 
 <meta name="description" content="本来这节不应该放这里的，因为在公司做一个小项目练手的时候碰到了些坑，使用了一个List，结果怎么也找不到添加item的方法，就先恶补了一下。　　首先Kotlin中的集合具有可变性和不可变性的区别，来看一下Kotlin中的相关接口：    Iterable MutableIterable     Collection MutableCollection   List MutableList   Se">
+<meta name="keywords" content="Kotlin">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Kotlin学习笔记（二）集合">
 <meta property="og:url" content="http://yoursite.com/2018/01/27/Kotlin学习笔记（二）集合/index.html">
@@ -91,7 +92,7 @@
 <meta property="og:image" content="http://upload-images.jianshu.io/upload_images/1215918-75781df9a81b33ed.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
 <meta property="og:image" content="http://upload-images.jianshu.io/upload_images/1215918-9e63a310e2e4d205.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
 <meta property="og:image" content="http://upload-images.jianshu.io/upload_images/1215918-1a1cd1a9e2f6d0d8.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
-<meta property="og:updated_time" content="2018-01-27T04:41:50.547Z">
+<meta property="og:updated_time" content="2018-01-27T07:45:06.554Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Kotlin学习笔记（二）集合">
 <meta name="twitter:description" content="本来这节不应该放这里的，因为在公司做一个小项目练手的时候碰到了些坑，使用了一个List，结果怎么也找不到添加item的方法，就先恶补了一下。　　首先Kotlin中的集合具有可变性和不可变性的区别，来看一下Kotlin中的相关接口：    Iterable MutableIterable     Collection MutableCollection   List MutableList   Se">
@@ -196,6 +197,26 @@
         </li>
       
         
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
         <li class="menu-item menu-item-archives">
           <a href="/archives/" rel="section">
             
@@ -243,7 +264,7 @@
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="风少侠">
       <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="image" content="/uploads/photo.png">
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
@@ -277,6 +298,28 @@
             
           </span>
 
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Kotlin/" itemprop="url" rel="index">
+                    <span itemprop="name">Kotlin</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
           
 
           
@@ -333,7 +376,7 @@
 </tbody>
 </table>
 <p>　　首先说明一下，这个表格并不代表继承关系，只是区分可变不可变。继承关系如下图，原谅我画的比较丑：</p>
-<p><img src="http://upload-images.jianshu.io/upload_images/1215918-8243b7045c733881.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="Kotlin集合继承关系.jpg"></p>
+<p><img src="http://upload-images.jianshu.io/upload_images/1215918-8243b7045c733881.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="Kotlin集合继承关系.jpg"><br><a id="more"></a></p>
 <ul>
 <li>Iterable：父类。所有可以遍历的集合都是实现这个接口。只声明了iterator()一个方法，返回一个Iterator。</li>
 <li>MutableIterable：重写了父类的iterator()方法，返回一个MutableIterable。</li>
@@ -372,6 +415,12 @@
     
 
     <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Kotlin/" rel="tag"># Kotlin</a>
+          
+        </div>
       
 
       
@@ -460,6 +509,10 @@
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
+              <img class="site-author-image" itemprop="image"
+                src="/uploads/photo.png"
+                alt="风少侠" />
+            
               <p class="site-author-name" itemprop="name">风少侠</p>
               <p class="site-description motion-element" itemprop="description"></p>
           </div>
@@ -471,20 +524,54 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">19</span>
+                  <span class="site-state-item-count">18</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
             
 
             
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">6</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
 
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">17</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
             
 
           </nav>
 
           
 
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/lunxinfeng" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://www.jianshu.com/u/41d7604ac57a" target="_blank" title="简书">
+                      
+                        <i class="fa fa-fw fa-paper-plane"></i>简书</a>
+                  </span>
+                
+            </div>
           
 
           

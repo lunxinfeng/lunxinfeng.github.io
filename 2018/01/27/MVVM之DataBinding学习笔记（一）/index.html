@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="Hexo, NexT" />
+  <meta name="keywords" content="Android,MVVM,DataBinding," />
 
 
 
@@ -80,13 +80,14 @@
 
 
 <meta name="description" content="前言  …想了半分钟，好像并没有啥需要特别声明的，能翻到这篇文章的人，相信也早已了解了DataBinding是个什么东西，所以还是简单粗暴点儿，就当给自己留个笔记…开撸吧！ 配置 确保sdk的support包更新到了最新版 在对应module的build.gradle文件中进行如下配置（需AS版本1.5以上）123456android &amp;#123;    ...    dataBinding &amp;#">
+<meta name="keywords" content="Android,MVVM,DataBinding">
 <meta property="og:type" content="article">
 <meta property="og:title" content="MVVM之DataBinding学习笔记（一）">
 <meta property="og:url" content="http://yoursite.com/2018/01/27/MVVM之DataBinding学习笔记（一）/index.html">
 <meta property="og:site_name" content="风少侠的个人博客">
 <meta property="og:description" content="前言  …想了半分钟，好像并没有啥需要特别声明的，能翻到这篇文章的人，相信也早已了解了DataBinding是个什么东西，所以还是简单粗暴点儿，就当给自己留个笔记…开撸吧！ 配置 确保sdk的support包更新到了最新版 在对应module的build.gradle文件中进行如下配置（需AS版本1.5以上）123456android &amp;#123;    ...    dataBinding &amp;#">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-01-27T04:11:57.477Z">
+<meta property="og:updated_time" content="2018-01-27T07:33:30.950Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="MVVM之DataBinding学习笔记（一）">
 <meta name="twitter:description" content="前言  …想了半分钟，好像并没有啥需要特别声明的，能翻到这篇文章的人，相信也早已了解了DataBinding是个什么东西，所以还是简单粗暴点儿，就当给自己留个笔记…开撸吧！ 配置 确保sdk的support包更新到了最新版 在对应module的build.gradle文件中进行如下配置（需AS版本1.5以上）123456android &amp;#123;    ...    dataBinding &amp;#">
@@ -190,6 +191,26 @@
         </li>
       
         
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
         <li class="menu-item menu-item-archives">
           <a href="/archives/" rel="section">
             
@@ -237,7 +258,7 @@
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="风少侠">
       <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="image" content="/uploads/photo.png">
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
@@ -271,6 +292,28 @@
             
           </span>
 
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Android/" itemprop="url" rel="index">
+                    <span itemprop="name">Android</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
           
 
           
@@ -307,6 +350,7 @@
 </ul>
 <h1 id="基本使用"><a href="#基本使用" class="headerlink" title="基本使用"></a>基本使用</h1><h2 id="数据绑定"><a href="#数据绑定" class="headerlink" title="数据绑定"></a>数据绑定</h2><h3 id="Activity"><a href="#Activity" class="headerlink" title="Activity"></a>Activity</h3><p>  <strong>先上layout代码</strong></p>
 <figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line">&lt;?xml version=<span class="string">"1.0"</span> encoding=<span class="string">"utf-8"</span>?&gt;</span><br><span class="line">&lt;layout xmlns:android=<span class="string">"http://schemas.android.com/apk/res/android"</span>&gt;</span><br><span class="line"></span><br><span class="line">	&lt;!--如果本页不需要绑定数据，data标签可以省略--&gt;</span><br><span class="line">    &lt;data <span class="class"><span class="keyword">class</span></span>=<span class="string">"DataBingMain"</span>&gt;</span><br><span class="line">		&lt;<span class="keyword">import</span> type=<span class="string">"lxf.widget.util.AppUtils"</span>/&gt;</span><br><span class="line">        &lt;variable</span><br><span class="line">            name=<span class="string">"user"</span></span><br><span class="line">            type=<span class="string">"lxf.androiddemos.model.UserEntity"</span>/&gt;</span><br><span class="line">    &lt;/data&gt;</span><br><span class="line"></span><br><span class="line">    &lt;LinearLayout</span><br><span class="line">        xmlns:tools=<span class="string">"http://schemas.android.com/tools"</span></span><br><span class="line">        tools:context=<span class="string">"lxf.androiddemos.ui.DatabindingActivity"</span></span><br><span class="line">        android:layout_width=<span class="string">"match_parent"</span></span><br><span class="line">        android:layout_height=<span class="string">"match_parent"</span></span><br><span class="line">		android:padding=<span class="string">"16dp"</span></span><br><span class="line">        android:background=<span class="string">"@mipmap/bg_robot"</span></span><br><span class="line">        android:orientation=<span class="string">"vertical"</span></span><br><span class="line">        &gt;</span><br><span class="line">		&lt;TextView</span><br><span class="line">        	style=<span class="string">"@style/text_base"</span></span><br><span class="line">			android:text=<span class="string">"@&#123;`name:`+user.name&#125;"</span>/&gt;</span><br><span class="line">     	&lt;TextView</span><br><span class="line">            style=<span class="string">"@style/text_base"</span></span><br><span class="line">            android:text=<span class="string">"@&#123;user.sex&#125;"</span>/&gt;</span><br><span class="line">		&lt;TextView</span><br><span class="line">            style=<span class="string">"@style/text_base"</span></span><br><span class="line">            android:text=<span class="string">"@&#123;String.valueOf(user.age)&#125;"</span>/&gt;</span><br><span class="line">		&lt;TextView</span><br><span class="line">            style=<span class="string">"@style/text_base"</span></span><br><span class="line">            android:text=<span class="string">"@&#123;user.initType(user.type)&#125;"</span>/&gt;</span><br><span class="line">    &lt;/LinearLayout&gt;</span><br><span class="line">&lt;/layout&gt;</span><br></pre></td></tr></table></figure>
+<a id="more"></a>
 <ol>
 <li>layout的编写方式改变：新增layout和data标签，layout为根布局，包含data和ui布局两部分。data即要绑定的数据model，ui布局即我们以前写法中的根布局。</li>
 <li>data标签：<ul>
@@ -358,6 +402,16 @@
     
 
     <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Android/" rel="tag"># Android</a>
+          
+            <a href="/tags/MVVM/" rel="tag"># MVVM</a>
+          
+            <a href="/tags/DataBinding/" rel="tag"># DataBinding</a>
+          
+        </div>
       
 
       
@@ -446,6 +500,10 @@
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
+              <img class="site-author-image" itemprop="image"
+                src="/uploads/photo.png"
+                alt="风少侠" />
+            
               <p class="site-author-name" itemprop="name">风少侠</p>
               <p class="site-description motion-element" itemprop="description"></p>
           </div>
@@ -457,20 +515,54 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">19</span>
+                  <span class="site-state-item-count">18</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
             
 
             
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">6</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
 
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">17</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
             
 
           </nav>
 
           
 
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/lunxinfeng" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://www.jianshu.com/u/41d7604ac57a" target="_blank" title="简书">
+                      
+                        <i class="fa fa-fw fa-paper-plane"></i>简书</a>
+                  </span>
+                
+            </div>
           
 
           

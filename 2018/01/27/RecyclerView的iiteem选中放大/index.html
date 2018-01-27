@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="Hexo, NexT" />
+  <meta name="keywords" content="Android,TV," />
 
 
 
@@ -80,13 +80,14 @@
 
 
 <meta name="description" content="需求　　最近在做的一个TV项目，我们知道TV一般是通过遥控器来进行选择的，因此有这样一个需求，需要在item被选中（获得焦点）时放大该item，电视不好录屏，效果图就不上了，大家应该都见过。 实现　　首先假设我们的item是一个ImageButton（当然也可以是其他view），我们来自定义一个FoucseImageButton继承ImageButton，并重写onFocusChanged方法：1">
+<meta name="keywords" content="Android,TV">
 <meta property="og:type" content="article">
 <meta property="og:title" content="RecyclerView的iiteem选中放大">
 <meta property="og:url" content="http://yoursite.com/2018/01/27/RecyclerView的iiteem选中放大/index.html">
 <meta property="og:site_name" content="风少侠的个人博客">
 <meta property="og:description" content="需求　　最近在做的一个TV项目，我们知道TV一般是通过遥控器来进行选择的，因此有这样一个需求，需要在item被选中（获得焦点）时放大该item，电视不好录屏，效果图就不上了，大家应该都见过。 实现　　首先假设我们的item是一个ImageButton（当然也可以是其他view），我们来自定义一个FoucseImageButton继承ImageButton，并重写onFocusChanged方法：1">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-01-27T04:34:11.634Z">
+<meta property="og:updated_time" content="2018-01-27T07:43:29.147Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="RecyclerView的iiteem选中放大">
 <meta name="twitter:description" content="需求　　最近在做的一个TV项目，我们知道TV一般是通过遥控器来进行选择的，因此有这样一个需求，需要在item被选中（获得焦点）时放大该item，电视不好录屏，效果图就不上了，大家应该都见过。 实现　　首先假设我们的item是一个ImageButton（当然也可以是其他view），我们来自定义一个FoucseImageButton继承ImageButton，并重写onFocusChanged方法：1">
@@ -190,6 +191,26 @@
         </li>
       
         
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
         <li class="menu-item menu-item-archives">
           <a href="/archives/" rel="section">
             
@@ -237,7 +258,7 @@
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="风少侠">
       <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="image" content="/uploads/photo.png">
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
@@ -272,6 +293,28 @@
           </span>
 
           
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Android/" itemprop="url" rel="index">
+                    <span itemprop="name">Android</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
 
           
             
@@ -301,6 +344,7 @@
       
         <h1 id="需求"><a href="#需求" class="headerlink" title="需求"></a>需求</h1><p>　　最近在做的一个TV项目，我们知道TV一般是通过遥控器来进行选择的，因此有这样一个需求，需要在item被选中（获得焦点）时放大该item，电视不好录屏，效果图就不上了，大家应该都见过。</p>
 <h1 id="实现"><a href="#实现" class="headerlink" title="实现"></a>实现</h1><p>　　首先假设我们的item是一个ImageButton（当然也可以是其他view），我们来自定义一个FoucseImageButton继承ImageButton，并重写onFocusChanged方法：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 获得焦点时放大的ImageButton</span></span><br><span class="line"><span class="comment"> * Created by lxf on 2017/2/21.</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">FocuseImageButton</span> <span class="keyword">extends</span> <span class="title">ImageButton</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">FocuseImageButton</span><span class="params">(Context context)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">super</span>(context);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">FocuseImageButton</span><span class="params">(Context context, AttributeSet attrs)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">super</span>(context, attrs);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">FocuseImageButton</span><span class="params">(Context context, AttributeSet attrs, <span class="keyword">int</span> defStyleAttr)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">super</span>(context, attrs, defStyleAttr);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">onFocusChanged</span><span class="params">(<span class="keyword">boolean</span> gainFocus, <span class="keyword">int</span> direction, Rect previouslyFocusedRect)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">super</span>.onFocusChanged(gainFocus, direction, previouslyFocusedRect);</span><br><span class="line">        <span class="keyword">if</span> (gainFocus) &#123;</span><br><span class="line">            scaleUp();</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            scaleDown();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">	<span class="comment">//1.08表示放大倍数,可以随便改</span></span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">scaleUp</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        ViewCompat.animate(<span class="keyword">this</span>)</span><br><span class="line">                .setDuration(<span class="number">200</span>)</span><br><span class="line">                .scaleX(<span class="number">1.08f</span>)</span><br><span class="line">                .scaleY(<span class="number">1.08f</span>)</span><br><span class="line">                .start();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">scaleDown</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        ViewCompat.animate(<span class="keyword">this</span>)</span><br><span class="line">                .setDuration(<span class="number">200</span>)</span><br><span class="line">                .scaleX(<span class="number">1f</span>)</span><br><span class="line">                .scaleY(<span class="number">1f</span>)</span><br><span class="line">                .start();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<a id="more"></a>
 <p>　　代码很简单，就是获取焦点时放大item，失去焦点时缩小item。当然，如果你的item是LinearLayout等，别忘了设置focusable为true。<br>　　看起来好像效果已经可以实现了，但是一运行发现并不是这么回事，你会发现第一行的item在放大时会被RecyclerView的边界遮挡住一部分，这时候只需要将RecyclerView的父布局的clipChildren设为false就好。<br><figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line">&lt;LinearLayout</span><br><span class="line">        android:layout_width=<span class="string">"match_parent"</span></span><br><span class="line">        android:layout_height=<span class="string">"match_parent"</span></span><br><span class="line">        android:paddingLeft=<span class="string">"40dp"</span></span><br><span class="line">        android:orientation=<span class="string">"vertical"</span></span><br><span class="line">        android:clipChildren=<span class="string">"false"</span></span><br><span class="line">        android:clipToPadding=<span class="string">"false"</span></span><br><span class="line">        tools:context=<span class="string">"cn.izis.yzgotvnew.ui.fragment.ExerciseFragment"</span>&gt;</span><br><span class="line"></span><br><span class="line">        &lt;ImageButton</span><br><span class="line">            android:layout_width=<span class="string">"wrap_content"</span></span><br><span class="line">            android:layout_height=<span class="string">"wrap_content"</span></span><br><span class="line">            android:src=<span class="string">"@drawable/sele_return"</span></span><br><span class="line">            android:background=<span class="string">"@null"</span></span><br><span class="line">            android:layout_marginTop=<span class="string">"20dp"</span></span><br><span class="line">            android:layout_marginBottom=<span class="string">"20dp"</span></span><br><span class="line">            android:onClick=<span class="string">"@&#123;fragment.finish&#125;"</span></span><br><span class="line">            /&gt;</span><br><span class="line"></span><br><span class="line">        &lt;lxf.widget.recyclerview.LoadMoreRecyclerView</span><br><span class="line">            android:id=<span class="string">"@+id/recy_exer_title2"</span></span><br><span class="line">            android:layout_width=<span class="string">"match_parent"</span></span><br><span class="line">            android:layout_height=<span class="string">"match_parent"</span></span><br><span class="line">            /&gt;</span><br><span class="line"></span><br><span class="line">    &lt;/LinearLayout&gt;</span><br></pre></td></tr></table></figure></p>
 
       
@@ -316,6 +360,14 @@
     
 
     <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Android/" rel="tag"># Android</a>
+          
+            <a href="/tags/TV/" rel="tag"># TV</a>
+          
+        </div>
       
 
       
@@ -404,6 +456,10 @@
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
+              <img class="site-author-image" itemprop="image"
+                src="/uploads/photo.png"
+                alt="风少侠" />
+            
               <p class="site-author-name" itemprop="name">风少侠</p>
               <p class="site-description motion-element" itemprop="description"></p>
           </div>
@@ -415,20 +471,54 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">19</span>
+                  <span class="site-state-item-count">18</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
             
 
             
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">6</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
 
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">17</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
             
 
           </nav>
 
           
 
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/lunxinfeng" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://www.jianshu.com/u/41d7604ac57a" target="_blank" title="简书">
+                      
+                        <i class="fa fa-fw fa-paper-plane"></i>简书</a>
+                  </span>
+                
+            </div>
           
 
           

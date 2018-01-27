@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="Hexo, NexT" />
+  <meta name="keywords" content="Android,Pl2303,USB通信," />
 
 
 
@@ -80,13 +80,14 @@
 
 
 <meta name="description" content="基本了解  PL2303 是Prolific 公司生产的一种高度集成的RS232-USB接口转换器，可提供一个RS232 全双工异步串行通信装置与USB 功能接口便利连接的解决方案。 类简介 PL2303MultiLib：主类，里面包括连接设备、数据传输等很多操作方法。 PL2303MultiLib.BaudRate：波特率（枚举类） PL2303MultiLib.DataBits：数据位（枚举类">
+<meta name="keywords" content="Android,Pl2303,USB通信">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Pl2303笔记">
 <meta property="og:url" content="http://yoursite.com/2018/01/27/Pl2303笔记/index.html">
 <meta property="og:site_name" content="风少侠的个人博客">
 <meta property="og:description" content="基本了解  PL2303 是Prolific 公司生产的一种高度集成的RS232-USB接口转换器，可提供一个RS232 全双工异步串行通信装置与USB 功能接口便利连接的解决方案。 类简介 PL2303MultiLib：主类，里面包括连接设备、数据传输等很多操作方法。 PL2303MultiLib.BaudRate：波特率（枚举类） PL2303MultiLib.DataBits：数据位（枚举类">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-01-27T04:24:49.011Z">
+<meta property="og:updated_time" content="2018-01-27T07:42:27.474Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Pl2303笔记">
 <meta name="twitter:description" content="基本了解  PL2303 是Prolific 公司生产的一种高度集成的RS232-USB接口转换器，可提供一个RS232 全双工异步串行通信装置与USB 功能接口便利连接的解决方案。 类简介 PL2303MultiLib：主类，里面包括连接设备、数据传输等很多操作方法。 PL2303MultiLib.BaudRate：波特率（枚举类） PL2303MultiLib.DataBits：数据位（枚举类">
@@ -190,6 +191,26 @@
         </li>
       
         
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
         <li class="menu-item menu-item-archives">
           <a href="/archives/" rel="section">
             
@@ -237,7 +258,7 @@
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="风少侠">
       <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="image" content="/uploads/photo.png">
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
@@ -271,6 +292,28 @@
             
           </span>
 
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Android/" itemprop="url" rel="index">
+                    <span itemprop="name">Android</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
           
 
           
@@ -306,9 +349,10 @@
 <li>PL2303MultiLib.DataBits：数据位（枚举类）</li>
 <li>PL2303MultiLib.FlowControl：流量控制（枚举类）</li>
 <li>PL2303MultiLib.Parity：（枚举类）</li>
-<li>PL2303MultiLib.StopBits：停止位（枚举类）</li>
-</ul>
+<li>PL2303MultiLib.StopBits：停止位（枚举类）<a id="more"></a>
 <h1 id="构造函数"><a href="#构造函数" class="headerlink" title="构造函数"></a>构造函数</h1><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/*Initialize a PL2303HXD driver, the software 4K Queue buffer is enable.内部调用下面的构造方法，默认第四个参数bWithQueue为true。第三个参数sAppName为芯片内部一个广播接收器的过滤器的ACTION，应该随便一个字符串就行（官方给出的案例用的是</span></span><br><span class="line"><span class="comment">private static final String ACTION_USB_PERMISSION = "com.prolific.pluartmultisimpletest.USB_PERMISSION";）</span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="title">PL2303MultiLib</span><span class="params">(UsbManager manager, Context context, java.lang.String sAppName)</span></span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">//Initialize a PL2303HXD driver</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="title">PL2303MultiLib</span><span class="params">(UsbManager manager, Context context, java.lang.String sAppName, <span class="keyword">boolean</span> bWithQueue)</span></span></span><br></pre></td></tr></table></figure>
+</li>
+</ul>
 <h1 id="常用参数和方法"><a href="#常用参数和方法" class="headerlink" title="常用参数和方法"></a>常用参数和方法</h1><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//PL2303芯片发送广播通知的IntentFilter.Action</span></span><br><span class="line"><span class="keyword">public</span> String PLUART_MESSAGE = <span class="string">"tw.PL2303MultiUSBMessage"</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">//检测到Usb设备拔出时，发送的广播所携带的extra数据，为String格式的device index。</span></span><br><span class="line"><span class="keyword">public</span> String PLUART_DETACHED = <span class="string">"MultiUSB.Detached"</span>;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">//返回PL2303HXD device数量，默认的VID_PID为067B_2303。同时会进行一些初始化工作，例如注册广播等。</span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">PL2303Enumerate</span><span class="params">()</span></span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">//通过device index获取该PL2303HXD的连接状态，如果连接成功返回true，否则返回false。</span></span><br><span class="line"><span class="function"><span class="keyword">boolean</span> <span class="title">PL2303IsDeviceConnectedByIndex</span><span class="params">(<span class="keyword">int</span> index)</span></span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">//通过URAT设置打开一个PL-UART USB device，成功打开则返回true。第一个参数为设备的index，后面四个为相应的枚举参数</span></span><br><span class="line"><span class="function"><span class="keyword">boolean</span> <span class="title">PL2303OpenDevByUARTSetting</span><span class="params">(<span class="keyword">int</span> index, BaudRate R, DataBits D, StopBits S, Parity P, FlowControl F)</span> </span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">//写入字节数据到PL-UART芯片集。返回写入数据的长度。</span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">PL2303Write</span><span class="params">(<span class="keyword">int</span> index,<span class="keyword">byte</span>[] buf)</span></span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">//从PL-UART芯片读取数据。返回读取数据的长度。读取到的数据会存在buf字节数组中。</span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">PL2303Read</span><span class="params">(<span class="keyword">int</span> index,<span class="keyword">byte</span>[] buf)</span></span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">//关闭一个PL-UART芯片集</span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">PL2303Release</span><span class="params">()</span></span>;</span><br></pre></td></tr></table></figure>
 <h1 id="配置"><a href="#配置" class="headerlink" title="配置"></a>配置</h1><p>　　官方给出的demo做了以下配置：<br><figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">&lt;activity android:name=<span class="string">".PL2303Activity"</span> android:launchMode=<span class="string">"singleTop"</span>&gt;</span><br><span class="line"></span><br><span class="line">            &lt;meta-data android:name=<span class="string">"android.hardware.usb.action.USB_DEVICE_ATTACHED"</span></span><br><span class="line">                android:resource=<span class="string">"@xml/device_filter"</span> /&gt;</span><br><span class="line">&lt;/activity&gt;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">//device_filter</span></span><br><span class="line">&lt;?xml version=<span class="string">"1.0"</span> encoding=<span class="string">"utf-8"</span>?&gt;</span><br><span class="line">&lt;resources&gt;</span><br><span class="line">		&lt;usb-device vendor-id=<span class="string">"1659"</span> product-id=<span class="string">"8963"</span> /&gt;</span><br><span class="line">		&lt;usb-device vendor-id=<span class="string">"1659"</span> product-id=<span class="string">"9553"</span> /&gt;</span><br><span class="line">		&lt;usb-device vendor-id=<span class="string">"1659"</span> product-id=<span class="string">"8964"</span> /&gt;   </span><br><span class="line">		&lt;usb-device vendor-id=<span class="string">"1659"</span> product-id=<span class="string">"9475"</span> /&gt;</span><br><span class="line">&lt;!-- usb-device vendor-id=<span class="string">"1659=0x067B"</span> product-id=<span class="string">"8963=0x2303"</span> --&gt;</span><br><span class="line">&lt;!-- usb-device vendor-id=<span class="string">"1659=0x067B"</span> product-id=<span class="string">"9553=0x2551"</span> --&gt;</span><br><span class="line">&lt;!-- usb-device vendor-id=<span class="string">"1659=0x067B"</span> product-id=<span class="string">"8964=0x2304"</span> --&gt;</span><br><span class="line">&lt;!-- usb-device vendor-id=<span class="string">"1659=0x067B"</span> product-id=<span class="string">"9475=0x2503"</span> --&gt;</span><br><span class="line">&lt;/resources&gt;</span><br></pre></td></tr></table></figure></p>
 <p>　　不过本人实测，单串口通信时不配置这个也能走通，貌似代码中自己添加了相关参数：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//这其实是个构造函数，混淆过的源码 - -#</span></span><br><span class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">a</span><span class="params">(UsbManager var1, Context var2, String var3, <span class="keyword">boolean</span> var4)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.U = var1;</span><br><span class="line">        <span class="keyword">this</span>.a = var2;</span><br><span class="line">        <span class="keyword">this</span>.V = var3;</span><br><span class="line">        <span class="keyword">this</span>.W.add(<span class="string">"067B:2303"</span>);<span class="comment">//这里其实就是device_filter中的参数</span></span><br><span class="line">        <span class="keyword">this</span>.W.add(<span class="string">"067B:2551"</span>);</span><br><span class="line">        <span class="keyword">this</span>.W.add(<span class="string">"067B:2503"</span>);</span><br><span class="line">        <span class="keyword">this</span>.W.add(<span class="string">"067B:AAA5"</span>);</span><br><span class="line">        <span class="keyword">this</span>.W.add(<span class="string">"05AD:0FBA"</span>);</span><br><span class="line">        <span class="keyword">this</span>.a(<span class="string">"067B:2304"</span>);</span><br><span class="line">        <span class="keyword">this</span>.X = <span class="keyword">this</span>.W.size();</span><br><span class="line">        <span class="keyword">this</span>.ab = <span class="keyword">new</span> UsbDeviceInfo[<span class="number">4</span>];</span><br><span class="line">        <span class="keyword">this</span>.ad = <span class="keyword">new</span> PL2303MultiLib.a[<span class="number">4</span>];</span><br></pre></td></tr></table></figure></p>
@@ -329,6 +373,16 @@
     
 
     <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Android/" rel="tag"># Android</a>
+          
+            <a href="/tags/Pl2303/" rel="tag"># Pl2303</a>
+          
+            <a href="/tags/USB通信/" rel="tag"># USB通信</a>
+          
+        </div>
       
 
       
@@ -417,6 +471,10 @@
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
+              <img class="site-author-image" itemprop="image"
+                src="/uploads/photo.png"
+                alt="风少侠" />
+            
               <p class="site-author-name" itemprop="name">风少侠</p>
               <p class="site-description motion-element" itemprop="description"></p>
           </div>
@@ -428,20 +486,54 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">19</span>
+                  <span class="site-state-item-count">18</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
             
 
             
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">6</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
 
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">17</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
             
 
           </nav>
 
           
 
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/lunxinfeng" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://www.jianshu.com/u/41d7604ac57a" target="_blank" title="简书">
+                      
+                        <i class="fa fa-fw fa-paper-plane"></i>简书</a>
+                  </span>
+                
+            </div>
           
 
           

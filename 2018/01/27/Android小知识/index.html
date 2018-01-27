@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="Hexo, NexT" />
+  <meta name="keywords" content="Android," />
 
 
 
@@ -80,6 +80,7 @@
 
 
 <meta name="description" content="自己在开发过程中积累的一些小知识点，持续更新，留个记录。 TintContextWrapper cannot be cast to Activity　　比如有这样一个需求，在一个view的点击事件中来操作activity的方法，假如这个点击事件写在activity外面（比如DataBinding模式中写在model里面），就像这样：1234public void click(View view)&amp;">
+<meta name="keywords" content="Android">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Android小知识">
 <meta property="og:url" content="http://yoursite.com/2018/01/27/Android小知识/index.html">
@@ -87,7 +88,7 @@
 <meta property="og:description" content="自己在开发过程中积累的一些小知识点，持续更新，留个记录。 TintContextWrapper cannot be cast to Activity　　比如有这样一个需求，在一个view的点击事件中来操作activity的方法，假如这个点击事件写在activity外面（比如DataBinding模式中写在model里面），就像这样：1234public void click(View view)&amp;">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="http://upload-images.jianshu.io/upload_images/1215918-ec4d621085495d82.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
-<meta property="og:updated_time" content="2018-01-27T04:22:50.559Z">
+<meta property="og:updated_time" content="2018-01-27T07:29:11.891Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Android小知识">
 <meta name="twitter:description" content="自己在开发过程中积累的一些小知识点，持续更新，留个记录。 TintContextWrapper cannot be cast to Activity　　比如有这样一个需求，在一个view的点击事件中来操作activity的方法，假如这个点击事件写在activity外面（比如DataBinding模式中写在model里面），就像这样：1234public void click(View view)&amp;">
@@ -192,6 +193,26 @@
         </li>
       
         
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
         <li class="menu-item menu-item-archives">
           <a href="/archives/" rel="section">
             
@@ -239,7 +260,7 @@
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="风少侠">
       <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="image" content="/uploads/photo.png">
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
@@ -273,6 +294,28 @@
             
           </span>
 
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Android/" itemprop="url" rel="index">
+                    <span itemprop="name">Android</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
           
 
           
@@ -308,6 +351,7 @@
 <p>android.support.v7.widget.TintContextWrapper cannot be cast to Activity</p>
 </blockquote>
 <p>　  解决方法：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">private</span> Activity <span class="title">getRequiredActivity</span><span class="params">(View view)</span> </span>&#123;</span><br><span class="line">        Context context = view.getContext();</span><br><span class="line">        <span class="keyword">while</span> (context <span class="keyword">instanceof</span> ContextWrapper) &#123;</span><br><span class="line">            <span class="keyword">if</span> (context <span class="keyword">instanceof</span> Activity) &#123;</span><br><span class="line">                <span class="keyword">return</span> (Activity) context;</span><br><span class="line">            &#125;</span><br><span class="line">            context = ((ContextWrapper) context).getBaseContext();</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">null</span>;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure></p>
+<a id="more"></a>
 <h1 id="String-format-String-Object…"><a href="#String-format-String-Object…" class="headerlink" title="String.format(String,Object…)"></a>String.format(String,Object…)</h1><p>　　如果想在android中使用占位符，可以这么写：%[index]$[type]。index表示对应第index个资源，从1开始；type表示资源类型，常见的有这几种：</p>
 <table>
 <thead>
@@ -384,6 +428,12 @@
     
 
     <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Android/" rel="tag"># Android</a>
+          
+        </div>
       
 
       
@@ -472,6 +522,10 @@
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
+              <img class="site-author-image" itemprop="image"
+                src="/uploads/photo.png"
+                alt="风少侠" />
+            
               <p class="site-author-name" itemprop="name">风少侠</p>
               <p class="site-description motion-element" itemprop="description"></p>
           </div>
@@ -483,20 +537,54 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">19</span>
+                  <span class="site-state-item-count">18</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
             
 
             
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">6</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
 
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">17</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
             
 
           </nav>
 
           
 
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/lunxinfeng" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://www.jianshu.com/u/41d7604ac57a" target="_blank" title="简书">
+                      
+                        <i class="fa fa-fw fa-paper-plane"></i>简书</a>
+                  </span>
+                
+            </div>
           
 
           

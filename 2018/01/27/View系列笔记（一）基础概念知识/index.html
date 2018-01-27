@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="Hexo, NexT" />
+  <meta name="keywords" content="Android,View," />
 
 
 
@@ -80,13 +80,14 @@
 
 
 <meta name="description" content="声明：此系列的部分内容出自《Android开发艺术探索》一书，是我当初学习时候的一些笔记和总结，在这里留个记录。　　View是android中所有控件的基类。 位置参数　　在Android系统中，左上角为坐标原点，x和y轴正方向分别是往右和下。View的位置由它的4个顶点来决定，即top，left，right，bottom。需要注意的是这4个点是相对坐标，相对于view的父容器来说的。获取方法">
+<meta name="keywords" content="Android,View">
 <meta property="og:type" content="article">
 <meta property="og:title" content="View系列笔记（一）基础概念知识">
 <meta property="og:url" content="http://yoursite.com/2018/01/27/View系列笔记（一）基础概念知识/index.html">
 <meta property="og:site_name" content="风少侠的个人博客">
 <meta property="og:description" content="声明：此系列的部分内容出自《Android开发艺术探索》一书，是我当初学习时候的一些笔记和总结，在这里留个记录。　　View是android中所有控件的基类。 位置参数　　在Android系统中，左上角为坐标原点，x和y轴正方向分别是往右和下。View的位置由它的4个顶点来决定，即top，left，right，bottom。需要注意的是这4个点是相对坐标，相对于view的父容器来说的。获取方法">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-01-27T04:31:58.811Z">
+<meta property="og:updated_time" content="2018-01-27T07:44:14.868Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="View系列笔记（一）基础概念知识">
 <meta name="twitter:description" content="声明：此系列的部分内容出自《Android开发艺术探索》一书，是我当初学习时候的一些笔记和总结，在这里留个记录。　　View是android中所有控件的基类。 位置参数　　在Android系统中，左上角为坐标原点，x和y轴正方向分别是往右和下。View的位置由它的4个顶点来决定，即top，left，right，bottom。需要注意的是这4个点是相对坐标，相对于view的父容器来说的。获取方法">
@@ -190,6 +191,26 @@
         </li>
       
         
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
         <li class="menu-item menu-item-archives">
           <a href="/archives/" rel="section">
             
@@ -237,7 +258,7 @@
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="风少侠">
       <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="image" content="/uploads/photo.png">
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
@@ -271,6 +292,28 @@
             
           </span>
 
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Android/" itemprop="url" rel="index">
+                    <span itemprop="name">Android</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
           
 
           
@@ -313,7 +356,8 @@
 <li>y = top + translationY;</li>
 </ul>
 <p>　　即：在view发生平移的过程中，left和top始终是不变的，指view原始位置的左上角坐标，发生改变的只是x，y，translationX，translationY这4个参数。</p>
-<h2 id="触摸事件"><a href="#触摸事件" class="headerlink" title="触摸事件"></a>触摸事件</h2><h3 id="MotionEvent"><a href="#MotionEvent" class="headerlink" title="MotionEvent"></a>MotionEvent</h3><p>　　手指的触摸事件一般可以分为两种（姑且把单击和长按当成一种，滑动和多点触控当成一种吧，起码触发的事件是差不多的）：</p>
+<h2 id="触摸事件"><a href="#触摸事件" class="headerlink" title="触摸事件"></a>触摸事件</h2><a id="more"></a>
+<h3 id="MotionEvent"><a href="#MotionEvent" class="headerlink" title="MotionEvent"></a>MotionEvent</h3><p>　　手指的触摸事件一般可以分为两种（姑且把单击和长按当成一种，滑动和多点触控当成一种吧，起码触发的事件是差不多的）：</p>
 <ul>
 <li>手指按下，不滑动，放开：DOWN—&gt;UP。</li>
 <li>手指按下，滑动一段距离，再松手：DOWN—&gt;MOVE—&gt;…—&gt;MOVE—&gt;UP。</li>
@@ -356,6 +400,14 @@
     
 
     <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Android/" rel="tag"># Android</a>
+          
+            <a href="/tags/View/" rel="tag"># View</a>
+          
+        </div>
       
 
       
@@ -444,6 +496,10 @@
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
+              <img class="site-author-image" itemprop="image"
+                src="/uploads/photo.png"
+                alt="风少侠" />
+            
               <p class="site-author-name" itemprop="name">风少侠</p>
               <p class="site-description motion-element" itemprop="description"></p>
           </div>
@@ -455,20 +511,54 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">19</span>
+                  <span class="site-state-item-count">18</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
             
 
             
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">6</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
 
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">17</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
             
 
           </nav>
 
           
 
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/lunxinfeng" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://www.jianshu.com/u/41d7604ac57a" target="_blank" title="简书">
+                      
+                        <i class="fa fa-fw fa-paper-plane"></i>简书</a>
+                  </span>
+                
+            </div>
           
 
           

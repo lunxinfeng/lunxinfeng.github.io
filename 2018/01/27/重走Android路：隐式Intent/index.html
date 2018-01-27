@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="Hexo, NexT" />
+  <meta name="keywords" content="Android,Intent," />
 
 
 
@@ -80,6 +80,7 @@
 
 
 <meta name="description" content="在Android开发工作中，Intent是我们经常需要打交道的一个类，我们可以用它来启动Activity、Service和Boardcast，Intent有七大属性：  ComponentName Action Category Data Type Extra Flags  根据是否指定componentName，可以将Intent分为显式Intent和隐式Intent，大多数情况下我们使用的都是">
+<meta name="keywords" content="Android,Intent">
 <meta property="og:type" content="article">
 <meta property="og:title" content="重走Android路：隐式Intent">
 <meta property="og:url" content="http://yoursite.com/2018/01/27/重走Android路：隐式Intent/index.html">
@@ -87,7 +88,7 @@
 <meta property="og:description" content="在Android开发工作中，Intent是我们经常需要打交道的一个类，我们可以用它来启动Activity、Service和Boardcast，Intent有七大属性：  ComponentName Action Category Data Type Extra Flags  根据是否指定componentName，可以将Intent分为显式Intent和隐式Intent，大多数情况下我们使用的都是">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="http://upload-images.jianshu.io/upload_images/1215918-30b7447eff219add.gif?imageMogr2/auto-orient/strip">
-<meta property="og:updated_time" content="2018-01-27T04:44:07.151Z">
+<meta property="og:updated_time" content="2018-01-27T07:28:46.166Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="重走Android路：隐式Intent">
 <meta name="twitter:description" content="在Android开发工作中，Intent是我们经常需要打交道的一个类，我们可以用它来启动Activity、Service和Boardcast，Intent有七大属性：  ComponentName Action Category Data Type Extra Flags  根据是否指定componentName，可以将Intent分为显式Intent和隐式Intent，大多数情况下我们使用的都是">
@@ -192,6 +193,26 @@
         </li>
       
         
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
         <li class="menu-item menu-item-archives">
           <a href="/archives/" rel="section">
             
@@ -239,7 +260,7 @@
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="风少侠">
       <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="image" content="/uploads/photo.png">
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
@@ -273,6 +294,28 @@
             
           </span>
 
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Android/" itemprop="url" rel="index">
+                    <span itemprop="name">Android</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
           
 
           
@@ -311,7 +354,7 @@
 <li>Extra</li>
 <li>Flags</li>
 </ul>
-<p>根据是否指定componentName，可以将Intent分为显式Intent和隐式Intent，大多数情况下我们使用的都是它的显式用法，在这里对其隐式用法做个整理并记录。<br>隐式Intent并不会明确指明我们的意图，而是指定了一系列action和category等信息，然后由系统帮我们过滤选出合适的活动去启动，可以用于不同应用程序之间，一般用来启动系统自带的Activity或Service组件。比如调用手机浏览器打开一个网页：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">Intent intent = <span class="keyword">new</span> Intent();</span><br><span class="line"><span class="comment">//显示Intent</span></span><br><span class="line"><span class="comment">//intent.setClass(this,SecondActivity.class);</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//隐式Intent</span></span><br><span class="line">intent.setAction(Intent.ACTION_VIEW);</span><br><span class="line">intent.setData(Uri.parse(<span class="string">"http://www.jianshu.com/"</span>));</span><br><span class="line">startActivity(intent);</span><br></pre></td></tr></table></figure></p>
+<p>根据是否指定componentName，可以将Intent分为显式Intent和隐式Intent，大多数情况下我们使用的都是它的显式用法，在这里对其隐式用法做个整理并记录。<br>隐式Intent并不会明确指明我们的意图，而是指定了一系列action和category等信息，然后由系统帮我们过滤选出合适的活动去启动，可以用于不同应用程序之间，一般用来启动系统自带的Activity或Service组件。比如调用手机浏览器打开一个网页：<br><a id="more"></a><br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">Intent intent = <span class="keyword">new</span> Intent();</span><br><span class="line"><span class="comment">//显示Intent</span></span><br><span class="line"><span class="comment">//intent.setClass(this,SecondActivity.class);</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//隐式Intent</span></span><br><span class="line">intent.setAction(Intent.ACTION_VIEW);</span><br><span class="line">intent.setData(Uri.parse(<span class="string">"http://www.jianshu.com/"</span>));</span><br><span class="line">startActivity(intent);</span><br></pre></td></tr></table></figure></p>
 <p><img src="http://upload-images.jianshu.io/upload_images/1215918-30b7447eff219add.gif?imageMogr2/auto-orient/strip" alt="隐式Intent.gif"></p>
 <h1 id="属性详解"><a href="#属性详解" class="headerlink" title="属性详解"></a>属性详解</h1><h2 id="ComponentName"><a href="#ComponentName" class="headerlink" title="ComponentName"></a>ComponentName</h2><p>表示要启动的组件的名称。<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">Intent intent = <span class="keyword">new</span> Intent();</span><br><span class="line">intent.setClass(<span class="keyword">this</span>,SecondActivity.class);</span><br><span class="line"><span class="comment">//Intent intent = new Intent(this,SecondActivity.class);</span></span><br><span class="line"></span><br><span class="line">startActivity(intent);</span><br></pre></td></tr></table></figure></p>
 <p>这是一段很常见的代码，代表Intent的显式用法，等同于<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">ComponentName componentName = <span class="keyword">new</span> ComponentName(<span class="keyword">this</span>,SecondActivity.class);</span><br><span class="line">intent.setComponent(componentName);</span><br></pre></td></tr></table></figure></p>
@@ -371,6 +414,14 @@
     
 
     <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Android/" rel="tag"># Android</a>
+          
+            <a href="/tags/Intent/" rel="tag"># Intent</a>
+          
+        </div>
       
 
       
@@ -459,6 +510,10 @@
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
+              <img class="site-author-image" itemprop="image"
+                src="/uploads/photo.png"
+                alt="风少侠" />
+            
               <p class="site-author-name" itemprop="name">风少侠</p>
               <p class="site-description motion-element" itemprop="description"></p>
           </div>
@@ -470,20 +525,54 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">19</span>
+                  <span class="site-state-item-count">18</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
             
 
             
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">6</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
 
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">17</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
             
 
           </nav>
 
           
 
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/lunxinfeng" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://www.jianshu.com/u/41d7604ac57a" target="_blank" title="简书">
+                      
+                        <i class="fa fa-fw fa-paper-plane"></i>简书</a>
+                  </span>
+                
+            </div>
           
 
           

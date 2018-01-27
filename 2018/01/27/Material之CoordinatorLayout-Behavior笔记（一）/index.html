@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="Hexo, NexT" />
+  <meta name="keywords" content="Android,Material," />
 
 
 
@@ -80,6 +80,7 @@
 
 
 <meta name="description" content="最新项目中用到了些Material效果，在此对自己的学习做个小结。   首先养成良好的学习习惯—–看源码： CoordinatorLayout1234567891011121314151617181920212223242526/** * CoordinatorLayout is a super-powered &amp;#123;@link android.widget.FrameLayout Fram">
+<meta name="keywords" content="Android,Material">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Material之CoordinatorLayout + Behavior笔记（一）">
 <meta property="og:url" content="http://yoursite.com/2018/01/27/Material之CoordinatorLayout-Behavior笔记（一）/index.html">
@@ -95,7 +96,7 @@
 <meta property="og:image" content="http://upload-images.jianshu.io/upload_images/1215918-e79423f6f7d93de5.gif?imageMogr2/auto-orient/strip">
 <meta property="og:image" content="http://upload-images.jianshu.io/upload_images/1215918-946022ce80784e08.gif?imageMogr2/auto-orient/strip">
 <meta property="og:image" content="http://upload-images.jianshu.io/upload_images/1215918-22c675c74d224a67.gif?imageMogr2/auto-orient/strip">
-<meta property="og:updated_time" content="2018-01-27T04:29:39.799Z">
+<meta property="og:updated_time" content="2018-01-27T07:33:09.113Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Material之CoordinatorLayout + Behavior笔记（一）">
 <meta name="twitter:description" content="最新项目中用到了些Material效果，在此对自己的学习做个小结。   首先养成良好的学习习惯—–看源码： CoordinatorLayout1234567891011121314151617181920212223242526/** * CoordinatorLayout is a super-powered &amp;#123;@link android.widget.FrameLayout Fram">
@@ -200,6 +201,26 @@
         </li>
       
         
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
         <li class="menu-item menu-item-archives">
           <a href="/archives/" rel="section">
             
@@ -247,7 +268,7 @@
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="风少侠">
       <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="image" content="/uploads/photo.png">
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
@@ -281,6 +302,28 @@
             
           </span>
 
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Android/" itemprop="url" rel="index">
+                    <span itemprop="name">Android</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
           
 
           
@@ -322,9 +365,10 @@
 </li>
 <li>通过为CoordinatorLayout的子views指定<strong>Behavior</strong>，在同一个父容器下可以提供不同的交互，并且那些子view可以和另一个子view相互作用，相互影响。通过<strong>@DefaultBehavior</strong>注释，CoordinatorLayout的子view可以使用一个默认的behavior。</li>
 <li>Behavior可以用来实现各种交互和 来自滑动抽屉、滑动删除元素和按钮关联其他元素产生的额外的布局修改。</li>
-<li>CoordinatorLayout的子view也许会有个anchor（锚点，即view显示在哪块区域），这个子view必须是CoordinatorLayout的<strong>直接子view</strong>，不能是孙子辈儿的view - -！<br>通过看CoordinatorLayout官方注释文档，了解到一个重要信息—Behavior，可以说CoordinatorLayout各种炫酷的交互效果，都是通过Behavior来控制的，除此之外，CoordinatorLayout类似于FrameLayout，那么接下来看重点：<h3 id="Behavior："><a href="#Behavior：" class="headerlink" title="Behavior："></a>Behavior：</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * Interaction behavior plugin for child views of &#123;<span class="doctag">@link</span> CoordinatorLayout&#125;.</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> * &lt;p&gt;A Behavior implements one or more interactions that a user can take on a child view.</span></span><br><span class="line"><span class="comment"> * These interactions may include drags, swipes, flings, or any other gestures.&lt;/p&gt;</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@param</span> &lt;V&gt; The View type that this Behavior operates on</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">abstract</span> <span class="class"><span class="keyword">class</span> <span class="title">Behavior</span>&lt;<span class="title">V</span> <span class="keyword">extends</span> <span class="title">View</span>&gt; </span>&#123;</span><br></pre></td></tr></table></figure>
-</li>
+<li>CoordinatorLayout的子view也许会有个anchor（锚点，即view显示在哪块区域），这个子view必须是CoordinatorLayout的<strong>直接子view</strong>，不能是孙子辈儿的view - -！<br>通过看CoordinatorLayout官方注释文档，了解到一个重要信息—Behavior，可以说CoordinatorLayout各种炫酷的交互效果，都是通过Behavior来控制的，除此之外，CoordinatorLayout类似于FrameLayout，那么接下来看重点：</li>
 </ul>
+<a id="more"></a>
+<h3 id="Behavior："><a href="#Behavior：" class="headerlink" title="Behavior："></a>Behavior：</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * Interaction behavior plugin for child views of &#123;<span class="doctag">@link</span> CoordinatorLayout&#125;.</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> * &lt;p&gt;A Behavior implements one or more interactions that a user can take on a child view.</span></span><br><span class="line"><span class="comment"> * These interactions may include drags, swipes, flings, or any other gestures.&lt;/p&gt;</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@param</span> &lt;V&gt; The View type that this Behavior operates on</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">abstract</span> <span class="class"><span class="keyword">class</span> <span class="title">Behavior</span>&lt;<span class="title">V</span> <span class="keyword">extends</span> <span class="title">View</span>&gt; </span>&#123;</span><br></pre></td></tr></table></figure>
 <p>老规矩：</p>
 <ul>
 <li>CoordinatorLayout的子view的交互行为插件。</li>
@@ -394,6 +438,14 @@
     
 
     <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Android/" rel="tag"># Android</a>
+          
+            <a href="/tags/Material/" rel="tag"># Material</a>
+          
+        </div>
       
 
       
@@ -482,6 +534,10 @@
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
+              <img class="site-author-image" itemprop="image"
+                src="/uploads/photo.png"
+                alt="风少侠" />
+            
               <p class="site-author-name" itemprop="name">风少侠</p>
               <p class="site-description motion-element" itemprop="description"></p>
           </div>
@@ -493,20 +549,54 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">19</span>
+                  <span class="site-state-item-count">18</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
             
 
             
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">6</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
 
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">17</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
             
 
           </nav>
 
           
 
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/lunxinfeng" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://www.jianshu.com/u/41d7604ac57a" target="_blank" title="简书">
+                      
+                        <i class="fa fa-fw fa-paper-plane"></i>简书</a>
+                  </span>
+                
+            </div>
           
 
           
