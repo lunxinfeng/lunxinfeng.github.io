@@ -1,0 +1,693 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Hexo, NexT" />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="最近公司做了个桌面应用，登陆页面要求做个类似于QQ登陆时的账号下拉列表，需要将账号信息保存在本地，考虑了下，打算以xml的形式保存，在此做个记录。 简单实现  首先来看一下需要保存的数据类，其实就是一个很普通的java实体类。12345678910111213141516171819202122232425public class Student &amp;#123;    private int">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Java通过JAXB以xml的形式保存实体类数据到本地">
+<meta property="og:url" content="http://yoursite.com/2018/01/27/Java通过JAXB以xml的形式保存实体类数据到本地/index.html">
+<meta property="og:site_name" content="风少侠的个人博客">
+<meta property="og:description" content="最近公司做了个桌面应用，登陆页面要求做个类似于QQ登陆时的账号下拉列表，需要将账号信息保存在本地，考虑了下，打算以xml的形式保存，在此做个记录。 简单实现  首先来看一下需要保存的数据类，其实就是一个很普通的java实体类。12345678910111213141516171819202122232425public class Student &amp;#123;    private int">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/1215918-ff1cdb573f8a9141.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:updated_time" content="2018-01-27T04:45:27.104Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Java通过JAXB以xml的形式保存实体类数据到本地">
+<meta name="twitter:description" content="最近公司做了个桌面应用，登陆页面要求做个类似于QQ登陆时的账号下拉列表，需要将账号信息保存在本地，考虑了下，打算以xml的形式保存，在此做个记录。 简单实现  首先来看一下需要保存的数据类，其实就是一个很普通的java实体类。12345678910111213141516171819202122232425public class Student &amp;#123;    private int">
+<meta name="twitter:image" content="http://upload-images.jianshu.io/upload_images/1215918-ff1cdb573f8a9141.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2018/01/27/Java通过JAXB以xml的形式保存实体类数据到本地/"/>
+
+
+
+
+
+  <title>Java通过JAXB以xml的形式保存实体类数据到本地 | 风少侠的个人博客</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">风少侠的个人博客</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/01/27/Java通过JAXB以xml的形式保存实体类数据到本地/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="风少侠">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="风少侠的个人博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Java通过JAXB以xml的形式保存实体类数据到本地</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-01-27T12:45:03+08:00">
+                2018-01-27
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>   最近公司做了个桌面应用，登陆页面要求做个类似于QQ登陆时的账号下拉列表，需要将账号信息保存在本地，考虑了下，打算以xml的形式保存，在此做个记录。</p>
+<h1 id="简单实现"><a href="#简单实现" class="headerlink" title="简单实现"></a>简单实现</h1><p>  首先来看一下需要保存的数据类，其实就是一个很普通的java实体类。<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Student</span> </span>&#123;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">int</span> id;</span><br><span class="line">    <span class="keyword">private</span> String name;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">Student</span><span class="params">(<span class="keyword">int</span> id, String name)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.id = id;</span><br><span class="line">        <span class="keyword">this</span>.name = name;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">getId</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> id;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setId</span><span class="params">(<span class="keyword">int</span> id)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.id = id;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">getName</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> name;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setName</span><span class="params">(String name)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.name = name;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>  因为可能要保存多个账号信息，将上述实体类做一个简单封装，作为要存储的实体类对象：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@XmlRootElement</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">SaveData</span> </span>&#123;</span><br><span class="line">    <span class="keyword">private</span> List&lt;Student&gt; students;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@XmlElement</span>(name = <span class="string">"student"</span>)</span><br><span class="line">    <span class="function"><span class="keyword">public</span> List&lt;Student&gt; <span class="title">getStudents</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> students;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setStudents</span><span class="params">(List&lt;Student&gt; students)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.students = students;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>最后是数据的读取：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">BeanToXml</span>&lt;<span class="title">T</span>&gt; </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        SaveData data = <span class="keyword">new</span> SaveData();</span><br><span class="line">        List&lt;Student&gt; list = <span class="keyword">new</span> ArrayList&lt;&gt;();</span><br><span class="line">        list.add(<span class="keyword">new</span> Student(<span class="number">1</span>,<span class="string">"Allen"</span>));</span><br><span class="line">        list.add(<span class="keyword">new</span> Student(<span class="number">2</span>,<span class="string">"Tom"</span>));</span><br><span class="line">        list.add(<span class="keyword">new</span> Student(<span class="number">3</span>,<span class="string">"Lili"</span>));</span><br><span class="line">        data.setStudents(list);</span><br><span class="line"></span><br><span class="line">        BeanToXml&lt;SaveData&gt; beanToXml = <span class="keyword">new</span> BeanToXml&lt;&gt;();</span><br><span class="line">        beanToXml.saveUserData(data,SaveData.class);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">//获取本地的保存文件  System.getProperty("user.home") 得到的是用户主目录，其他相关值见附录</span></span><br><span class="line">    <span class="function"><span class="keyword">private</span> File <span class="title">getSavePath</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        File file = <span class="keyword">new</span> File(System.getProperty(<span class="string">"user.home"</span>) + File.separator + <span class="string">"test"</span>);</span><br><span class="line">        <span class="keyword">if</span> (!file.exists())</span><br><span class="line">            file.mkdir();</span><br><span class="line">        file = <span class="keyword">new</span> File(file.getPath() + File.separator + <span class="string">"test.xml"</span>);</span><br><span class="line">        <span class="keyword">return</span> file;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 保存数据</span></span><br><span class="line"><span class="comment">     *</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> data 需要保存的数据</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> cls 数据bean的class对象</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">saveUserData</span><span class="params">(T data, Class&lt;T&gt; cls)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            JAXBContext context = JAXBContext.newInstance(cls);</span><br><span class="line">            Marshaller m = context.createMarshaller();</span><br><span class="line">            m.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, <span class="keyword">true</span>);</span><br><span class="line"></span><br><span class="line">            <span class="comment">// Marshalling and saving XML to the file.</span></span><br><span class="line">            m.marshal(data, getSavePath());</span><br><span class="line">        &#125; <span class="keyword">catch</span> (Exception e) &#123;</span><br><span class="line">            e.printStackTrace();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">private</span> T <span class="title">loadUserData</span><span class="params">(Class&lt;T&gt; cls)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            JAXBContext context = JAXBContext.newInstance(cls);</span><br><span class="line">            Unmarshaller um = context.createUnmarshaller();</span><br><span class="line"></span><br><span class="line">            <span class="comment">// Reading XML from the file and unmarshalling.</span></span><br><span class="line">            <span class="keyword">return</span> (T) um.unmarshal(getSavePath());</span><br><span class="line"></span><br><span class="line">        &#125; <span class="keyword">catch</span> (Exception e) &#123;</span><br><span class="line">            e.printStackTrace();</span><br><span class="line">            <span class="keyword">return</span> <span class="keyword">null</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>  保存的本地xml数据：<br><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">&lt;?xml version="1.0" encoding="UTF-8" standalone="yes"?&gt;</span><br><span class="line"><span class="tag">&lt;<span class="name">saveData</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">student</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">id</span>&gt;</span>1<span class="tag">&lt;/<span class="name">id</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">name</span>&gt;</span>Allen<span class="tag">&lt;/<span class="name">name</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">student</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">student</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">id</span>&gt;</span>2<span class="tag">&lt;/<span class="name">id</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">name</span>&gt;</span>Tom<span class="tag">&lt;/<span class="name">name</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">student</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">student</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">id</span>&gt;</span>3<span class="tag">&lt;/<span class="name">id</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">name</span>&gt;</span>Lili<span class="tag">&lt;/<span class="name">name</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">student</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">saveData</span>&gt;</span></span><br></pre></td></tr></table></figure></p>
+<h1 id="扩展"><a href="#扩展" class="headerlink" title="扩展"></a>扩展</h1><h2 id="注解说明"><a href="#注解说明" class="headerlink" title="注解说明"></a>注解说明</h2><p>  首先是三种用于标注<strong>顶级类或枚举</strong>的注解，他们可以配合使用，会被保留到<strong>运行时</strong>。</p>
+<ul>
+<li><p>@XmlAccessOrder：用于标注<strong>顶级类或包</strong>，会被保留到<strong>运行时</strong>。对java对象映射成的xml元素进行排序。有两个值：</p>
+<ol>
+<li><p>XmlAccessOrder.UNDEFINED：不排序。此为默认值。</p>
+</li>
+<li><p>XmlAccessOrder.ALPHABETICAL：按字母顺序排序。</p>
+</li>
+</ol>
+</li>
+<li>@XmlAccessorType：用于标注<strong>顶级类或包</strong>，会被保留到<strong>运行时</strong>。控制实体类的哪些属性会被映射到xml。有4种值，默认值为PUBLIC_MEMBER：<ol>
+<li>XmlAccessType.PROPERTY：所有有getter/setter的属性。</li>
+<li>XmlAccessType.FIELD：所有非静态的、非临时变量，也可以理解为所有非静态成员变量。</li>
+<li>XmlAccessType.PUBLIC_MEMBER：所有public的或者有getter/setter的属性。</li>
+<li>XmlAccessType.NONE：所有属性都不映射。</li>
+</ol>
+</li>
+<li>@XmlRootElement：用于标注<strong>顶级类或枚举</strong>，会被保留到<strong>运行时</strong>。表示xml的根元素，有name和namespace两个方法，可以自定义xml的根元素名称和命名空间，name默认会使用类名，namespace默认为空。</li>
+<li>@XmlType：用于标注<strong>顶级类或枚举</strong>，会被保留到<strong>运行时</strong>。包括name，propOrder等属性，propOrder用于排序，不指定时按@XmlAccessOrder排序。</li>
+</ul>
+<p>再来看看其他常用注解：</p>
+<ul>
+<li>@XmlElement：用于标注<strong>属性、方法或者参数</strong>，会被保留到<strong>运行时</strong>。用于将java属性映射为xml节点，可以通过name来修改节点的名称。</li>
+<li>@XmlAttribute：用于标注<strong>属性、方法</strong>，会被保留到<strong>运行时</strong>。用于将java属性映射为xml属性。</li>
+<li>@XmlTransient：用于标注<strong>属性、方法或类</strong>，会被保留到<strong>运行时</strong>。用于在java映射到xml时忽略此属性，不映射到xml。<h1 id="踩坑"><a href="#踩坑" class="headerlink" title="踩坑"></a>踩坑</h1></li>
+<li>上面这段代码在java 6/7/8版本都是运行正常的，但是在java 9版本会报java.lang.NoClassDefFoundError: javax/xml/bind/JAXBException 异常，解决办法请参考<a href="https://stackoverflow.com/questions/43574426/how-to-resolve-java-lang-noclassdeffounderror-javax-xml-bind-jaxbexception-in-j" target="_blank" rel="noopener">这里</a></li>
+</ul>
+<h1 id="附录"><a href="#附录" class="headerlink" title="附录"></a>附录</h1><p><img src="http://upload-images.jianshu.io/upload_images/1215918-ff1cdb573f8a9141.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="java系统属性.png"></p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/01/27/重走Android路：隐式Intent/" rel="next" title="重走Android路：隐式Intent">
+                <i class="fa fa-chevron-left"></i> 重走Android路：隐式Intent
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/01/27/java调用系统默认浏览器打开指定网址/" rel="prev" title="java调用系统默认浏览器打开指定网址">
+                java调用系统默认浏览器打开指定网址 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">风少侠</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">19</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#简单实现"><span class="nav-number">1.</span> <span class="nav-text">简单实现</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#扩展"><span class="nav-number">2.</span> <span class="nav-text">扩展</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#注解说明"><span class="nav-number">2.1.</span> <span class="nav-text">注解说明</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#踩坑"><span class="nav-number">3.</span> <span class="nav-text">踩坑</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#附录"><span class="nav-number">4.</span> <span class="nav-text">附录</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">风少侠</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Mist</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

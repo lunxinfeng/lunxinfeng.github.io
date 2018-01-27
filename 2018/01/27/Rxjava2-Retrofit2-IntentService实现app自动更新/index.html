@@ -1,0 +1,672 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Hexo, NexT" />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="效果图　　网速较慢，只录制了最后几秒，效果还是看得出来。  需求　　实现app的版本自动更新。 思路　　其实Google官方专门提供了一个DownloadManager类来实现app的自动更新功能，因为项目的网络框架用的Retrofit2配合Rxjava2，因此想试一下自己去实现，顺便练练手。　　此处下载大文件，肯定是要放在后台操作，放在服务中比较合适，而这个服务唯一的任务就是下载，因此我们用In">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Rxjava2+Retrofit2+IntentService实现app自动更新">
+<meta property="og:url" content="http://yoursite.com/2018/01/27/Rxjava2-Retrofit2-IntentService实现app自动更新/index.html">
+<meta property="og:site_name" content="风少侠的个人博客">
+<meta property="og:description" content="效果图　　网速较慢，只录制了最后几秒，效果还是看得出来。  需求　　实现app的版本自动更新。 思路　　其实Google官方专门提供了一个DownloadManager类来实现app的自动更新功能，因为项目的网络框架用的Retrofit2配合Rxjava2，因此想试一下自己去实现，顺便练练手。　　此处下载大文件，肯定是要放在后台操作，放在服务中比较合适，而这个服务唯一的任务就是下载，因此我们用In">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/1215918-293c4e0105d5778b.gif?imageMogr2/auto-orient/strip">
+<meta property="og:updated_time" content="2018-01-27T04:37:21.884Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Rxjava2+Retrofit2+IntentService实现app自动更新">
+<meta name="twitter:description" content="效果图　　网速较慢，只录制了最后几秒，效果还是看得出来。  需求　　实现app的版本自动更新。 思路　　其实Google官方专门提供了一个DownloadManager类来实现app的自动更新功能，因为项目的网络框架用的Retrofit2配合Rxjava2，因此想试一下自己去实现，顺便练练手。　　此处下载大文件，肯定是要放在后台操作，放在服务中比较合适，而这个服务唯一的任务就是下载，因此我们用In">
+<meta name="twitter:image" content="http://upload-images.jianshu.io/upload_images/1215918-293c4e0105d5778b.gif?imageMogr2/auto-orient/strip">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2018/01/27/Rxjava2-Retrofit2-IntentService实现app自动更新/"/>
+
+
+
+
+
+  <title>Rxjava2+Retrofit2+IntentService实现app自动更新 | 风少侠的个人博客</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">风少侠的个人博客</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/01/27/Rxjava2-Retrofit2-IntentService实现app自动更新/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="风少侠">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="风少侠的个人博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Rxjava2+Retrofit2+IntentService实现app自动更新</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-01-27T12:36:43+08:00">
+                2018-01-27
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="效果图"><a href="#效果图" class="headerlink" title="效果图"></a>效果图</h1><p>　　网速较慢，只录制了最后几秒，效果还是看得出来。</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/1215918-293c4e0105d5778b.gif?imageMogr2/auto-orient/strip" alt="appUpdate.gif"></p>
+<h1 id="需求"><a href="#需求" class="headerlink" title="需求"></a>需求</h1><p>　　实现app的版本自动更新。</p>
+<h1 id="思路"><a href="#思路" class="headerlink" title="思路"></a>思路</h1><p>　　其实Google官方专门提供了一个DownloadManager类来实现app的自动更新功能，因为项目的网络框架用的Retrofit2配合Rxjava2，因此想试一下自己去实现，顺便练练手。<br>　　此处下载大文件，肯定是要放在后台操作，放在服务中比较合适，而这个服务唯一的任务就是下载，因此我们用IntentService，然后在服务中通过发送Notification实现下载进度的实时监控，那么问题来了，下载过程中如何得到当前的下载进度？这个应该就是难点所在了，本来是想在写入数据到文件的时候将写入的长度记录下来，后来意外在网上看到一种更优雅的方式，通过自定义OkHttp网络拦截器的方式来获取到当前已经下载的数据长度，并通过Rxbus发布数据（<a href="http://blog.csdn.net/jdsjlzx/article/details/52144971" target="_blank" rel="noopener">参考链接</a>），在此做个记录。</p>
+<h1 id="实现"><a href="#实现" class="headerlink" title="实现"></a>实现</h1><h2 id="自定义ResponseBody"><a href="#自定义ResponseBody" class="headerlink" title="自定义ResponseBody"></a>自定义ResponseBody</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 下载文件</span></span><br><span class="line"><span class="comment"> * Created by lxf on 2017/3/3.</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">FileResponseBody</span> <span class="keyword">extends</span> <span class="title">ResponseBody</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> Response originalResponse;<span class="comment">//原结果</span></span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">FileResponseBody</span><span class="params">(Response originalResponse)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.originalResponse = originalResponse;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">	<span class="comment">//返回内容类型</span></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> MediaType <span class="title">contentType</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> originalResponse.body().contentType();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">	<span class="comment">//返回内容长度，没有则返回-1</span></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">long</span> <span class="title">contentLength</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> originalResponse.body().contentLength();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">	<span class="comment">//返回缓存源，类似于io中的BufferedReader</span></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> BufferedSource <span class="title">source</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> Okio.buffer(<span class="keyword">new</span> ForwardingSource(originalResponse.body().source()) &#123;</span><br><span class="line">            <span class="keyword">long</span> bytesReaded = <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line">			<span class="comment">//返回读取到的长度</span></span><br><span class="line">            <span class="meta">@Override</span></span><br><span class="line">            <span class="function"><span class="keyword">public</span> <span class="keyword">long</span> <span class="title">read</span><span class="params">(Buffer sink, <span class="keyword">long</span> byteCount)</span> <span class="keyword">throws</span> IOException </span>&#123;</span><br><span class="line">                <span class="keyword">long</span> bytesRead = <span class="keyword">super</span>.read(sink, byteCount);</span><br><span class="line">                bytesReaded += bytesRead == -<span class="number">1</span> ? <span class="number">0</span> : bytesRead;</span><br><span class="line">                <span class="comment">// 通过RxBus发布进度信息</span></span><br><span class="line">                RxBus.getDefault().send(<span class="keyword">new</span> DownloadBean(contentLength(), bytesReaded));</span><br><span class="line">                <span class="keyword">return</span> bytesRead;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>　　上面的代码已经加了注解，如果对Okio不了解的同学可以参考下<a href="http://blog.csdn.net/sbsujjbcy/article/details/50523623" target="_blank" rel="noopener">这里</a>。</p>
+<h2 id="配置网络接口"><a href="#配置网络接口" class="headerlink" title="配置网络接口"></a>配置网络接口</h2><p>　　由于是通过Retrofit2下载文件，返回的Obserable<t>泛型直接使用ResponseBody。<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">interface</span> <span class="title">Api</span> </span>&#123;</span><br><span class="line">	...</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Streaming</span><span class="comment">//注明为流文件，防止retrofit将大文件读入内存</span></span><br><span class="line">    <span class="meta">@GET</span></span><br><span class="line">    <span class="function">Observable&lt;ResponseBody&gt; <span class="title">down</span><span class="params">(@Url String url)</span></span>;<span class="comment">//通过@Url覆盖baseurl</span></span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></t></p>
+<p>　　实现网络接口：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> Observable&lt;ResponseBody&gt; <span class="title">down</span><span class="params">(String url)</span> </span>&#123;</span><br><span class="line">        OkHttpClient client = <span class="keyword">new</span> OkHttpClient.Builder()</span><br><span class="line">                .connectTimeout(NetConfig.CONNECT_TIME_OUT, TimeUnit.MILLISECONDS)</span><br><span class="line">                .addNetworkInterceptor(<span class="keyword">new</span> Interceptor() &#123;</span><br><span class="line">                    <span class="meta">@Override</span></span><br><span class="line">                    <span class="function"><span class="keyword">public</span> Response <span class="title">intercept</span><span class="params">(Chain chain)</span> <span class="keyword">throws</span> IOException </span>&#123;</span><br><span class="line">                        Response originalResponse = chain.proceed(chain.request());<span class="comment">//对结果重新处理</span></span><br><span class="line">                        <span class="keyword">return</span> originalResponse</span><br><span class="line">                                .newBuilder()</span><br><span class="line">                                .body(<span class="keyword">new</span> FileResponseBody(originalResponse))<span class="comment">//将自定义的ResposeBody设置给它</span></span><br><span class="line">                                .build();</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;)</span><br><span class="line">                .build();</span><br><span class="line"></span><br><span class="line">        Retrofit retrofit = <span class="keyword">new</span> Retrofit.Builder()</span><br><span class="line">                .client(client)</span><br><span class="line">                .addCallAdapterFactory(RxJava2CallAdapterFactory.create())</span><br><span class="line">                .build();</span><br><span class="line">        Api api = retrofit.create(Api.class);</span><br><span class="line">        <span class="keyword">return</span> api.down(url);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<h2 id="封装UpdateManager"><a href="#封装UpdateManager" class="headerlink" title="封装UpdateManager"></a>封装UpdateManager</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">UpdateManager</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 是否需要更新,需要则下载</span></span><br><span class="line"><span class="comment">     *</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> context     上下文</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> url         新版本地址</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> apkPath     本地apk保存路径</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> cd          订阅关系集合，在数据传输完毕时解除订阅</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">downloadApk</span><span class="params">(<span class="keyword">final</span> Context context, <span class="keyword">final</span> String url, <span class="keyword">final</span> String apkPath, <span class="keyword">final</span> CompositeDisposable cd)</span> </span>&#123;</span><br><span class="line">        NetWork.getInstance().down(url)</span><br><span class="line">                .map(<span class="keyword">new</span> Function&lt;ResponseBody, BufferedSource&gt;() &#123;</span><br><span class="line">                    <span class="meta">@Override</span></span><br><span class="line">                    <span class="function"><span class="keyword">public</span> BufferedSource <span class="title">apply</span><span class="params">(ResponseBody responseBody)</span> <span class="keyword">throws</span> Exception </span>&#123;</span><br><span class="line">                        <span class="keyword">return</span> responseBody.source();<span class="comment">//获取数据缓冲源</span></span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;)</span><br><span class="line">                .subscribeOn(Schedulers.io())</span><br><span class="line">                .observeOn(Schedulers.io())</span><br><span class="line">                .subscribe(<span class="keyword">new</span> Observer&lt;BufferedSource&gt;() &#123;</span><br><span class="line">                    <span class="meta">@Override</span></span><br><span class="line">                    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onSubscribe</span><span class="params">(Disposable d)</span> </span>&#123;</span><br><span class="line">                        cd.add(d);</span><br><span class="line">                    &#125;</span><br><span class="line"></span><br><span class="line">                    <span class="meta">@Override</span></span><br><span class="line">                    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onNext</span><span class="params">(BufferedSource bufferedSource)</span> </span>&#123;</span><br><span class="line">                        <span class="keyword">try</span> &#123;</span><br><span class="line">                            writeFile(bufferedSource, <span class="keyword">new</span> File(apkPath));</span><br><span class="line">                        &#125; <span class="keyword">catch</span> (IOException e) &#123;</span><br><span class="line">                            e.printStackTrace();</span><br><span class="line">                        &#125;</span><br><span class="line">                    &#125;</span><br><span class="line"></span><br><span class="line">                    <span class="meta">@Override</span></span><br><span class="line">                    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onError</span><span class="params">(Throwable e)</span> </span>&#123;</span><br><span class="line">                        unSubscribe(cd);</span><br><span class="line">                    &#125;</span><br><span class="line"></span><br><span class="line">                    <span class="meta">@Override</span></span><br><span class="line">                    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onComplete</span><span class="params">()</span> </span>&#123;</span><br><span class="line">                        <span class="comment">//安装apk</span></span><br><span class="line">                        Intent intent = <span class="keyword">new</span> Intent(Intent.ACTION_VIEW);</span><br><span class="line">                        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);</span><br><span class="line">                        intent.setDataAndType(Uri.fromFile(<span class="keyword">new</span> File(apkPath)), <span class="string">"application/vnd.android.package-archive"</span>);</span><br><span class="line">                        context.startActivity(intent);</span><br><span class="line"></span><br><span class="line">                        unSubscribe(cd);</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 写入文件</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">writeFile</span><span class="params">(BufferedSource source, File file)</span> <span class="keyword">throws</span> IOException </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (!file.getParentFile().exists())</span><br><span class="line">            file.getParentFile().mkdirs();</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> (file.exists())</span><br><span class="line">            file.delete();</span><br><span class="line"></span><br><span class="line">        BufferedSink bufferedSink = Okio.buffer(Okio.sink(file));</span><br><span class="line">        bufferedSink.writeAll(source);</span><br><span class="line"></span><br><span class="line">        bufferedSink.close();</span><br><span class="line">        source.close();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 解除订阅</span></span><br><span class="line"><span class="comment">     *</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> cd 订阅关系集合</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">unSubscribe</span><span class="params">(CompositeDisposable cd)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (cd != <span class="keyword">null</span> &amp;&amp; !cd.isDisposed())</span><br><span class="line">            cd.dispose();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="通过IntentService下载apk文件"><a href="#通过IntentService下载apk文件" class="headerlink" title="通过IntentService下载apk文件"></a>通过IntentService下载apk文件</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">MyIntentService</span> <span class="keyword">extends</span> <span class="title">IntentService</span> </span>&#123;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> String ACTION_DOWNLOAD = <span class="string">"intentservice.action.download"</span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> String DOWNLOAD_URL = <span class="string">"downloadUrl"</span>;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> String APK_PATH = <span class="string">"apkPath"</span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> CompositeDisposable cd = <span class="keyword">new</span> CompositeDisposable();</span><br><span class="line">    <span class="keyword">private</span> NotificationCompat.Builder builder;</span><br><span class="line">    <span class="keyword">private</span> NotificationManager notificationManager;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">MyIntentService</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">super</span>(<span class="string">"MyIntentService"</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">startUpdateService</span><span class="params">(Context context, String url, String apkPath)</span> </span>&#123;</span><br><span class="line">        Intent intent = <span class="keyword">new</span> Intent(context, MyIntentService.class);</span><br><span class="line">        intent.setAction(ACTION_DOWNLOAD);</span><br><span class="line">        intent.putExtra(DOWNLOAD_URL, url);</span><br><span class="line">        intent.putExtra(APK_PATH, apkPath);</span><br><span class="line">        context.startService(intent);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">onHandleIntent</span><span class="params">(Intent intent)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (intent != <span class="keyword">null</span>) &#123;</span><br><span class="line">            String action = intent.getAction();</span><br><span class="line">            <span class="keyword">if</span> (ACTION_DOWNLOAD.equals(action)) &#123;</span><br><span class="line">                notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);</span><br><span class="line">                builder = <span class="keyword">new</span> NotificationCompat.Builder(<span class="keyword">this</span>)</span><br><span class="line">                        .setSmallIcon(R.mipmap.ic_launcher)</span><br><span class="line">                        .setContentTitle(<span class="string">"开始下载"</span>)</span><br><span class="line">                        .setAutoCancel(<span class="keyword">true</span>)</span><br><span class="line">                        .setContentText(<span class="string">"版本更新"</span>);</span><br><span class="line"></span><br><span class="line">                notificationManager.notify(<span class="number">0</span>, builder.build());</span><br><span class="line"></span><br><span class="line">                String url = intent.getStringExtra(DOWNLOAD_URL);</span><br><span class="line">                String apkPath = intent.getStringExtra(APK_PATH);</span><br><span class="line">                handleUpdate(url, apkPath);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">handleUpdate</span><span class="params">(String url, String apkPath)</span> </span>&#123;</span><br><span class="line">        subscribeEvent();<span class="comment">//订阅下载进度</span></span><br><span class="line">        UpdateManager.downloadApk(<span class="keyword">this</span>, url, apkPath, cd);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">subscribeEvent</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        RxBus.getDefault().toObservable(DownloadBean.class)</span><br><span class="line">                .subscribe(<span class="keyword">new</span> Observer&lt;DownloadBean&gt;() &#123;</span><br><span class="line">                    <span class="meta">@Override</span></span><br><span class="line">                    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onSubscribe</span><span class="params">(Disposable d)</span> </span>&#123;</span><br><span class="line">                        cd.add(d);</span><br><span class="line">                    &#125;</span><br><span class="line"></span><br><span class="line">                    <span class="meta">@Override</span></span><br><span class="line">                    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onNext</span><span class="params">(DownloadBean downloadBean)</span> </span>&#123;</span><br><span class="line">                        <span class="keyword">int</span> progress = (<span class="keyword">int</span>) Math.round(downloadBean.getBytesReaded() / (<span class="keyword">double</span>) downloadBean.getTotal() * <span class="number">100</span>);</span><br><span class="line">                        builder.setContentInfo(String.valueOf(progress) + <span class="string">"%"</span>).setProgress(<span class="number">100</span>, progress, <span class="keyword">false</span>);</span><br><span class="line">                        notificationManager.notify(<span class="number">0</span>, builder.build());</span><br><span class="line"></span><br><span class="line">                        <span class="keyword">if</span> (progress == <span class="number">100</span>)</span><br><span class="line">                            notificationManager.cancel(<span class="number">0</span>);</span><br><span class="line">                    &#125;</span><br><span class="line"></span><br><span class="line">                    <span class="meta">@Override</span></span><br><span class="line">                    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onError</span><span class="params">(Throwable e)</span> </span>&#123;</span><br><span class="line">                        subscribeEvent();</span><br><span class="line">                    &#125;</span><br><span class="line"></span><br><span class="line">                    <span class="meta">@Override</span></span><br><span class="line">                    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onComplete</span><span class="params">()</span> </span>&#123;</span><br><span class="line">                        subscribeEvent();</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onDestroy</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">super</span>.onDestroy();</span><br><span class="line">        System.out.println(<span class="string">"onDestory____MyIntentService"</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="调用方式"><a href="#调用方式" class="headerlink" title="调用方式"></a>调用方式</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">UpdateActivity</span> <span class="keyword">extends</span> <span class="title">BaseActivity</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    ...</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">startDownload</span><span class="params">(View view)</span></span>&#123;</span><br><span class="line">		<span class="comment">//要下载的文件地址</span></span><br><span class="line">        String url = <span class="string">"http://www.izis.cn/mygoedu/yztv_1.apk"</span>;</span><br><span class="line">		<span class="comment">//下载后的保存路径</span></span><br><span class="line">        String apkPath = Environment.getExternalStorageDirectory().getPath() + <span class="string">"/yzkj.apk"</span>;</span><br><span class="line">        MyIntentService.startUpdateService(<span class="keyword">this</span>,url,apkPath);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h1 id="Demo地址"><a href="#Demo地址" class="headerlink" title="Demo地址"></a>Demo地址</h1><p>　　<a href="https://github.com/lunxinfeng/AndroidDemos" target="_blank" rel="noopener">传送门</a></p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/01/27/RecyclerView的iiteem选中放大/" rel="next" title="RecyclerView的iiteem选中放大">
+                <i class="fa fa-chevron-left"></i> RecyclerView的iiteem选中放大
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/01/27/自定义登陆动画/" rel="prev" title="自定义登陆动画">
+                自定义登陆动画 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">风少侠</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">19</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#效果图"><span class="nav-number">1.</span> <span class="nav-text">效果图</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#需求"><span class="nav-number">2.</span> <span class="nav-text">需求</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#思路"><span class="nav-number">3.</span> <span class="nav-text">思路</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#实现"><span class="nav-number">4.</span> <span class="nav-text">实现</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#自定义ResponseBody"><span class="nav-number">4.1.</span> <span class="nav-text">自定义ResponseBody</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#配置网络接口"><span class="nav-number">4.2.</span> <span class="nav-text">配置网络接口</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#封装UpdateManager"><span class="nav-number">4.3.</span> <span class="nav-text">封装UpdateManager</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#通过IntentService下载apk文件"><span class="nav-number">4.4.</span> <span class="nav-text">通过IntentService下载apk文件</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#调用方式"><span class="nav-number">4.5.</span> <span class="nav-text">调用方式</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Demo地址"><span class="nav-number">5.</span> <span class="nav-text">Demo地址</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">风少侠</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Mist</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

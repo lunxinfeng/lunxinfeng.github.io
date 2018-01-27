@@ -1,0 +1,717 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Hexo, NexT" />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="本来这节不应该放这里的，因为在公司做一个小项目练手的时候碰到了些坑，使用了一个List，结果怎么也找不到添加item的方法，就先恶补了一下。　　首先Kotlin中的集合具有可变性和不可变性的区别，来看一下Kotlin中的相关接口：    Iterable MutableIterable     Collection MutableCollection   List MutableList   Se">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Kotlin学习笔记（二）集合">
+<meta property="og:url" content="http://yoursite.com/2018/01/27/Kotlin学习笔记（二）集合/index.html">
+<meta property="og:site_name" content="风少侠的个人博客">
+<meta property="og:description" content="本来这节不应该放这里的，因为在公司做一个小项目练手的时候碰到了些坑，使用了一个List，结果怎么也找不到添加item的方法，就先恶补了一下。　　首先Kotlin中的集合具有可变性和不可变性的区别，来看一下Kotlin中的相关接口：    Iterable MutableIterable     Collection MutableCollection   List MutableList   Se">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/1215918-8243b7045c733881.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/1215918-c139e4564b8758aa.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/1215918-75781df9a81b33ed.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/1215918-9e63a310e2e4d205.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/1215918-1a1cd1a9e2f6d0d8.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:updated_time" content="2018-01-27T04:41:50.547Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Kotlin学习笔记（二）集合">
+<meta name="twitter:description" content="本来这节不应该放这里的，因为在公司做一个小项目练手的时候碰到了些坑，使用了一个List，结果怎么也找不到添加item的方法，就先恶补了一下。　　首先Kotlin中的集合具有可变性和不可变性的区别，来看一下Kotlin中的相关接口：    Iterable MutableIterable     Collection MutableCollection   List MutableList   Se">
+<meta name="twitter:image" content="http://upload-images.jianshu.io/upload_images/1215918-8243b7045c733881.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2018/01/27/Kotlin学习笔记（二）集合/"/>
+
+
+
+
+
+  <title>Kotlin学习笔记（二）集合 | 风少侠的个人博客</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">风少侠的个人博客</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/01/27/Kotlin学习笔记（二）集合/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="风少侠">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="风少侠的个人博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Kotlin学习笔记（二）集合</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-01-27T12:40:56+08:00">
+                2018-01-27
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>本来这节不应该放这里的，因为在公司做一个小项目练手的时候碰到了些坑，使用了一个List，结果怎么也找不到添加item的方法，就先恶补了一下。<br>　　首先Kotlin中的集合具有可变性和不可变性的区别，来看一下Kotlin中的相关接口：</p>
+<table>
+<thead>
+<tr>
+<th>Iterable</th>
+<th>MutableIterable</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Collection</td>
+<td>MutableCollection</td>
+</tr>
+<tr>
+<td>List</td>
+<td>MutableList</td>
+</tr>
+<tr>
+<td>Set</td>
+<td>MutableSet</td>
+</tr>
+<tr>
+<td>Map</td>
+<td>MutableMap</td>
+</tr>
+</tbody>
+</table>
+<p>　　首先说明一下，这个表格并不代表继承关系，只是区分可变不可变。继承关系如下图，原谅我画的比较丑：</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/1215918-8243b7045c733881.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="Kotlin集合继承关系.jpg"></p>
+<ul>
+<li>Iterable：父类。所有可以遍历的集合都是实现这个接口。只声明了iterator()一个方法，返回一个Iterator。</li>
+<li>MutableIterable：重写了父类的iterator()方法，返回一个MutableIterable。</li>
+<li>Collection：这个类是一个范性集合。仅包含集合是否为空，是否包含某元素等几个方法，有兴趣的可以看源码，是只读集合，不可变。</li>
+<li>MutableCollection：在Collection的基础上提供了额外的函数，比如 add 、 remove 、 clear 等等，是可变集合。</li>
+<li>List：它是一个范性有序的集合。因为它的有序，我们可以使用 get 函数通过position来访问，继承于Collection，只读集合。</li>
+<li>MutableList：一个支持增加和删除item的List，可变集合。</li>
+<li>Set：一个无序并不支持重复item的集合。</li>
+<li>MutableSet：一个支持增加和删除item的Set。</li>
+<li>Map：一个key-value对的集合。key在map中是唯一的，也就是说不能有两对key是一样的键值对存在于一个map中。</li>
+<li>MutableMap：一个支持增加和删除item的map。增加了put和remove方法。<br>　　附上源码中的结构图：</li>
+</ul>
+<p><img src="http://upload-images.jianshu.io/upload_images/1215918-c139e4564b8758aa.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="1.png"></p>
+<p><img src="http://upload-images.jianshu.io/upload_images/1215918-75781df9a81b33ed.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="2.png"></p>
+<p><img src="http://upload-images.jianshu.io/upload_images/1215918-9e63a310e2e4d205.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="3.png"></p>
+<p><img src="http://upload-images.jianshu.io/upload_images/1215918-1a1cd1a9e2f6d0d8.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="4.png"></p>
+<p>　　另外，kotlin中封装了很多常用的操作符，学会使用的话可以节省我们很多的代码量。</p>
+<h4 id="总数操作符"><a href="#总数操作符" class="headerlink" title="总数操作符"></a>总数操作符</h4><p><strong>any</strong><br>如果至少有一个元素符合给出的判断条件，则返回true。<br><strong>all</strong><br>如果全部的元素符合给出的判断条件，则返回true。<br><strong>count</strong><br>返回符合给出判断条件的元素总数。<br><strong>fold</strong><br>在一个初始值的基础上从第一项到最后一项通过一个函数累计所有的元素。<br><strong>foldRight</strong><br>与 fold 一样，但是顺序是从最后一项到第一项。<br><strong>forEach</strong><br>遍历所有元素，并执行给定的操作。<br><strong>forEachIndexed</strong><br>与 forEach 类似，但是我们同时可以得到元素的index。类似的还有foldIndexed和foldRightIndexed。<br><strong>max</strong><br>返回最大的一项，如果没有则返回null。min同理。<br><strong>maxBy</strong><br>根据给定的函数返回最大的一项（返回的是集合本身的元素，而非给定函数运算过结果），如果没有则返回null。minBy同理。<br><strong>none</strong><br>如果没有任何元素与给定的函数匹配，则返回true。<br><strong>reduce</strong><br>reduce系列类似fold系列，包括reduceIndexed、reduceRight、reduceRightIndexed，只是没有初始值。<br><strong>sumBy</strong><br>返回所有每一项通过函数转换之后的数据的总和。<br><figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">val</span> list = listOf(<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>, <span class="number">6</span>)</span><br><span class="line"></span><br><span class="line">println(list.any &#123; it &gt; <span class="number">5</span> &#125;)<span class="comment">//true</span></span><br><span class="line">println(list.all &#123; it &gt; <span class="number">1</span> &#125;)<span class="comment">//false</span></span><br><span class="line">println(list.count &#123; it &gt; <span class="number">3</span> &#125;)<span class="comment">//3</span></span><br><span class="line">println(list.fold(<span class="number">5</span>) &#123; total, next -&gt; total + next &#125;)<span class="comment">//5+1+2+3+4+5+6=26</span></span><br><span class="line">println(list.fold(<span class="number">5</span>) &#123; total, next -&gt; total * next &#125;)<span class="comment">//5*1*2*3*4*5*6=3600</span></span><br><span class="line">println(list.fold(<span class="string">"5"</span>) &#123; total, next -&gt; total + next &#125;)<span class="comment">//"5"+1+2+3+4+5+6="5123456"</span></span><br><span class="line">println(list.foldRight(<span class="number">5</span>) &#123; total, next -&gt; total + next &#125;)<span class="comment">//"5"+1+2+3+4+5+6="5123456"</span></span><br><span class="line">list.forEach &#123; print(it) &#125;<span class="comment">//123456</span></span><br><span class="line">list.forEachIndexed &#123; index, i -&gt; print(<span class="string">"<span class="variable">$index</span>:<span class="variable">$i</span>,"</span>) &#125;<span class="comment">//0:1,1:2,2:3,3:4,4:5,5:6,</span></span><br><span class="line">println(list.max())<span class="comment">//6</span></span><br><span class="line">println(list.maxBy &#123; it * <span class="number">-1</span> &#125;)<span class="comment">//1</span></span><br><span class="line">println(list.none &#123; it &gt; <span class="number">6</span> &#125;)<span class="comment">//true</span></span><br><span class="line">println(list.reduce &#123; acc, i -&gt; acc + i &#125;)<span class="comment">//21</span></span><br><span class="line">println(list.sumBy &#123; it * <span class="number">-1</span> &#125;)<span class="comment">//-21</span></span><br></pre></td></tr></table></figure></p>
+<h4 id="过滤操作符"><a href="#过滤操作符" class="headerlink" title="过滤操作符"></a>过滤操作符</h4><p><strong>drop</strong><br>返回去掉前n个元素的剩余元素的列表。<br><strong>dropLast</strong><br>返回去掉后n个元素的剩余元素的列表。<br><strong>dropWhile</strong><br>返回根据给定函数从第一项开始去掉指定元素的列表。即从前面开始，符合条件的一律去除，直到碰到一个不符合条件的元素为止。<br><strong>dropLastWhile</strong><br>返回根据给定函数从最后一项开始去掉指定元素的列表。<br><strong>filter</strong><br>过滤所有符合给定函数条件的元素。filterIndexed同filter，同时返回索引。<br><strong>filterNot</strong><br>过滤所有不符合给定函数条件的元素。<br><strong>filterNotNull</strong><br>过滤所有元素中不是null的元素。<br><strong>slice</strong><br>过滤一个list中指定index的元素。<br><strong>take</strong><br>返回从第一个开始的n个元素。takeLast从最后一个开始返回n个。<br><strong>takeWhile</strong><br>返回从第一个开始符合给定函数条件的元素，一旦不符合即停止。takeLastWhile从最后一个开始返回。<br><strong>takeIf</strong><br>如果满足条件，则返回这个集合，注意参数it代表的是集合，而非集合中的元素。takeUnless相反，如果满足条件，则返回null，否则返回集合本身。<br><figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">val</span> list = listOf(<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>, <span class="number">6</span>)</span><br><span class="line">println(list.drop(<span class="number">2</span>))<span class="comment">//[3, 4, 5, 6]</span></span><br><span class="line">println(list.dropLast(<span class="number">2</span>))<span class="comment">//[1, 2, 3, 4]</span></span><br><span class="line">println(list.dropWhile &#123; it &gt; <span class="number">2</span> &#125;)<span class="comment">//[1, 2, 3, 4, 5, 6]</span></span><br><span class="line">println(list.dropLastWhile &#123; it &gt; <span class="number">2</span> &#125;)<span class="comment">//[1, 2]</span></span><br><span class="line">println(list.filter &#123; it &gt; <span class="number">3</span> &#125;)<span class="comment">//[4, 5, 6]</span></span><br><span class="line">println(list.filterIndexed &#123; index, i -&gt; i &gt; <span class="number">3</span> &amp;&amp; index &gt; <span class="number">4</span> &#125;)<span class="comment">//[6]</span></span><br><span class="line">println(list.filterNot &#123; it &gt; <span class="number">3</span> &#125;)<span class="comment">//[1, 2, 3]</span></span><br><span class="line">println(list.filterNotNull())<span class="comment">//[1, 2, 3, 4, 5, 6]</span></span><br><span class="line">println(list.slice(<span class="number">1.</span><span class="number">.2</span>))<span class="comment">//[2, 3]</span></span><br><span class="line">println(list.take(<span class="number">3</span>))<span class="comment">//[1, 2, 3]</span></span><br><span class="line">println(list.takeLast(<span class="number">3</span>))<span class="comment">//[4, 5, 6]</span></span><br><span class="line">println(list.takeWhile &#123; it &gt; <span class="number">3</span> &#125;)<span class="comment">//[]</span></span><br><span class="line">println(list.takeLastWhile &#123; it &gt; <span class="number">3</span> &#125;)<span class="comment">//[4, 5, 6]</span></span><br><span class="line">println(list.takeIf &#123; it.isNotEmpty() &#125;)<span class="comment">//[1, 2, 3, 4, 5, 6]</span></span><br><span class="line">println(list.takeUnless &#123; it.isNotEmpty() &#125;)<span class="comment">//null</span></span><br></pre></td></tr></table></figure></p>
+<h4 id="映射操作符"><a href="#映射操作符" class="headerlink" title="映射操作符"></a>映射操作符</h4><p><strong>flatMap</strong><br>遍历所有的元素，为每一个创建一个集合，最后把所有的集合放在一个集合中。<br><strong>groupBy</strong><br>返回一个根据给定函数分组后的map。<br><strong>map</strong><br>返回一个每一个元素根据给定的函数转换所组成的List。mapIndexed同理，同时可以操作每一个元素的索引。<br><strong>mapNotNull</strong><br>返回一个每一个非null元素根据给定的函数转换所组成的List。mapIndexedNotNull同理。<br><figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">val</span> list = listOf(<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>, <span class="number">6</span>)</span><br><span class="line">println(list.flatMap &#123; listOf(it + <span class="number">1</span>) &#125;)<span class="comment">//[2, 3, 4, 5, 6, 7]</span></span><br><span class="line">println(list.groupBy &#123; it % <span class="number">2</span> == <span class="number">0</span> &#125;)<span class="comment">//&#123;false=[1, 3, 5], true=[2, 4, 6]&#125;</span></span><br><span class="line">println(list.map &#123; it * it &#125;)<span class="comment">//[1, 4, 9, 16, 25, 36]</span></span><br><span class="line">println(list.mapNotNull &#123; it?.times(<span class="number">2</span>) &#125;)<span class="comment">//[2, 4, 6, 8, 10, 12],如果list改为listOf(1, 2, 3, 4, 5, null)，则返回[2, 4, 6, 8, 10]</span></span><br></pre></td></tr></table></figure></p>
+<h4 id="元素操作符"><a href="#元素操作符" class="headerlink" title="元素操作符"></a>元素操作符</h4><p><strong>contains</strong><br>如果指定元素可以在集合中找到，则返回true。<br><strong>elementAt</strong><br>返回给定index对应的元素，如果index数组越界则会抛出 IndexOutOfBoundsException 。<br><strong>elementAtOrElse</strong><br>返回给定index对应的元素，如果index数组越界则会根据给定函数返回默认值。<br><strong>elementAtOrNull</strong><br>返回给定index对应的元素，如果index数组越界则会返回null。<br><strong>first</strong><br>返回符合给定函数条件的第一个元素。<br><strong>firstOrNull</strong><br>返回符合给定函数条件的第一个元素，如果没有符合则返回null。<br><strong>indexOf</strong><br>返回指定元素的第一个index，如果不存在，则返回 -1 。<br><strong>indexOfFirst</strong><br>返回第一个符合给定函数条件的元素的index，如果没有符合则返回 -1 。<br><strong>indexOfLast</strong><br>返回最后一个符合给定函数条件的元素的index，如果没有符合则返回 -1 。<br><strong>last</strong><br>返回符合给定函数条件的最后一个元素。<br><strong>lastIndexOf</strong><br>返回指定元素的最后一个index，如果不存在，则返回 -1 。<br><strong>lastOrNull</strong><br>返回符合给定函数条件的最后一个元素，如果没有符合则返回null。<br><strong>single</strong><br>返回符合给定函数的单个元素，如果没有符合或者超过一个，则抛出异常。<br><strong>singleOrNull</strong><br>返回符合给定函数的单个元素，如果没有符合或者超过一个，则返回null。<br>　　这一部分与java中的集合操作类似，基本看字面就可以理解什么意思，应该也是最常用的一些操作符了。</p>
+<h4 id="生产操作符"><a href="#生产操作符" class="headerlink" title="生产操作符"></a>生产操作符</h4><p><strong>partition</strong><br>把一个给定的集合分割成两个，第一个集合是由原集合每一项元素匹配给定函数条件返回 true 的元素组成，第二个集合是由原集合每一项元素匹配给定函数条件返回 false 的元素组成。<br><strong>plus</strong><br>返回一个包含原集合和给定集合中所有元素的集合，因为函数的名字原因，我们可以使用 + 操作符。<br><strong>zip</strong><br>返回由 pair 组成的List，每个 pair 由两个集合中相同index的元素组成。这个返回的List的大小由最小的那个集合决定。<br><strong>unzip</strong><br>从包含pair的List中生成包含List的Pair。<br><figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">val</span> list1 = listOf(<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>)</span><br><span class="line"><span class="keyword">val</span> list2 = listOf(<span class="number">4</span>, <span class="number">5</span>, <span class="number">6</span>)</span><br><span class="line">println(list1.partition &#123; it % <span class="number">2</span> == <span class="number">0</span> &#125;)<span class="comment">//([2], [1, 3])</span></span><br><span class="line">println(list1.plus(list2))<span class="comment">//[1, 2, 3, 4, 5, 6]</span></span><br><span class="line">println(list1 + list2)<span class="comment">//[1, 2, 3, 4, 5, 6]</span></span><br><span class="line">println(list1.zip(list2))<span class="comment">//[(1, 4), (2, 5), (3, 6)]</span></span><br><span class="line">println(listOf(Pair(<span class="number">1</span>, <span class="number">2</span>), Pair(<span class="number">3</span>, <span class="number">4</span>)).unzip())<span class="comment">//([1, 3], [2, 4])</span></span><br></pre></td></tr></table></figure></p>
+<h4 id="顺序操作符"><a href="#顺序操作符" class="headerlink" title="顺序操作符"></a>顺序操作符</h4><p><strong>reverse</strong><br>返回一个与原list反序的list。<br><strong>sort</strong><br>返回一个原list升序排列后的list。<br><strong>sortBy</strong><br>返回一个根据指定函数升序排序后的list。<br><strong>sortDescending</strong><br>返回一个原list降序排序后的List。<br><strong>sortDescendingBy</strong><br>返回一个根据指定函数降序排序后的list。<br><figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">val</span> list = listOf(<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>, <span class="number">6</span>)</span><br><span class="line">println(list.reversed())<span class="comment">//[6, 5, 4, 3, 2, 1]</span></span><br><span class="line">println(list.sorted())<span class="comment">//[1, 2, 3, 4, 5, 6]</span></span><br><span class="line">println(list.sortedBy &#123; it % <span class="number">6</span> &#125;)<span class="comment">//[6, 1, 2, 3, 4, 5]</span></span><br><span class="line">println(list.sortedDescending())<span class="comment">//[6, 5, 4, 3, 2, 1]</span></span><br><span class="line">println(list.sortedByDescending &#123; it % <span class="number">6</span> &#125;)<span class="comment">//[5, 4, 3, 2, 1, 6]</span></span><br></pre></td></tr></table></figure></p>
+<p>　　注意上述所有操作符的测试环境为List，而非MutableList，即上述操作符并不会改变原集合本身。</p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/01/27/Kotlin学习笔记（一）初识/" rel="next" title="Kotlin学习笔记（一）初识">
+                <i class="fa fa-chevron-left"></i> Kotlin学习笔记（一）初识
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/01/27/重走Android路：隐式Intent/" rel="prev" title="重走Android路：隐式Intent">
+                重走Android路：隐式Intent <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">风少侠</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">19</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#总数操作符"><span class="nav-number">1.</span> <span class="nav-text">总数操作符</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#过滤操作符"><span class="nav-number">2.</span> <span class="nav-text">过滤操作符</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#映射操作符"><span class="nav-number">3.</span> <span class="nav-text">映射操作符</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#元素操作符"><span class="nav-number">4.</span> <span class="nav-text">元素操作符</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#生产操作符"><span class="nav-number">5.</span> <span class="nav-text">生产操作符</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#顺序操作符"><span class="nav-number">6.</span> <span class="nav-text">顺序操作符</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">风少侠</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Mist</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
