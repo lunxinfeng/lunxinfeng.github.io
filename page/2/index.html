@@ -249,6 +249,155 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/01/27/Rxjava2-Retrofit2-IntentService实现app自动更新/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="风少侠">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/uploads/photo.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="风少侠的个人博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/01/27/Rxjava2-Retrofit2-IntentService实现app自动更新/" itemprop="url">Rxjava2+Retrofit2+IntentService实现app自动更新</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-01-27T12:36:43+08:00">
+                2018-01-27
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Android/" itemprop="url" rel="index">
+                    <span itemprop="name">Android</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <h1 id="效果图"><a href="#效果图" class="headerlink" title="效果图"></a>效果图</h1><p>　　网速较慢，只录制了最后几秒，效果还是看得出来。</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/1215918-293c4e0105d5778b.gif?imageMogr2/auto-orient/strip" alt="appUpdate.gif"></p>
+<h1 id="需求"><a href="#需求" class="headerlink" title="需求"></a>需求</h1><p>　　实现app的版本自动更新。</p>
+<h1 id="思路"><a href="#思路" class="headerlink" title="思路"></a>思路</h1><p>　　其实Google官方专门提供了一个DownloadManager类来实现app的自动更新功能，因为项目的网络框架用的Retrofit2配合Rxjava2，因此想试一下自己去实现，顺便练练手。<br>　　此处下载大文件，肯定是要放在后台操作，放在服务中比较合适，而这个服务唯一的任务就是下载，因此我们用IntentService，然后在服务中通过发送Notification实现下载进度的实时监控，那么问题来了，下载过程中如何得到当前的下载进度？这个应该就是难点所在了，本来是想在写入数据到文件的时候将写入的长度记录下来，后来意外在网上看到一种更优雅的方式，通过自定义OkHttp网络拦截器的方式来获取到当前已经下载的数据长度，并通过Rxbus发布数据（<a href="http://blog.csdn.net/jdsjlzx/article/details/52144971" target="_blank" rel="noopener">参考链接</a>），在此做个记录。<br>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2018/01/27/Rxjava2-Retrofit2-IntentService实现app自动更新/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/01/27/RecyclerView的item选中放大/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1660,7 +1809,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">19</span>
+                  <span class="site-state-item-count">20</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
