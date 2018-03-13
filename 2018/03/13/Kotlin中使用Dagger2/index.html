@@ -1,0 +1,825 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Kotlin,Android,Dagger2," />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="Dagger2有Google接手开发的一个基于JSR-330标准的依赖注入框架，它会在编译期间自动生成相关代码，负责依赖对象的创建，达到解耦目的。 kotlin中配置Dagger2在app模块的build.gradle文件中进行如下配置，关于kapt的相关知识。1234567891011121314apply plugin: &apos;com.android.application&apos;apply plugi">
+<meta name="keywords" content="Kotlin,Android,Dagger2">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Kotlin中使用Dagger2">
+<meta property="og:url" content="http://yoursite.com/2018/03/13/Kotlin中使用Dagger2/index.html">
+<meta property="og:site_name" content="风少侠的个人博客">
+<meta property="og:description" content="Dagger2有Google接手开发的一个基于JSR-330标准的依赖注入框架，它会在编译期间自动生成相关代码，负责依赖对象的创建，达到解耦目的。 kotlin中配置Dagger2在app模块的build.gradle文件中进行如下配置，关于kapt的相关知识。1234567891011121314apply plugin: &apos;com.android.application&apos;apply plugi">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2018-03-13T02:52:30.014Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Kotlin中使用Dagger2">
+<meta name="twitter:description" content="Dagger2有Google接手开发的一个基于JSR-330标准的依赖注入框架，它会在编译期间自动生成相关代码，负责依赖对象的创建，达到解耦目的。 kotlin中配置Dagger2在app模块的build.gradle文件中进行如下配置，关于kapt的相关知识。1234567891011121314apply plugin: &apos;com.android.application&apos;apply plugi">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2018/03/13/Kotlin中使用Dagger2/"/>
+
+
+
+
+
+  <title>Kotlin中使用Dagger2 | 风少侠的个人博客</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">风少侠的个人博客</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/03/13/Kotlin中使用Dagger2/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="风少侠">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/uploads/photo.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="风少侠的个人博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Kotlin中使用Dagger2</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-03-13T09:00:38+08:00">
+                2018-03-13
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Kotlin-Android/" itemprop="url" rel="index">
+                    <span itemprop="name">Kotlin,Android</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>Dagger2有Google接手开发的一个基于JSR-330标准的依赖注入框架，它会在编译期间自动生成相关代码，负责依赖对象的创建，达到解耦目的。</p>
+<h1 id="kotlin中配置Dagger2"><a href="#kotlin中配置Dagger2" class="headerlink" title="kotlin中配置Dagger2"></a>kotlin中配置Dagger2</h1><p>在app模块的build.gradle文件中进行如下配置，关于<a href="https://kotlinlang.org/docs/reference/kapt.html" target="_blank" rel="noopener">kapt的相关知识</a>。<br><figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">apply plugin: <span class="string">'com.android.application'</span></span><br><span class="line">apply plugin: <span class="string">'kotlin-android'</span></span><br><span class="line">apply plugin: <span class="string">'kotlin-android-extensions'</span></span><br><span class="line">apply plugin: <span class="string">'kotlin-kapt'</span></span><br><span class="line"></span><br><span class="line">android &#123;</span><br><span class="line">    ...</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">dependencies &#123;</span><br><span class="line">    ...</span><br><span class="line">    implementation <span class="string">'com.google.dagger:dagger:2.11'</span></span><br><span class="line">    kapt <span class="string">'com.google.dagger:dagger-compiler:2.11'</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>相关常用注解：</p>
+<ul>
+<li>@Inject</li>
+<li>@Component</li>
+<li>@Module</li>
+<li>@Provides</li>
+<li>@Qualifier和@Named</li>
+<li>@Scope和@Singleton<h1 id="Inject"><a href="#Inject" class="headerlink" title="@Inject"></a>@Inject</h1>@Inject注解只是JSR-330中定义的注解，在javax.inject包中。 这个注解本身并没有作用，它需要依赖于注入框架才具有意义，可以用来标记<strong>构造函数、属性和方法</strong>。<h2 id="标记构造函数"><a href="#标记构造函数" class="headerlink" title="标记构造函数"></a>标记构造函数</h2></li>
+<li>被标记的构造函数可以有0个或多个<strong>依赖</strong>作为参数。</li>
+<li>同一个类中最多只可以标记一个构造函数。<a id="more"></a>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">People</span> <span class="meta">@Inject</span> <span class="keyword">constructor</span></span>(<span class="keyword">val</span> name:String = <span class="string">"Tom"</span>)</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>注意在kotlin中这种写法是不被允许的，因为这等价于java中的多个构造方法People(String name), People()，正确的写法应该是这样：<br><figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">data</span> <span class="class"><span class="keyword">class</span> <span class="title">People</span> <span class="keyword">constructor</span></span>(<span class="keyword">val</span> name: String) &#123;</span><br><span class="line">    <span class="meta">@Inject</span></span><br><span class="line">    <span class="keyword">constructor</span>() : <span class="keyword">this</span>(<span class="string">"Tom"</span>)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<h2 id="标记属性"><a href="#标记属性" class="headerlink" title="标记属性"></a>标记属性</h2><ul>
+<li>被标记的属性不能是final的，kotlin中不能是val。</li>
+<li>被注入进的属性不能用private修饰（是Dagger2不支持，而非@Inject不支持）。<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Inject</span></span><br><span class="line"><span class="keyword">lateinit</span> <span class="keyword">var</span> people:People</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h2 id="标记方法"><a href="#标记方法" class="headerlink" title="标记方法"></a>标记方法</h2><ul>
+<li>被标记的方法可以有0个或多个<strong>依赖</strong>作为参数。</li>
+<li>方法不能是抽象的。<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">HomeActivity</span> : <span class="type">AppCompatActivity</span></span>() &#123;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">lateinit</span> <span class="keyword">var</span> people:People</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Inject</span></span><br><span class="line">    <span class="function"><span class="keyword">fun</span> <span class="title">setPeople</span><span class="params">(people:<span class="type">People</span>)</span></span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.people = people</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>这种方法注入和属性注入并没有什么本质上的不同，实现效果也基本一样。还有一种做法是<strong>@Inject标记被注入类的某个方法，该方法会在类的构造方法之后接着被调用</strong>：<br><figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">data</span> <span class="class"><span class="keyword">class</span> <span class="title">People</span> <span class="keyword">constructor</span></span>(<span class="keyword">val</span> name: String) &#123;</span><br><span class="line">    <span class="meta">@Inject</span></span><br><span class="line">    <span class="keyword">constructor</span>() : <span class="keyword">this</span>(<span class="string">"Tom"</span>)</span><br><span class="line"></span><br><span class="line">    init &#123;</span><br><span class="line">        println(<span class="string">"init：<span class="variable">$name</span>"</span>)</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Inject</span></span><br><span class="line">    <span class="function"><span class="keyword">fun</span> <span class="title">hello</span><span class="params">()</span></span>&#123;</span><br><span class="line">        println(<span class="string">"hello：<span class="variable">$name</span>"</span>)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">HomeActivity</span> : <span class="type">AppCompatActivity</span></span>() &#123;</span><br><span class="line">    <span class="meta">@Inject</span></span><br><span class="line">    <span class="keyword">lateinit</span> <span class="keyword">var</span> people:People</span><br><span class="line"></span><br><span class="line">    <span class="keyword">override</span> <span class="function"><span class="keyword">fun</span> <span class="title">onCreate</span><span class="params">(savedInstanceState: <span class="type">Bundle</span>?)</span></span> &#123;</span><br><span class="line">        <span class="keyword">super</span>.onCreate(savedInstanceState)</span><br><span class="line">        setContentView(R.layout.activity_home)</span><br><span class="line"></span><br><span class="line">        <span class="comment">//执行相关注入操作</span></span><br><span class="line">        ...</span><br><span class="line">        println(people.toString())</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>运行结果是这样的：</p>
+<blockquote>
+<p>01-02 11:57:30.995 16601-16601/? I/System.out: init：Tom<br>01-02 11:57:30.995 16601-16601/? I/System.out: hello：Tom<br>01-02 11:57:30.995 16601-16601/? I/System.out: People(name=Tom)</p>
+</blockquote>
+<h1 id="Component"><a href="#Component" class="headerlink" title="@Component"></a>@Component</h1><p>可以理解为一个注射器，可以算是Dagger2中最核心的一个注解，用来标记一个<strong>接口或者抽象类</strong>。使用@Component标记的接口，会在编译时自动生成一个Dagger+类名的实现类实现依赖注入。在Component中一般可以定义两种方法：</p>
+<ul>
+<li>Members-injection methods：<br>该方法有一个参数，表示需要注入到的类，提醒Dagger在该类中寻找需要被注入的属性（被@Inject标记）。<blockquote>
+<p>void inject(SomeType someType);//无返回值<br>SomeType injectAndReturn(SomeType someType);//返回它的参数类型<br>等价于：<br>MembersInjector<sometype> getMembersInjector();//使用MembersInjector.injectMembers方法注入</sometype></p>
+</blockquote>
+</li>
+<li>Provision methods：<br>该方法没有参数，返回一个需要被注入（或被提供）的依赖。一般用于为其他Component提供依赖的时候。<blockquote>
+<p>SomeType  getSomeType();<br>Provider<sometype>  getSomeTypeProvider();//可以通过Provider.get访问任意次<br>Lazy<sometype>  getLazySomeType();//通过Lazy.get第一次访问时创建实例，并在之后的访问中都访问同一个实例</sometype></sometype></p>
+</blockquote>
+</li>
+</ul>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Component</span></span><br><span class="line"><span class="class"><span class="keyword">interface</span> <span class="title">HomeComponent</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">fun</span> <span class="title">inject</span><span class="params">(activity: <span class="type">HomeActivity</span>)</span></span></span><br><span class="line">    <span class="function"><span class="keyword">fun</span> <span class="title">injectAndReturn</span><span class="params">(activity: <span class="type">HomeActivity</span>)</span></span>: HomeActivity</span><br><span class="line">    <span class="function"><span class="keyword">fun</span> <span class="title">getInjectors</span><span class="params">()</span></span>: MembersInjector&lt;HomeActivity&gt;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">fun</span> <span class="title">getPeople</span><span class="params">()</span></span>:People</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>事实上，了解到这里我们已经可以使用最简单的Dagger2用法，毕竟有了依赖和注射器，只需要注入就可以了，我们来看一个最简单的Dagger2实例，只使用@Inject和@Component来完成注入。<br>第一步：在需要被注入的类的构造方法上添加注解@Inject<br><figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">People</span> <span class="meta">@Inject</span> <span class="keyword">constructor</span></span>() &#123;</span><br><span class="line">    <span class="function"><span class="keyword">fun</span> <span class="title">hello</span><span class="params">()</span></span>&#123;</span><br><span class="line">        println(<span class="string">"hello"</span>)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>第二步：编写一个注射器接口<br><figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Component</span></span><br><span class="line"><span class="class"><span class="keyword">interface</span> <span class="title">HomeComponent</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">fun</span> <span class="title">inject</span><span class="params">(activity: <span class="type">HomeActivity</span>)</span></span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>第三步：注入<br><figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">HomeActivity</span> : <span class="type">AppCompatActivity</span></span>() &#123;</span><br><span class="line">    <span class="meta">@Inject</span></span><br><span class="line">    <span class="keyword">lateinit</span> <span class="keyword">var</span> people:People</span><br><span class="line"></span><br><span class="line">    <span class="keyword">override</span> <span class="function"><span class="keyword">fun</span> <span class="title">onCreate</span><span class="params">(savedInstanceState: <span class="type">Bundle</span>?)</span></span> &#123;</span><br><span class="line">        <span class="keyword">super</span>.onCreate(savedInstanceState)</span><br><span class="line">        setContentView(R.layout.activity_home)</span><br><span class="line"></span><br><span class="line">        DaggerHomeComponent.builder()</span><br><span class="line">                .build()</span><br><span class="line">                .inject(<span class="keyword">this</span>)<span class="comment">//会在这句代码时执行注入的操作</span></span><br><span class="line"></span><br><span class="line">        people.hello()</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="number">03</span><span class="number">-01</span> <span class="number">14</span>:<span class="number">30</span>:<span class="number">23.425</span> <span class="number">3256</span><span class="number">-3256</span>/? I/System.<span class="keyword">out</span>: hello</span><br><span class="line"><span class="comment">//大功告成</span></span><br></pre></td></tr></table></figure></p>
+<p>当然，上面这种只是最简单的用法，如果需要传入一些非自定义类的实例就不适用了，毕竟你不能在第三方的类中加入@Inject注解。此时就需要用到@Module和@Provides注解。</p>
+<h1 id="Module"><a href="#Module" class="headerlink" title="@Module"></a>@Module</h1><p>用来<strong>标记类</strong>，为Component提供依赖，相当于告诉Component，如果需要依赖可以来找我，当然前提是在Component中配置了该Module。同时Module可以通过includes依赖其他的Module。</p>
+<h1 id="Provides"><a href="#Provides" class="headerlink" title="@Provides"></a>@Provides</h1><p>用来标记<strong>Module中的方法</strong>，该方法的返回类型是你需要提供的依赖类型。<br>举个自己项目中的例子，我需要在presenter中创建一个pl2303对象，pl2303对象的创建又需要context和pl2303Interface，所以我们需要提供三个依赖，因为context在其他地方也要用，我们单独提出来：<br><figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Module</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">ContextModule</span></span>(<span class="keyword">private</span> <span class="keyword">var</span> mContext: Context) &#123;</span><br><span class="line">    <span class="meta">@Provides</span></span><br><span class="line">    <span class="function"><span class="keyword">fun</span> <span class="title">getContext</span><span class="params">()</span></span> = mContext</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>pl2303Interface只有这一个地方要用：<br><figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Module(includes = arrayOf(ContextModule::class)</span>)</span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Pl2303Module</span></span>(<span class="keyword">private</span> <span class="keyword">var</span> pl2303Interface: ActivityCallBridge.PL2303Interface) &#123;</span><br><span class="line">    <span class="meta">@Provides</span></span><br><span class="line">    <span class="function"><span class="keyword">fun</span> <span class="title">providePl2303</span><span class="params">(mContext: <span class="type">Context</span>)</span></span>: Pl2303 &#123;</span><br><span class="line">        <span class="keyword">return</span> Pl2303(mContext, pl2303Interface)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>其中includes可以是多个，我们这里把ContextModule加进来，这样创建pl2303就只差一个pl2303Interface，这是个接口对象，不能new，从构造函数注入进来。接下来创建注射器：<br><figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Component(modules = arrayOf(Pl2303Module::class)</span>)</span><br><span class="line"><span class="class"><span class="keyword">interface</span> <span class="title">MainPresenterComponent</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">fun</span> <span class="title">inject</span><span class="params">(presenter: <span class="type">MainPresenter</span>)</span></span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>最后注入：<br><figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">MainPresenter</span></span>(<span class="keyword">val</span> view: MainContract.View) : MainContract.Presenter, ActivityCallBridge.PL2303Interface, LifecycleObserver &#123;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Inject</span> <span class="keyword">lateinit</span> <span class="keyword">var</span> pl2303: Pl2303</span><br><span class="line"></span><br><span class="line">    init &#123;</span><br><span class="line">        DaggerMainPresenterComponent.builder()</span><br><span class="line">                .contextModule(ContextModule(view.context))</span><br><span class="line">                .pl2303Module(Pl2303Module(<span class="keyword">this</span>))</span><br><span class="line">                .build()</span><br><span class="line">                .inject(<span class="keyword">this</span>)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>如果在大型项目中，一个Component有很多的Module，那么不需要传入参数的Module是可以省略的，看一下官方的注释文档：<br><figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> static void main(String[] args) &#123;</span><br><span class="line">       OtherComponent otherComponent = ...;</span><br><span class="line">       MyComponent component = DaggerMyComponent.builder()</span><br><span class="line">           <span class="comment">// required because component dependencies must be set（必须的）</span></span><br><span class="line">           .otherComponent(otherComponent)</span><br><span class="line">           <span class="comment">// required because FlagsModule has constructor parameters（必须的）</span></span><br><span class="line">           .flagsModule(new FlagsModule(args))</span><br><span class="line">           <span class="comment">// may be elided because a no-args constructor is visible（可以省略的）</span></span><br><span class="line">           .myApplicationModule(new MyApplicationModule())</span><br><span class="line">           .build();</span><br><span class="line">     &#125;</span><br></pre></td></tr></table></figure></p>
+<h1 id="Named和-Qualifier"><a href="#Named和-Qualifier" class="headerlink" title="@Named和@Qualifier"></a>@Named和@Qualifier</h1><p>@Named是@Qualifier的一个实现。有时候我们会需要提供几个相同类型的依赖（比如继承于同一父类），如果不做处理的话编译器就不知道我们需要的具体是哪一个依赖而报错，比如这样：<br><figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">abstract</span> <span class="class"><span class="keyword">class</span> <span class="title">Animal</span></span></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Dog</span> : <span class="type">Animal</span></span>() &#123;</span><br><span class="line">    <span class="keyword">override</span> <span class="function"><span class="keyword">fun</span> <span class="title">toString</span><span class="params">()</span></span>: String &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="string">"dog"</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Cat</span> : <span class="type">Animal</span></span>() &#123;</span><br><span class="line">    <span class="keyword">override</span> <span class="function"><span class="keyword">fun</span> <span class="title">toString</span><span class="params">()</span></span>: String &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="string">"cat"</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="meta">@Module</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">AnimalModule</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Provides</span></span><br><span class="line">    <span class="function"><span class="keyword">fun</span> <span class="title">provideDog</span><span class="params">()</span></span>: Animal = Dog()</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Provides</span></span><br><span class="line">    <span class="function"><span class="keyword">fun</span> <span class="title">provideCat</span><span class="params">()</span></span>: Animal = Cat()</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">data</span> <span class="class"><span class="keyword">class</span> <span class="title">Pet</span> <span class="meta">@Inject</span> <span class="keyword">constructor</span></span>(<span class="keyword">val</span> pet: Animal)</span><br></pre></td></tr></table></figure></p>
+<p>这时候就需要标记一下来告诉编译器我们需要的是哪个依赖：<br><figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Module</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">AnimalModule</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Provides</span></span><br><span class="line">    <span class="meta">@Named(<span class="meta-string">"dog"</span>)</span></span><br><span class="line">    <span class="function"><span class="keyword">fun</span> <span class="title">provideDog</span><span class="params">()</span></span>: Animal = Dog()</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Provides</span></span><br><span class="line">    <span class="meta">@Named(<span class="meta-string">"cat"</span>)</span></span><br><span class="line">    <span class="function"><span class="keyword">fun</span> <span class="title">provideCat</span><span class="params">()</span></span>: Animal = Cat()</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">data</span> <span class="class"><span class="keyword">class</span> <span class="title">Pet</span> <span class="meta">@Inject</span> <span class="keyword">constructor</span></span>(<span class="meta">@Named(<span class="meta-string">"dog"</span>)</span> <span class="keyword">val</span> pet: Animal)</span><br></pre></td></tr></table></figure></p>
+<p>上面我们说了@Named只是@Qualifier的一个实现而已，所以我们也可以用@Qualifier来达到一样的效果，实际使用中也更推荐使用@Qualifier的方式，因为@Named需要手写字符串来进行标识，容易出错。<br>使用@Qualifier需要注意：</p>
+<ul>
+<li>创建一个自定义的Qualifier至少需要@Qualifier, @Retention(RUNTIME)这两个注解。</li>
+<li>可以有自己的属性。<br>我们可以看一下@Named的源码来加深一下理解：<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Qualifier</span></span><br><span class="line"><span class="meta">@Documented</span></span><br><span class="line"><span class="meta">@Retention(RUNTIME)</span></span><br><span class="line"><span class="keyword">public</span> <span class="meta">@interface</span> Named &#123;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/** The name. */</span></span><br><span class="line">    String value() <span class="keyword">default</span> <span class="string">""</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>下面我们比葫芦画瓢来改造一下上面的例子：<br><figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Module</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">AnimalModule</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Provides</span></span><br><span class="line">    <span class="meta">@DogAnim</span></span><br><span class="line">    <span class="function"><span class="keyword">fun</span> <span class="title">provideDog</span><span class="params">()</span></span>: Animal = Dog()</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Provides</span></span><br><span class="line">    <span class="meta">@CatAnim</span></span><br><span class="line">    <span class="function"><span class="keyword">fun</span> <span class="title">provideCat</span><span class="params">()</span></span>: Animal = Cat()</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="meta">@Qualifier</span></span><br><span class="line"><span class="meta">@Retention(AnnotationRetention.RUNTIME)</span></span><br><span class="line"><span class="keyword">annotation</span> <span class="class"><span class="keyword">class</span> <span class="title">DogAnim</span></span></span><br><span class="line"></span><br><span class="line"><span class="meta">@Qualifier</span></span><br><span class="line"><span class="meta">@Retention(AnnotationRetention.RUNTIME)</span></span><br><span class="line"><span class="keyword">annotation</span> <span class="class"><span class="keyword">class</span> <span class="title">CatAnim</span></span></span><br><span class="line"></span><br><span class="line"><span class="keyword">data</span> <span class="class"><span class="keyword">class</span> <span class="title">Pet</span> <span class="meta">@Inject</span> <span class="keyword">constructor</span></span>(<span class="meta">@CatAnim</span> <span class="keyword">val</span> pet: Animal)</span><br></pre></td></tr></table></figure></p>
+<p>经测试依然是可以运行的。</p>
+<blockquote>
+<p>Pet(pet=cat)</p>
+</blockquote>
+<h1 id="Scope和-Singleton"><a href="#Scope和-Singleton" class="headerlink" title="@Scope和@Singleton"></a>@Scope和@Singleton</h1><blockquote>
+<p>A scope annotation applies to a class containing an injectable constructor and governs how the injector reuses instances of the type</p>
+</blockquote>
+<p>@Scope是用来标记包含可注入构造函数的类或者提供注入依赖对象的类，简单来说，可以用来标记包含@Inject构造函数的类或者@Module类。<br>@Scope是用来管理依赖的生命周期的。它和@Qualifier一样是用来自定义注解的，而@Singleton和@Named类似，是@Scope的默认实现。<br><strong>如果一个注射器和创建依赖对象的地方没有标记@Scope，那么每次注入时都会创建一个新的对象，如果标记了@Scope，则在规定的生命周期内会使用同一个对象，特别注意是在规定的生命周期内单例，并不是全局单例，或者可以理解为在@Component内单例。</strong><br>还是借助上面的例子：<br><figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">data</span> <span class="class"><span class="keyword">class</span> <span class="title">People</span> <span class="keyword">constructor</span></span>(<span class="keyword">val</span> name: String) &#123;</span><br><span class="line">    <span class="meta">@Inject</span></span><br><span class="line">    <span class="keyword">constructor</span>() : <span class="keyword">this</span>(<span class="string">"Tom"</span>)</span><br><span class="line"></span><br><span class="line">    init &#123;</span><br><span class="line">        println(<span class="string">"init：<span class="variable">$name</span>"</span>)</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Inject</span></span><br><span class="line">    <span class="function"><span class="keyword">fun</span> <span class="title">hello</span><span class="params">()</span></span>&#123;</span><br><span class="line">        println(<span class="string">"hello：<span class="variable">$name</span>"</span>)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">HomeActivity</span> : <span class="type">AppCompatActivity</span></span>() &#123;</span><br><span class="line">    <span class="meta">@Inject</span></span><br><span class="line">    <span class="keyword">lateinit</span> <span class="keyword">var</span> people: People</span><br><span class="line">    <span class="meta">@Inject</span></span><br><span class="line">    <span class="keyword">lateinit</span> <span class="keyword">var</span> people_2: People</span><br><span class="line"></span><br><span class="line">    <span class="keyword">override</span> <span class="function"><span class="keyword">fun</span> <span class="title">onCreate</span><span class="params">(savedInstanceState: <span class="type">Bundle</span>?)</span></span> &#123;</span><br><span class="line">        <span class="keyword">super</span>.onCreate(savedInstanceState)</span><br><span class="line">        setContentView(R.layout.activity_home)</span><br><span class="line"></span><br><span class="line">        DaggerHomeComponent.builder()</span><br><span class="line">                .build()</span><br><span class="line">                .inject(<span class="keyword">this</span>)</span><br><span class="line"></span><br><span class="line">        println(<span class="string">"people===people_2：<span class="subst">$&#123;people===people_2&#125;</span>"</span>)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>运行结果：</p>
+<blockquote>
+<p>people===people_2：false</p>
+</blockquote>
+<p>说明确实是两个不同的对象，接下来我们改造一下：<br><figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Singleton</span></span><br><span class="line"><span class="keyword">data</span> <span class="class"><span class="keyword">class</span> <span class="title">People</span> <span class="keyword">constructor</span></span>(<span class="keyword">val</span> name: String) &#123;</span><br><span class="line">    ...<span class="comment">//和之前一样</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="meta">@Singleton</span></span><br><span class="line"><span class="meta">@Component(modules = arrayOf(AnimalModule::class)</span>)</span><br><span class="line"><span class="class"><span class="keyword">interface</span> <span class="title">HomeComponent</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">fun</span> <span class="title">inject</span><span class="params">(activity: <span class="type">HomeActivity</span>)</span></span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">...<span class="comment">//HomeActivity代码和之前一样</span></span><br></pre></td></tr></table></figure></p>
+<p>再次看下运行结果：</p>
+<blockquote>
+<p>people===people_2：true</p>
+</blockquote>
+<p>说明这次两次都是访问的同一个对象。上面提到这只是一个局部单例，那么怎么实现一个全局单例呢，很简单，只要保证标记的Component在全局只初始化一次即可，比如在Application中初始化，篇幅限制代码就不贴了，有兴趣的骚年可以自己实践一下。</p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Kotlin/" rel="tag"># Kotlin</a>
+          
+            <a href="/tags/Android/" rel="tag"># Android</a>
+          
+            <a href="/tags/Dagger2/" rel="tag"># Dagger2</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/02/24/Kotlin学习笔记（四）约定（一）/" rel="next" title="Kotlin学习笔记（四）约定(一)">
+                <i class="fa fa-chevron-left"></i> Kotlin学习笔记（四）约定(一)
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/uploads/photo.png"
+                alt="风少侠" />
+            
+              <p class="site-author-name" itemprop="name">风少侠</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">21</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">7</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">18</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/lunxinfeng" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://www.jianshu.com/u/41d7604ac57a" target="_blank" title="简书">
+                      
+                        <i class="fa fa-fw fa-paper-plane"></i>简书</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#kotlin中配置Dagger2"><span class="nav-number">1.</span> <span class="nav-text">kotlin中配置Dagger2</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Inject"><span class="nav-number">2.</span> <span class="nav-text">@Inject</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#标记构造函数"><span class="nav-number">2.1.</span> <span class="nav-text">标记构造函数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#标记属性"><span class="nav-number">2.2.</span> <span class="nav-text">标记属性</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#标记方法"><span class="nav-number">2.3.</span> <span class="nav-text">标记方法</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Component"><span class="nav-number">3.</span> <span class="nav-text">@Component</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Module"><span class="nav-number">4.</span> <span class="nav-text">@Module</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Provides"><span class="nav-number">5.</span> <span class="nav-text">@Provides</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Named和-Qualifier"><span class="nav-number">6.</span> <span class="nav-text">@Named和@Qualifier</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Scope和-Singleton"><span class="nav-number">7.</span> <span class="nav-text">@Scope和@Singleton</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">风少侠</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Mist</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
