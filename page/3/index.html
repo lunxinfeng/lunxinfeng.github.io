@@ -249,6 +249,166 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/01/27/Material之CoordinatorLayout-Behavior笔记（一）/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="风少侠">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/uploads/photo.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="风少侠的个人博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/01/27/Material之CoordinatorLayout-Behavior笔记（一）/" itemprop="url">Material之CoordinatorLayout + Behavior笔记（一）</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-01-27T11:25:04+08:00">
+                2018-01-27
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Android/" itemprop="url" rel="index">
+                    <span itemprop="name">Android</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <p>最新项目中用到了些Material效果，在此对自己的学习做个小结。</p>
+<p>  首先养成良好的学习习惯—–看源码：</p>
+<h3 id="CoordinatorLayout"><a href="#CoordinatorLayout" class="headerlink" title="CoordinatorLayout"></a>CoordinatorLayout</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * CoordinatorLayout is a super-powered &#123;<span class="doctag">@link</span> android.widget.FrameLayout FrameLayout&#125;.</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> * &lt;p&gt;CoordinatorLayout is intended for two primary use cases:&lt;/p&gt;</span></span><br><span class="line"><span class="comment"> * &lt;ol&gt;</span></span><br><span class="line"><span class="comment"> *     &lt;li&gt;As a top-level application decor or chrome layout&lt;/li&gt;</span></span><br><span class="line"><span class="comment"> *     &lt;li&gt;As a container for a specific interaction with one or more child views&lt;/li&gt;</span></span><br><span class="line"><span class="comment"> * &lt;/ol&gt;</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> * &lt;p&gt;By specifying &#123;<span class="doctag">@link</span> CoordinatorLayout.Behavior Behaviors&#125; for child views of a</span></span><br><span class="line"><span class="comment"> * CoordinatorLayout you can provide many different interactions within a single parent and those</span></span><br><span class="line"><span class="comment"> * views can also interact with one another. View classes can specify a default behavior when</span></span><br><span class="line"><span class="comment"> * used as a child of a CoordinatorLayout using the</span></span><br><span class="line"><span class="comment"> * &#123;<span class="doctag">@link</span> CoordinatorLayout.DefaultBehavior DefaultBehavior&#125; annotation.&lt;/p&gt;</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> * &lt;p&gt;Behaviors may be used to implement a variety of interactions and additional layout</span></span><br><span class="line"><span class="comment"> * modifications ranging from sliding drawers and panels to swipe-dismissable elements and buttons</span></span><br><span class="line"><span class="comment"> * that stick to other elements as they move and animate.&lt;/p&gt;</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> * &lt;p&gt;Children of a CoordinatorLayout may have an</span></span><br><span class="line"><span class="comment"> * &#123;<span class="doctag">@link</span> CoordinatorLayout.LayoutParams#setAnchorId(int) anchor&#125;. This view id must correspond</span></span><br><span class="line"><span class="comment"> * to an arbitrary descendant of the CoordinatorLayout, but it may not be the anchored child itself</span></span><br><span class="line"><span class="comment"> * or a descendant of the anchored child. This can be used to place floating views relative to</span></span><br><span class="line"><span class="comment"> * other arbitrary content panes.&lt;/p&gt;</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">CoordinatorLayout</span> <span class="keyword">extends</span> <span class="title">ViewGroup</span> <span class="keyword">implements</span> <span class="title">NestedScrollingParent</span> </span>&#123;</span><br></pre></td></tr></table></figure>
+<p>  大概的翻译如下：</p>
+<ul>
+<li>CoordinateLayout是一个超级FrameLayout。</li>
+<li>CoordinateLayout原意是用于以下情况：<ol>
+<li>作为<strong>顶层布局</strong>。</li>
+<li>作为一个容器，它的<strong>子View</strong>之间有特殊的<strong>相互作用（交互）</strong>。</li>
+</ol>
+</li>
+<li>通过为CoordinatorLayout的子views指定<strong>Behavior</strong>，在同一个父容器下可以提供不同的交互，并且那些子view可以和另一个子view相互作用，相互影响。通过<strong>@DefaultBehavior</strong>注释，CoordinatorLayout的子view可以使用一个默认的behavior。</li>
+<li>Behavior可以用来实现各种交互和 来自滑动抽屉、滑动删除元素和按钮关联其他元素产生的额外的布局修改。</li>
+<li>CoordinatorLayout的子view也许会有个anchor（锚点，即view显示在哪块区域），这个子view必须是CoordinatorLayout的<strong>直接子view</strong>，不能是孙子辈儿的view - -！<br>通过看CoordinatorLayout官方注释文档，了解到一个重要信息—Behavior，可以说CoordinatorLayout各种炫酷的交互效果，都是通过Behavior来控制的，除此之外，CoordinatorLayout类似于FrameLayout，那么接下来看重点：</li>
+</ul>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2018/01/27/Material之CoordinatorLayout-Behavior笔记（一）/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/01/26/新的开始/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -433,7 +593,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">21</span>
+                  <span class="site-state-item-count">22</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
