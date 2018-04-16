@@ -88,7 +88,7 @@
 <meta property="og:description" content="公司产品需要和硬件通信，最近有需求要去掉每次USB插入时的弹窗授权提示，研究了两天最后发现最完美的解决方法居然是修改android系统源码，So～开始我的入坑之旅。 准备工作Android源码的编译目前是只支持Mac和Linux的，考虑到编译时的性能问题，我没有使用虚拟机，而是装了win10和ubuntu双系统，安装方法可以自行百度，近乎傻瓜式操作。源码的下载要用到git工具，所以还要先安装git">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="https://upload-images.jianshu.io/upload_images/1215918-b3a5fff8eb3a79c6.jpeg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
-<meta property="og:updated_time" content="2018-04-08T17:14:53.613Z">
+<meta property="og:updated_time" content="2018-04-16T23:45:00.725Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="android framework之旅（一）下载源码">
 <meta name="twitter:description" content="公司产品需要和硬件通信，最近有需求要去掉每次USB插入时的弹窗授权提示，研究了两天最后发现最完美的解决方法居然是修改android系统源码，So～开始我的入坑之旅。 准备工作Android源码的编译目前是只支持Mac和Linux的，考虑到编译时的性能问题，我没有使用虚拟机，而是装了win10和ubuntu双系统，安装方法可以自行百度，近乎傻瓜式操作。源码的下载要用到git工具，所以还要先安装git">
@@ -357,7 +357,7 @@
 <blockquote>
 <p>sudo apt-get install curl</p>
 </blockquote>
-<h1 id="下载源码"><a href="#下载源码" class="headerlink" title="下载源码"></a>下载源码</h1><p>android源码较大，在国内Google被墙的情况下，建议使用国内镜像下载，当然你有科学的上网姿势也可以～～镜像的话有清华镜像和中科大镜像，这里我使用的是清华镜像。<br>网络上关于使用清华镜像下载android源码的教程很多，但是很多比较老，有很多坑，比如清华镜像站在16年就已经停用了git协议，只支持https，别问我怎么知道的/(ㄒoㄒ)/~~，建议直接查看清华镜像站的<a href="https://mirrors.tuna.tsinghua.edu.cn/help/AOSP/" target="_blank" rel="noopener">官方使用帮助</a>。</p>
+<h1 id="下载源码"><a href="#下载源码" class="headerlink" title="下载源码"></a>下载源码</h1><p>android源码较大，在国内Google被墙的情况下，建议使用国内镜像下载，当然你有科学的上网姿势也可以～～镜像的话有清华镜像和中科大镜像，这里我使用的是清华镜像。<br>网络上关于使用清华镜像下载android源码的教程很多，但是很多比较老，有很多坑，比如清华镜像站在16年就已经停用了git协议，只支持https，别问我怎么知道的/(ㄒoㄒ)/~~，建议直接查看清华镜像站的<a href="https://mirrors.tuna.tsinghua.edu.cn/help/AOSP/" target="_blank" rel="noopener">官方使用帮助</a>。<br><a id="more"></a></p>
 <h2 id="第一步"><a href="#第一步" class="headerlink" title="第一步"></a>第一步</h2><p>首先是下载repo工具，在终端依次输入以下命令：</p>
 <blockquote>
 <p>mkdir ~/bin<br>PATH=~/bin:$PATH<br>curl <a href="https://storage.googleapis.com/git-repo-downloads/repo" target="_blank" rel="noopener">https://storage.googleapis.com/git-repo-downloads/repo</a> &gt; ~/bin/repo<br>chmod a+x ~/bin/repo</p>
@@ -380,7 +380,7 @@
 <blockquote>
 <p>repo init -u <a href="https://aosp.tuna.tsinghua.edu.cn/platform/manifest" target="_blank" rel="noopener">https://aosp.tuna.tsinghua.edu.cn/platform/manifest</a> -b android-5.1.1_r6</p>
 </blockquote>
-<p>这步比较快，正常的话应该会提示你init successfully。</p>
+<p>这步比较快，正常的话应该会提示你init successfully。如果提示无法连接到gerrit.googlesource.com，是因为repo在运行过程中会尝试连接服务器更新自己，需要翻墙，运用国内镜像更新的话可以参考<a href="https://mirror.tuna.tsinghua.edu.cn/help/git-repo/" target="_blank" rel="noopener">这里的更新章节部分</a>。</p>
 <h2 id="第三步"><a href="#第三步" class="headerlink" title="第三步"></a>第三步</h2><p>同步源码树：</p>
 <blockquote>
 <p>repo sync</p>
@@ -436,6 +436,10 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/04/17/android-framework之旅（二）NanoPC-T3源码编译并烧入真机/" rel="prev" title="android framework之旅（二）NanoPC-T3源码编译并烧入真机">
+                android framework之旅（二）NanoPC-T3源码编译并烧入真机 <i class="fa fa-chevron-right"></i>
+              </a>
             
           </div>
         </div>
@@ -516,7 +520,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">23</span>
+                  <span class="site-state-item-count">24</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
