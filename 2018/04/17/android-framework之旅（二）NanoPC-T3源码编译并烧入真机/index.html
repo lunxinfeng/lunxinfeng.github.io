@@ -91,7 +91,7 @@
 <meta property="og:image" content="https://upload-images.jianshu.io/upload_images/1215918-418ebc90f87a71a5.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
 <meta property="og:image" content="https://upload-images.jianshu.io/upload_images/1215918-e3101163f6587944.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
 <meta property="og:image" content="https://upload-images.jianshu.io/upload_images/1215918-b4a288521e9508a9.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
-<meta property="og:updated_time" content="2018-04-16T23:47:04.569Z">
+<meta property="og:updated_time" content="2018-04-16T23:52:02.993Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="android framework之旅（二）NanoPC-T3源码编译并烧入真机">
 <meta name="twitter:description" content="这几天捣鼓了下源码的编译和烧入真机，终于闲下来有空总结一下，总体来说源码的编译还比较顺利。 编译环境编译的环境具体要求可以查看官方的文档，不想看英文的直接看下面： 硬件环境 编译2.3.x之后的版本需要64位系统，之前的版本可以用32位系统。 最少100G的硬盘空间下载源码和额外的150G去编译它，如果需要开启ccache，则需要更大的空间。（关于这一点我实测5.1.1源码下载加编译，共150G就">
@@ -434,7 +434,7 @@
 <p>先说一下第一种方式，那个说明困扰了我大半天（原谅我是硬件小白），后来终于找到这么一篇博客，<a href="https://www.2cto.com/kf/201803/728262.html" target="_blank" rel="noopener">Fastboot烧写Android镜像文件到eMMC
 </a>，不过我没尝试，因为当时我已经通过第二种方式刷机成功了O(∩_∩)O~。</p>
 <p>然后说下通过sd卡烧写的方式，首先参考<a href="http://wiki.friendlyarm.com/wiki/index.php/NanoPC-T3/zh#.E5.BF.AB.E9.80.9F.E4.BB.8ESD.E5.8D.A1.E5.90.AF.E5.8A.A8" target="_blank" rel="noopener">官方说明</a>制作sd启动卡，然后按上图所示将需要的几个img文件拷到sd卡，按住boot键重新上电即可。<br>当然，为了验证是否是烧写的我们自己的系统，你可以在编译源码前在源文件中做点改动，加个日志什么的。</p>
-<p>最后附上Google的刷机文档，献给有探索精神的小伙伴：<a href="https://source.android.google.cn/setup/build/running#flashing-a-device" target="_blank" rel="noopener">https://source.android.google.cn/setup/build/running#flashing-a-device</a></p>
+<p>最后附上Google的刷机文档，献给有探索精神的小伙伴：<br><a href="https://source.android.google.cn/setup/build/running#flashing-a-device" target="_blank" rel="noopener">https://source.android.google.cn/setup/build/running#flashing-a-device</a></p>
 
       
     </div>

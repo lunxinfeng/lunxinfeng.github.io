@@ -88,7 +88,7 @@
 <meta property="og:description" content="公司产品需要和硬件通信，最近有需求要去掉每次USB插入时的弹窗授权提示，研究了两天最后发现最完美的解决方法居然是修改android系统源码，So～开始我的入坑之旅。 准备工作Android源码的编译目前是只支持Mac和Linux的，考虑到编译时的性能问题，我没有使用虚拟机，而是装了win10和ubuntu双系统，安装方法可以自行百度，近乎傻瓜式操作。源码的下载要用到git工具，所以还要先安装git">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="https://upload-images.jianshu.io/upload_images/1215918-b3a5fff8eb3a79c6.jpeg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
-<meta property="og:updated_time" content="2018-04-16T23:45:00.725Z">
+<meta property="og:updated_time" content="2018-04-16T23:50:40.189Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="android framework之旅（一）下载源码">
 <meta name="twitter:description" content="公司产品需要和硬件通信，最近有需求要去掉每次USB插入时的弹窗授权提示，研究了两天最后发现最完美的解决方法居然是修改android系统源码，So～开始我的入坑之旅。 准备工作Android源码的编译目前是只支持Mac和Linux的，考虑到编译时的性能问题，我没有使用虚拟机，而是装了win10和ubuntu双系统，安装方法可以自行百度，近乎傻瓜式操作。源码的下载要用到git工具，所以还要先安装git">
@@ -367,7 +367,7 @@
 <p>创建bin文件夹<br>将bin文件夹加入环境变量，方便使用<br>下载repo工具到bin文件夹中<br>为repo工具增加执行权限</p>
 </blockquote>
 <p>对于chmod命令有兴趣的可以参考<a href="https://www.cnblogs.com/chengJAVA/p/4319420.html" target="_blank" rel="noopener">这里</a>，a+x可以简单理解为对所有用户增加某文件的可执行权限。</p>
-<p>##　第二步<br>接下来初始化仓库，仓库的初始化有两种方式，这里只说以下我使用的方法，对另一种方法有兴趣的可以参考<a href="https://mirrors.tuna.tsinghua.edu.cn/help/AOSP/" target="_blank" rel="noopener">官方使用帮助</a>。</p>
+<h2 id="第二步"><a href="#第二步" class="headerlink" title="第二步"></a>第二步</h2><p>接下来初始化仓库，仓库的初始化有两种方式，这里只说以下我使用的方法，对另一种方法有兴趣的可以参考<a href="https://mirrors.tuna.tsinghua.edu.cn/help/AOSP/" target="_blank" rel="noopener">官方使用帮助</a>。</p>
 <p>新建一个文件夹，并进入该文件夹，名字随意：</p>
 <blockquote>
 <p>mkdir android_source<br>cd android_source</p>
@@ -591,7 +591,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#准备工作"><span class="nav-number">1.</span> <span class="nav-text">准备工作</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#下载源码"><span class="nav-number">2.</span> <span class="nav-text">下载源码</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#第一步"><span class="nav-number">2.1.</span> <span class="nav-text">第一步</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#第三步"><span class="nav-number">2.2.</span> <span class="nav-text">第三步</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#准备工作"><span class="nav-number">1.</span> <span class="nav-text">准备工作</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#下载源码"><span class="nav-number">2.</span> <span class="nav-text">下载源码</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#第一步"><span class="nav-number">2.1.</span> <span class="nav-text">第一步</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#第二步"><span class="nav-number">2.2.</span> <span class="nav-text">第二步</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#第三步"><span class="nav-number">2.3.</span> <span class="nav-text">第三步</span></a></li></ol></li></ol></div>
             
 
           </div>
