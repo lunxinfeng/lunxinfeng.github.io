@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="Java," />
+  <meta name="keywords" content="Android,Framework," />
 
 
 
@@ -79,18 +79,18 @@
 
 
 
-<meta name="description" content="通过api调用123456789101112131415if (java.awt.Desktop.isDesktopSupported()) &amp;#123;    try &amp;#123;        // 创建一个URI实例        java.net.URI uri = java.net.URI.create(&quot;http://www.jianshu.com&quot;);        // 获取当前系">
-<meta name="keywords" content="Java">
+<meta name="description" content="终于配置、下载、编译、刷机各种环节均已打通，回归到自己的初始目标，去除每次重启插入usb后的权限弹窗提示。 环境源码版本：5.1.1 修改我们打开/frameworks/base/packages/SystemUI/src/com/android/systemui/usb/UsbPermissionActivity.java文件，伪代码如下：1234567891011121314151617181">
+<meta name="keywords" content="Android,Framework">
 <meta property="og:type" content="article">
-<meta property="og:title" content="java调用系统默认浏览器打开指定网址">
-<meta property="og:url" content="http://yoursite.com/2018/01/27/java调用系统默认浏览器打开指定网址/index.html">
+<meta property="og:title" content="android framework之旅（四）去除Usb权限弹窗">
+<meta property="og:url" content="http://yoursite.com/2018/04/23/android-framework之旅（四）去除Usb权限弹窗/index.html">
 <meta property="og:site_name" content="风少侠的个人博客">
-<meta property="og:description" content="通过api调用123456789101112131415if (java.awt.Desktop.isDesktopSupported()) &amp;#123;    try &amp;#123;        // 创建一个URI实例        java.net.URI uri = java.net.URI.create(&quot;http://www.jianshu.com&quot;);        // 获取当前系">
+<meta property="og:description" content="终于配置、下载、编译、刷机各种环节均已打通，回归到自己的初始目标，去除每次重启插入usb后的权限弹窗提示。 环境源码版本：5.1.1 修改我们打开/frameworks/base/packages/SystemUI/src/com/android/systemui/usb/UsbPermissionActivity.java文件，伪代码如下：1234567891011121314151617181">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-01-27T07:30:09.784Z">
+<meta property="og:updated_time" content="2018-04-23T22:27:07.810Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="java调用系统默认浏览器打开指定网址">
-<meta name="twitter:description" content="通过api调用123456789101112131415if (java.awt.Desktop.isDesktopSupported()) &amp;#123;    try &amp;#123;        // 创建一个URI实例        java.net.URI uri = java.net.URI.create(&quot;http://www.jianshu.com&quot;);        // 获取当前系">
+<meta name="twitter:title" content="android framework之旅（四）去除Usb权限弹窗">
+<meta name="twitter:description" content="终于配置、下载、编译、刷机各种环节均已打通，回归到自己的初始目标，去除每次重启插入usb后的权限弹窗提示。 环境源码版本：5.1.1 修改我们打开/frameworks/base/packages/SystemUI/src/com/android/systemui/usb/UsbPermissionActivity.java文件，伪代码如下：1234567891011121314151617181">
 
 
 
@@ -120,13 +120,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/2018/01/27/java调用系统默认浏览器打开指定网址/"/>
+  <link rel="canonical" href="http://yoursite.com/2018/04/23/android-framework之旅（四）去除Usb权限弹窗/"/>
 
 
 
 
 
-  <title>java调用系统默认浏览器打开指定网址 | 风少侠的个人博客</title>
+  <title>android framework之旅（四）去除Usb权限弹窗 | 风少侠的个人博客</title>
   
 
 
@@ -253,7 +253,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/01/27/java调用系统默认浏览器打开指定网址/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/04/23/android-framework之旅（四）去除Usb权限弹窗/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="风少侠">
@@ -270,7 +270,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">java调用系统默认浏览器打开指定网址</h1>
+          <h1 class="post-title" itemprop="name headline">android framework之旅（四）去除Usb权限弹窗</h1>
         
 
         <div class="post-meta">
@@ -282,8 +282,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-01-27T12:45:58+08:00">
-                2018-01-27
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-04-23T06:24:27+08:00">
+                2018-04-23
               </time>
             
 
@@ -305,8 +305,8 @@
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Java/" itemprop="url" rel="index">
-                    <span itemprop="name">Java</span>
+                  <a href="/categories/Android/" itemprop="url" rel="index">
+                    <span itemprop="name">Android</span>
                   </a>
                 </span>
 
@@ -342,9 +342,12 @@
       
 
       
-        <h1 id="通过api调用"><a href="#通过api调用" class="headerlink" title="通过api调用"></a>通过api调用</h1><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> (java.awt.Desktop.isDesktopSupported()) &#123;</span><br><span class="line">    <span class="keyword">try</span> &#123;</span><br><span class="line">        <span class="comment">// 创建一个URI实例</span></span><br><span class="line">        java.net.URI uri = java.net.URI.create(<span class="string">"http://www.jianshu.com"</span>);</span><br><span class="line">        <span class="comment">// 获取当前系统桌面扩展</span></span><br><span class="line">        java.awt.Desktop dp = java.awt.Desktop.getDesktop();</span><br><span class="line">        <span class="comment">// 判断系统桌面是否支持要执行的功能</span></span><br><span class="line">        <span class="keyword">if</span> (dp.isSupported(java.awt.Desktop.Action.BROWSE)) &#123;</span><br><span class="line">            <span class="comment">// 获取系统默认浏览器打开链接</span></span><br><span class="line">            dp.browse(uri);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125; <span class="keyword">catch</span> (Exception e) &#123;</span><br><span class="line">        e.printStackTrace();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+        <p>终于配置、下载、编译、刷机各种环节均已打通，回归到自己的初始目标，去除每次重启插入usb后的权限弹窗提示。</p>
+<h1 id="环境"><a href="#环境" class="headerlink" title="环境"></a>环境</h1><p>源码版本：5.1.1</p>
+<h1 id="修改"><a href="#修改" class="headerlink" title="修改"></a>修改</h1><p>我们打开/frameworks/base/packages/SystemUI/src/com/android/systemui/usb/UsbPermissionActivity.java文件，伪代码如下：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">UsbPermissionActivity</span> <span class="keyword">extends</span> <span class="title">AlertActivity</span></span></span><br><span class="line"><span class="class">        <span class="keyword">implements</span> <span class="title">DialogInterface</span>.<span class="title">OnClickListener</span>, <span class="title">CheckBox</span>.<span class="title">OnCheckedChangeListener</span> </span>&#123;</span><br><span class="line">    ...</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">boolean</span> mPermissionGranted;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onCreate</span><span class="params">(Bundle icicle)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">super</span>.onCreate(icicle);</span><br><span class="line"></span><br><span class="line">        ...</span><br><span class="line">        setupAlert();<span class="comment">//弹窗</span></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onDestroy</span><span class="params">()</span> </span>&#123;</span><br><span class="line">       <span class="comment">//onDestory相关操作，保存状态等</span></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onClick</span><span class="params">(DialogInterface dialog, <span class="keyword">int</span> which)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (which == AlertDialog.BUTTON_POSITIVE) &#123;<span class="comment">//点击确定</span></span><br><span class="line">            mPermissionGranted = <span class="keyword">true</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        finish();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onCheckedChanged</span><span class="params">(CompoundButton buttonView, <span class="keyword">boolean</span> isChecked)</span> </span>&#123;</span><br><span class="line">       <span class="comment">//checkbox的处理</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
 <a id="more"></a>
-<h1 id="通过cmd命令调用"><a href="#通过cmd命令调用" class="headerlink" title="通过cmd命令调用"></a>通过cmd命令调用</h1><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">try</span> &#123;</span><br><span class="line">    Runtime.getRuntime().exec(</span><br><span class="line">            <span class="string">"cmd /c start http://www.jianshu.com"</span>);</span><br><span class="line">&#125; <span class="keyword">catch</span> (IOException e) &#123;</span><br><span class="line">    e.printStackTrace();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>源码很简单，确认授予权限的操作就是将mPermissionGranted改为true，然后将界面finish掉，出发onDestroy保存相关状态。<br>为了不显示该弹窗，我们直接在onCreate中去掉弹窗的操作，并添加点击确定按钮时的操作：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Override</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onCreate</span><span class="params">(Bundle icicle)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">super</span>.onCreate(icicle);</span><br><span class="line"></span><br><span class="line">    ...</span><br><span class="line">    <span class="comment">//setupAlert();</span></span><br><span class="line">    mPermissionGranted = <span class="keyword">true</span>;</span><br><span class="line">    finish();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>最后重新编译/frameworks/base/packages/SystemUI/模块，替换系统文件，重启开发板，验证成功。</p>
 
       
     </div>
@@ -362,7 +365,9 @@
       
         <div class="post-tags">
           
-            <a href="/tags/Java/" rel="tag"># Java</a>
+            <a href="/tags/Android/" rel="tag"># Android</a>
+          
+            <a href="/tags/Framework/" rel="tag"># Framework</a>
           
         </div>
       
@@ -375,8 +380,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2018/01/27/Java通过JAXB以xml的形式保存实体类数据到本地/" rel="next" title="Java通过JAXB以xml的形式保存实体类数据到本地">
-                <i class="fa fa-chevron-left"></i> Java通过JAXB以xml的形式保存实体类数据到本地
+              <a href="/2018/04/23/android-framework之旅（三）编译调试单个模块/" rel="next" title="android framework之旅（三）编译调试单个模块">
+                <i class="fa fa-chevron-left"></i> android framework之旅（三）编译调试单个模块
               </a>
             
           </div>
@@ -385,8 +390,8 @@
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2018/01/27/一个java程序员的python之旅：初识/" rel="prev" title="一个java程序员的python之旅：初识">
-                一个java程序员的python之旅：初识 <i class="fa fa-chevron-right"></i>
+              <a href="/2018/04/24/android-framework之旅（五）开发一个简单桌面/" rel="prev" title="android framework之旅（五）开发一个简单桌面">
+                android framework之旅（五）开发一个简单桌面 <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -539,7 +544,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#通过api调用"><span class="nav-number">1.</span> <span class="nav-text">通过api调用</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#通过cmd命令调用"><span class="nav-number">2.</span> <span class="nav-text">通过cmd命令调用</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#环境"><span class="nav-number">1.</span> <span class="nav-text">环境</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#修改"><span class="nav-number">2.</span> <span class="nav-text">修改</span></a></li></ol></div>
             
 
           </div>

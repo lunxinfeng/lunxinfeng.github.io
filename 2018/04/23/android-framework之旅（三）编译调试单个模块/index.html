@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="Java," />
+  <meta name="keywords" content="Android,Framework," />
 
 
 
@@ -79,18 +79,18 @@
 
 
 
-<meta name="description" content="通过api调用123456789101112131415if (java.awt.Desktop.isDesktopSupported()) &amp;#123;    try &amp;#123;        // 创建一个URI实例        java.net.URI uri = java.net.URI.create(&quot;http://www.jianshu.com&quot;);        // 获取当前系">
-<meta name="keywords" content="Java">
+<meta name="description" content="在开发过程中，我们需要不断修改代码，并进行调试，而源码的整体编译耗时太长，我们不可能每次测试的时候都要重新生成镜像，重新烧系统，那我估计人会发疯的，所以这两天研究了下怎么单独编译模块并push到真机看到效果，过程还是比较曲折的，记录一下～ 环境操作系统：ubuntu 16.04开发板：NanoPC T3源码版本：5.1.1 编译单个模块为了验证我们的工作，我在Laucher的onCreate方法中">
+<meta name="keywords" content="Android,Framework">
 <meta property="og:type" content="article">
-<meta property="og:title" content="java调用系统默认浏览器打开指定网址">
-<meta property="og:url" content="http://yoursite.com/2018/01/27/java调用系统默认浏览器打开指定网址/index.html">
+<meta property="og:title" content="android framework之旅（三）编译调试单个模块">
+<meta property="og:url" content="http://yoursite.com/2018/04/23/android-framework之旅（三）编译调试单个模块/index.html">
 <meta property="og:site_name" content="风少侠的个人博客">
-<meta property="og:description" content="通过api调用123456789101112131415if (java.awt.Desktop.isDesktopSupported()) &amp;#123;    try &amp;#123;        // 创建一个URI实例        java.net.URI uri = java.net.URI.create(&quot;http://www.jianshu.com&quot;);        // 获取当前系">
+<meta property="og:description" content="在开发过程中，我们需要不断修改代码，并进行调试，而源码的整体编译耗时太长，我们不可能每次测试的时候都要重新生成镜像，重新烧系统，那我估计人会发疯的，所以这两天研究了下怎么单独编译模块并push到真机看到效果，过程还是比较曲折的，记录一下～ 环境操作系统：ubuntu 16.04开发板：NanoPC T3源码版本：5.1.1 编译单个模块为了验证我们的工作，我在Laucher的onCreate方法中">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-01-27T07:30:09.784Z">
+<meta property="og:updated_time" content="2018-04-23T22:27:05.904Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="java调用系统默认浏览器打开指定网址">
-<meta name="twitter:description" content="通过api调用123456789101112131415if (java.awt.Desktop.isDesktopSupported()) &amp;#123;    try &amp;#123;        // 创建一个URI实例        java.net.URI uri = java.net.URI.create(&quot;http://www.jianshu.com&quot;);        // 获取当前系">
+<meta name="twitter:title" content="android framework之旅（三）编译调试单个模块">
+<meta name="twitter:description" content="在开发过程中，我们需要不断修改代码，并进行调试，而源码的整体编译耗时太长，我们不可能每次测试的时候都要重新生成镜像，重新烧系统，那我估计人会发疯的，所以这两天研究了下怎么单独编译模块并push到真机看到效果，过程还是比较曲折的，记录一下～ 环境操作系统：ubuntu 16.04开发板：NanoPC T3源码版本：5.1.1 编译单个模块为了验证我们的工作，我在Laucher的onCreate方法中">
 
 
 
@@ -120,13 +120,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/2018/01/27/java调用系统默认浏览器打开指定网址/"/>
+  <link rel="canonical" href="http://yoursite.com/2018/04/23/android-framework之旅（三）编译调试单个模块/"/>
 
 
 
 
 
-  <title>java调用系统默认浏览器打开指定网址 | 风少侠的个人博客</title>
+  <title>android framework之旅（三）编译调试单个模块 | 风少侠的个人博客</title>
   
 
 
@@ -253,7 +253,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/01/27/java调用系统默认浏览器打开指定网址/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/04/23/android-framework之旅（三）编译调试单个模块/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="风少侠">
@@ -270,7 +270,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">java调用系统默认浏览器打开指定网址</h1>
+          <h1 class="post-title" itemprop="name headline">android framework之旅（三）编译调试单个模块</h1>
         
 
         <div class="post-meta">
@@ -282,8 +282,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-01-27T12:45:58+08:00">
-                2018-01-27
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-04-23T06:23:08+08:00">
+                2018-04-23
               </time>
             
 
@@ -305,8 +305,8 @@
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Java/" itemprop="url" rel="index">
-                    <span itemprop="name">Java</span>
+                  <a href="/categories/Android/" itemprop="url" rel="index">
+                    <span itemprop="name">Android</span>
                   </a>
                 </span>
 
@@ -342,9 +342,49 @@
       
 
       
-        <h1 id="通过api调用"><a href="#通过api调用" class="headerlink" title="通过api调用"></a>通过api调用</h1><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> (java.awt.Desktop.isDesktopSupported()) &#123;</span><br><span class="line">    <span class="keyword">try</span> &#123;</span><br><span class="line">        <span class="comment">// 创建一个URI实例</span></span><br><span class="line">        java.net.URI uri = java.net.URI.create(<span class="string">"http://www.jianshu.com"</span>);</span><br><span class="line">        <span class="comment">// 获取当前系统桌面扩展</span></span><br><span class="line">        java.awt.Desktop dp = java.awt.Desktop.getDesktop();</span><br><span class="line">        <span class="comment">// 判断系统桌面是否支持要执行的功能</span></span><br><span class="line">        <span class="keyword">if</span> (dp.isSupported(java.awt.Desktop.Action.BROWSE)) &#123;</span><br><span class="line">            <span class="comment">// 获取系统默认浏览器打开链接</span></span><br><span class="line">            dp.browse(uri);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125; <span class="keyword">catch</span> (Exception e) &#123;</span><br><span class="line">        e.printStackTrace();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+        <p>在开发过程中，我们需要不断修改代码，并进行调试，而源码的整体编译耗时太长，我们不可能每次测试的时候都要重新生成镜像，重新烧系统，那我估计人会发疯的，所以这两天研究了下怎么单独编译模块并push到真机看到效果，过程还是比较曲折的，记录一下～</p>
+<h1 id="环境"><a href="#环境" class="headerlink" title="环境"></a>环境</h1><p>操作系统：ubuntu 16.04<br>开发板：NanoPC T3<br>源码版本：5.1.1</p>
+<h1 id="编译单个模块"><a href="#编译单个模块" class="headerlink" title="编译单个模块"></a>编译单个模块</h1><p>为了验证我们的工作，我在Laucher的onCreate方法中加了这么一句话：</p>
+<blockquote>
+<p>System.out.println(“test tag add by lxf”);</p>
+</blockquote>
+<p>首先还是初始化环境和选择目标版本：</p>
+<blockquote>
+<p>source build/envsetup.sh<br>lunch &lt;自己要编译的版本&gt;</p>
+</blockquote>
+<p>执行初始化之后在当前目录我们可以得到一些其他指令，比较常用的就是mm和mmm指令（其实是我只用过这两个），mm表示编译当前目录，mmm表示编译指定目录，只要目录下又Android.mk文件即可。<br>比如我们编译桌面模块（我使用开发板的桌面为Launcher2，有的为Launcher3）：</p>
+<blockquote>
+<p>mmm packages/apps/Launcher2/</p>
+</blockquote>
+<p>编译过程中会提示你具体的生成目录：</p>
+<blockquote>
+<p>…<br>Install: out/target/product/nanopi3/system/priv-app/Launcher2/Launcher2.apk<br>…<br>Install: out/target/product/nanopi3/system/priv-app/Launcher2/arm/Launcher2.odex</p>
+</blockquote>
 <a id="more"></a>
-<h1 id="通过cmd命令调用"><a href="#通过cmd命令调用" class="headerlink" title="通过cmd命令调用"></a>通过cmd命令调用</h1><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">try</span> &#123;</span><br><span class="line">    Runtime.getRuntime().exec(</span><br><span class="line">            <span class="string">"cmd /c start http://www.jianshu.com"</span>);</span><br><span class="line">&#125; <span class="keyword">catch</span> (IOException e) &#123;</span><br><span class="line">    e.printStackTrace();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>odex文件简单来说就是android为了优化启动速度而将classes.dex文件提取出来的一个产物，详情可以参考<a href="https://baike.baidu.com/item/ODEX/10322643?fr=aladdin" target="_blank" rel="noopener">百度百科</a>。我们知道classes.dex文件是由java文件编译后打包而成的，因为我并没有修改res文件，所以我就只把odex文件push到手机对应目录，发现然并卵，又把odex和apk文件都push进去，依然看不到我想要的效果。<br>无奈开始上网求助，发现各种教程都是直接push生成的apk，于是开始找不生成odex的编译方法，于是发现了这个：</p>
+<blockquote>
+<p>解决方法：<br>1.不生成odex，只生成apk，将 LOCAL_DEX_PREOPT 的值改为 false 即可。<br>     即 build\core\package.mk 中156行改为 LOCAL_DEX_PREOPT := false。<br>照上述修改后，全部重新编译，后续就可以mm单独编译apk方便调试了。<br>2.如果时间紧，又不想全编重新编译怎么办？<br>     在相应的apk代码路径的Android.mk文件中加入WITH_DEXPREOPT := false。<br>添加后mm重新编译生成apk即可。</p>
+</blockquote>
+<p>第一种方法我没有尝试，因为我不想全部重新编译，渣电脑太费时间了；第二种方法尝试了下但编译不成功，提示错误：</p>
+<blockquote>
+<p>build/core/main.mk:528: WITH_DEXPREOPT has been modified: false<br>build/core/main.mk:528: previous value: true<br>build/core/main.mk:528: <em>*</em> The following variables have been changed: WITH_DEXPREOPT。 停止。</p>
+</blockquote>
+<p>于是只能另谋出路，最终在外文网上找到这么一条指令：</p>
+<blockquote>
+<p>mm WITH_DEXPREOPT=false</p>
+</blockquote>
+<p>测试成功，只生成了原始的apk文件，并没有抽取生成odex，将开发板对应目录下的odex和apk文件都删除后，将该apk文件push进去，重启看到如下日志：</p>
+<blockquote>
+<p>04-20 07:20:36.600 523-523/com.android.Launcher2 I/System.out: test tag add by lxf</p>
+</blockquote>
+<p>如果无法删除开发板系统文件并提示为只读权限，可以使用如下命令将开发板重新挂载为可读写模式：</p>
+<blockquote>
+<p>adb remount</p>
+</blockquote>
+<h1 id="Push到设备"><a href="#Push到设备" class="headerlink" title="Push到设备"></a>Push到设备</h1><p>最后附上push相关的所有命令：</p>
+<blockquote>
+<p>adb remount<br>adb shell rm system/priv-app/Launcher2/Launcher2.apk<br>adb shell rm -r system/priv-app/Launcher2/arm<br>adb push /home/lxf/Launcher2.apk system/priv-app/Launcher2<br>adb reboot</p>
+</blockquote>
 
       
     </div>
@@ -362,7 +402,9 @@
       
         <div class="post-tags">
           
-            <a href="/tags/Java/" rel="tag"># Java</a>
+            <a href="/tags/Android/" rel="tag"># Android</a>
+          
+            <a href="/tags/Framework/" rel="tag"># Framework</a>
           
         </div>
       
@@ -375,8 +417,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2018/01/27/Java通过JAXB以xml的形式保存实体类数据到本地/" rel="next" title="Java通过JAXB以xml的形式保存实体类数据到本地">
-                <i class="fa fa-chevron-left"></i> Java通过JAXB以xml的形式保存实体类数据到本地
+              <a href="/2018/04/17/android-framework之旅（二）NanoPC-T3源码编译并烧入真机/" rel="next" title="android framework之旅（二）NanoPC-T3源码编译并烧入真机">
+                <i class="fa fa-chevron-left"></i> android framework之旅（二）NanoPC-T3源码编译并烧入真机
               </a>
             
           </div>
@@ -385,8 +427,8 @@
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2018/01/27/一个java程序员的python之旅：初识/" rel="prev" title="一个java程序员的python之旅：初识">
-                一个java程序员的python之旅：初识 <i class="fa fa-chevron-right"></i>
+              <a href="/2018/04/23/android-framework之旅（四）去除Usb权限弹窗/" rel="prev" title="android framework之旅（四）去除Usb权限弹窗">
+                android framework之旅（四）去除Usb权限弹窗 <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -539,7 +581,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#通过api调用"><span class="nav-number">1.</span> <span class="nav-text">通过api调用</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#通过cmd命令调用"><span class="nav-number">2.</span> <span class="nav-text">通过cmd命令调用</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#环境"><span class="nav-number">1.</span> <span class="nav-text">环境</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#编译单个模块"><span class="nav-number">2.</span> <span class="nav-text">编译单个模块</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Push到设备"><span class="nav-number">3.</span> <span class="nav-text">Push到设备</span></a></li></ol></div>
             
 
           </div>

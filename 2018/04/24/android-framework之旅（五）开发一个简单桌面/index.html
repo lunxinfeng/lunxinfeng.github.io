@@ -1,0 +1,772 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Android,Framework," />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="环境开发工具：Android Studio开发板：NanoPC T3源码版本：5.1.1 目标 开机启动自己的桌面 设置自己的桌面背景 桌面上只放置自己需要的应用图标 点击应用图标启动相应应用 监听应用的安装和卸载广播，更新桌面  放一张效果图（原谅渣像素/(ㄒoㄒ)/~~）：">
+<meta name="keywords" content="Android,Framework">
+<meta property="og:type" content="article">
+<meta property="og:title" content="android framework之旅（五）开发一个简单桌面">
+<meta property="og:url" content="http://yoursite.com/2018/04/24/android-framework之旅（五）开发一个简单桌面/index.html">
+<meta property="og:site_name" content="风少侠的个人博客">
+<meta property="og:description" content="环境开发工具：Android Studio开发板：NanoPC T3源码版本：5.1.1 目标 开机启动自己的桌面 设置自己的桌面背景 桌面上只放置自己需要的应用图标 点击应用图标启动相应应用 监听应用的安装和卸载广播，更新桌面  放一张效果图（原谅渣像素/(ㄒoㄒ)/~~）：">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/1215918-2aafdb5096a5f545.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:updated_time" content="2018-04-23T22:26:38.270Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="android framework之旅（五）开发一个简单桌面">
+<meta name="twitter:description" content="环境开发工具：Android Studio开发板：NanoPC T3源码版本：5.1.1 目标 开机启动自己的桌面 设置自己的桌面背景 桌面上只放置自己需要的应用图标 点击应用图标启动相应应用 监听应用的安装和卸载广播，更新桌面  放一张效果图（原谅渣像素/(ㄒoㄒ)/~~）：">
+<meta name="twitter:image" content="https://upload-images.jianshu.io/upload_images/1215918-2aafdb5096a5f545.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2018/04/24/android-framework之旅（五）开发一个简单桌面/"/>
+
+
+
+
+
+  <title>android framework之旅（五）开发一个简单桌面 | 风少侠的个人博客</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">风少侠的个人博客</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/04/24/android-framework之旅（五）开发一个简单桌面/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="风少侠">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/uploads/photo.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="风少侠的个人博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">android framework之旅（五）开发一个简单桌面</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-04-24T06:25:16+08:00">
+                2018-04-24
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Android/" itemprop="url" rel="index">
+                    <span itemprop="name">Android</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="环境"><a href="#环境" class="headerlink" title="环境"></a>环境</h1><p>开发工具：Android Studio<br>开发板：NanoPC T3<br>源码版本：5.1.1</p>
+<h1 id="目标"><a href="#目标" class="headerlink" title="目标"></a>目标</h1><ul>
+<li>开机启动自己的桌面</li>
+<li>设置自己的桌面背景</li>
+<li>桌面上只放置自己需要的应用图标</li>
+<li>点击应用图标启动相应应用</li>
+<li>监听应用的安装和卸载广播，更新桌面</li>
+</ul>
+<p>放一张效果图（原谅渣像素/(ㄒoㄒ)/~~）：<br><img src="https://upload-images.jianshu.io/upload_images/1215918-2aafdb5096a5f545.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="效果.jpg"></p>
+<a id="more"></a>
+<h1 id="实现方式"><a href="#实现方式" class="headerlink" title="实现方式"></a>实现方式</h1><p>我使用的开发板启动桌面为Launcher2，所以以下内容都是参考的Launcher2的源码。</p>
+<h2 id="开机启动自己的桌面"><a href="#开机启动自己的桌面" class="headerlink" title="开机启动自己的桌面"></a>开机启动自己的桌面</h2><p>要开机启动自己的桌面，首先要了解系统桌面是怎么被启动的，详情可以参考<a href="https://blog.csdn.net/maxleng/article/details/5508372" target="_blank" rel="noopener">这篇博客</a>，android系统init进程启动后会启动Native服务和系统服务，ActivityManagerServic中启动Home：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">systemReady</span><span class="params">(<span class="keyword">final</span> Runnable goingCallback)</span> </span>&#123;</span><br><span class="line">    ...</span><br><span class="line">    startHomeActivityLocked(mCurrentUserId, <span class="string">"systemReady"</span>);</span><br><span class="line">    ...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>追踪一下该方法，最后是启动的这样一个Intent：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">Intent <span class="title">getHomeIntent</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    Intent intent = <span class="keyword">new</span> Intent(mTopAction, mTopData != <span class="keyword">null</span> ? Uri.parse(mTopData) : <span class="keyword">null</span>);</span><br><span class="line">    intent.setComponent(mTopComponent);</span><br><span class="line">    <span class="keyword">if</span> (mFactoryTest != FactoryTest.FACTORY_TEST_LOW_LEVEL) &#123;</span><br><span class="line">        intent.addCategory(Intent.CATEGORY_HOME);<span class="comment">//划重点，圈住，要考的</span></span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> intent;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>so，我们只要让自己的IntentFilter匹配上面这个Intent就可以响应系统启动桌面的这个意图，看一下Launcher2中的manifest：<br><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">manifest</span></span></span><br><span class="line"><span class="tag">    <span class="attr">xmlns:android</span>=<span class="string">"http://schemas.android.com/apk/res/android"</span></span></span><br><span class="line"><span class="tag">    <span class="attr">package</span>=<span class="string">"com.android.launcher"</span>&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="tag">&lt;<span class="name">original-package</span> <span class="attr">android:name</span>=<span class="string">"com.android.launcher2"</span> /&gt;</span></span><br><span class="line"></span><br><span class="line">     //...权限相关</span><br><span class="line">    <span class="tag">&lt;<span class="name">application</span></span></span><br><span class="line"><span class="tag">        <span class="attr">android:name</span>=<span class="string">"com.android.launcher2.LauncherApplication"</span></span></span><br><span class="line"><span class="tag">        <span class="attr">android:label</span>=<span class="string">"@string/application_name"</span></span></span><br><span class="line"><span class="tag">        <span class="attr">android:icon</span>=<span class="string">"@mipmap/ic_launcher_home"</span></span></span><br><span class="line"><span class="tag">        <span class="attr">android:hardwareAccelerated</span>=<span class="string">"true"</span></span></span><br><span class="line"><span class="tag">        <span class="attr">android:largeHeap</span>=<span class="string">"@bool/config_largeHeap"</span></span></span><br><span class="line"><span class="tag">        <span class="attr">android:supportsRtl</span>=<span class="string">"true"</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">activity</span></span></span><br><span class="line"><span class="tag">            <span class="attr">android:name</span>=<span class="string">"com.android.launcher2.Launcher"</span></span></span><br><span class="line"><span class="tag">            <span class="attr">android:launchMode</span>=<span class="string">"singleTask"</span></span></span><br><span class="line"><span class="tag">            <span class="attr">android:clearTaskOnLaunch</span>=<span class="string">"true"</span></span></span><br><span class="line"><span class="tag">            <span class="attr">android:stateNotNeeded</span>=<span class="string">"true"</span></span></span><br><span class="line"><span class="tag">            <span class="attr">android:resumeWhilePausing</span>=<span class="string">"true"</span></span></span><br><span class="line"><span class="tag">            <span class="attr">android:theme</span>=<span class="string">"@style/Theme"</span></span></span><br><span class="line"><span class="tag">            <span class="attr">android:windowSoftInputMode</span>=<span class="string">"adjustPan"</span></span></span><br><span class="line"><span class="tag">            <span class="attr">android:screenOrientation</span>=<span class="string">"nosensor"</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">intent-filter</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">action</span> <span class="attr">android:name</span>=<span class="string">"android.intent.action.MAIN"</span> /&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">category</span> <span class="attr">android:name</span>=<span class="string">"android.intent.category.HOME"</span> /&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">category</span> <span class="attr">android:name</span>=<span class="string">"android.intent.category.DEFAULT"</span> /&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">category</span> <span class="attr">android:name</span>=<span class="string">"android.intent.category.MONKEY"</span>/&gt;</span></span><br><span class="line">            <span class="tag">&lt;/<span class="name">intent-filter</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">activity</span>&gt;</span></span><br><span class="line"></span><br><span class="line">        <span class="tag">&lt;<span class="name">activity</span></span></span><br><span class="line"><span class="tag">            <span class="attr">android:name</span>=<span class="string">"com.android.launcher2.WallpaperChooser"</span></span></span><br><span class="line"><span class="tag">            <span class="attr">android:theme</span>=<span class="string">"@style/Theme.WallpaperPicker"</span></span></span><br><span class="line"><span class="tag">            <span class="attr">android:label</span>=<span class="string">"@string/pick_wallpaper"</span></span></span><br><span class="line"><span class="tag">            <span class="attr">android:icon</span>=<span class="string">"@mipmap/ic_launcher_wallpaper"</span></span></span><br><span class="line"><span class="tag">            <span class="attr">android:finishOnCloseSystemDialogs</span>=<span class="string">"true"</span></span></span><br><span class="line"><span class="tag">            <span class="attr">android:process</span>=<span class="string">":wallpaper_chooser"</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">intent-filter</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">action</span> <span class="attr">android:name</span>=<span class="string">"android.intent.action.SET_WALLPAPER"</span> /&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">category</span> <span class="attr">android:name</span>=<span class="string">"android.intent.category.DEFAULT"</span> /&gt;</span></span><br><span class="line">            <span class="tag">&lt;/<span class="name">intent-filter</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">meta-data</span> <span class="attr">android:name</span>=<span class="string">"android.wallpaper.preview"</span></span></span><br><span class="line"><span class="tag">                <span class="attr">android:resource</span>=<span class="string">"@xml/wallpaper_picker_preview"</span> /&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">activity</span>&gt;</span></span><br><span class="line"></span><br><span class="line">        //...安装卸载应用和快捷方式的相关广播接收器</span><br><span class="line"></span><br><span class="line">        //settings的内容提供者，保存桌面数据</span><br><span class="line"></span><br><span class="line">        <span class="tag">&lt;<span class="name">meta-data</span> <span class="attr">android:name</span>=<span class="string">"android.nfc.disable_beam_default"</span></span></span><br><span class="line"><span class="tag">                       <span class="attr">android:value</span>=<span class="string">"true"</span> /&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">application</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">manifest</span>&gt;</span></span><br></pre></td></tr></table></figure></p>
+<p>可以看到Launcher2相对来说还不是很复杂，只有两个Activity和一系列Package相关的广播接收器，其中Launcher就是我们的桌面，我们可以将自己的应用按照上面这样配置下，然后删除系统apk，并将我们的apk放到系统对应目录，重启开发板即可。</p>
+<h2 id="设置自己的桌面背景"><a href="#设置自己的桌面背景" class="headerlink" title="设置自己的桌面背景"></a>设置自己的桌面背景</h2><p>这个我这里选了个偷懒的方式，直接设置了Activity的背景，因为我们这个产品是不需要用户自己更换主题这种操作的。</p>
+<h2 id="桌面上只放置自己需要的应用图标"><a href="#桌面上只放置自己需要的应用图标" class="headerlink" title="桌面上只放置自己需要的应用图标"></a>桌面上只放置自己需要的应用图标</h2><p>首先还是继续看下系统是怎么获取到应用列表的，我们从Launcher的onCreate方法看起：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Override</span></span><br><span class="line"><span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">onCreate</span><span class="params">(Bundle savedInstanceState)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">super</span>.onCreate(savedInstanceState);</span><br><span class="line">    <span class="comment">//...初始化一系列对象，LauncherModel、图标缓存、拖拽管理类、widget管理类、inflater等等</span></span><br><span class="line">    <span class="comment">//初始化布局控件</span></span><br><span class="line">    <span class="comment">//是否第一次启动，进而决定是否显示引导功能</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">//通过LauncherModel加载相关数据</span></span><br><span class="line">    <span class="keyword">if</span> (!mRestoring) &#123;</span><br><span class="line">        <span class="keyword">if</span> (sPausedFromUserAction) &#123;</span><br><span class="line">            mModel.startLoader(<span class="keyword">true</span>, -<span class="number">1</span>);</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            mModel.startLoader(<span class="keyword">true</span>, mWorkspace.getCurrentPage());</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    ...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>继续追踪mModel.startLoader()，发现就是启动了一个异步任务，我们来看下该异步任务的run方法：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">run</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        ...</span><br><span class="line">        <span class="comment">// First step. Load workspace first, this is necessary since adding of apps from</span></span><br><span class="line">        <span class="comment">// managed profile in all apps is deferred until onResume. See http://b/17336902.</span></span><br><span class="line">        <span class="keyword">if</span> (DEBUG_LOADERS) Log.d(TAG, <span class="string">"step 1: loading workspace"</span>);</span><br><span class="line">        loadAndBindWorkspace();</span><br><span class="line"></span><br><span class="line">       ...</span><br><span class="line">        <span class="comment">// Second step. Load all apps.</span></span><br><span class="line">        <span class="keyword">if</span> (DEBUG_LOADERS) Log.d(TAG, <span class="string">"step 2: loading all apps"</span>);</span><br><span class="line">        loadAndBindAllApps();</span><br><span class="line"></span><br><span class="line">        ...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>该任务主要进行了两个操作，加载workspace和加载所有app，接下来继续追踪加载app的方法，发现内部调用了loadAllAppsByBatch()方法，最后调用到LauncherAppsService的getLauncherActivities()方法：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Override</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> List&lt;ResolveInfo&gt; <span class="title">getLauncherActivities</span><span class="params">(String packageName, UserHandle user)</span></span></span><br><span class="line"><span class="function">        <span class="keyword">throws</span> RemoteException </span>&#123;</span><br><span class="line">    ensureInUserProfiles(user, <span class="string">"Cannot retrieve activities for unrelated profile "</span> + user);</span><br><span class="line">    <span class="keyword">if</span> (!isUserEnabled(user)) &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">new</span> ArrayList&lt;ResolveInfo&gt;();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">final</span> Intent mainIntent = <span class="keyword">new</span> Intent(Intent.ACTION_MAIN, <span class="keyword">null</span>);</span><br><span class="line">    mainIntent.addCategory(Intent.CATEGORY_LAUNCHER);</span><br><span class="line">    mainIntent.setPackage(packageName);</span><br><span class="line">    <span class="keyword">long</span> ident = Binder.clearCallingIdentity();</span><br><span class="line">    <span class="keyword">try</span> &#123;</span><br><span class="line">        List&lt;ResolveInfo&gt; apps = mPm.queryIntentActivitiesAsUser(mainIntent, <span class="number">0</span> <span class="comment">/* flags */</span>,</span><br><span class="line">                user.getIdentifier());</span><br><span class="line">        <span class="keyword">return</span> apps;</span><br><span class="line">    &#125; <span class="keyword">finally</span> &#123;</span><br><span class="line">        Binder.restoreCallingIdentity(ident);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>这部分就是我们需要的加载所有应用的代码，然后根据包名过滤掉我们不需要的app，将得到的数据用RecyclerView展示，就可以只显示我们自己需要的应用：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">static</span> List&lt;ResolveInfo&gt; <span class="title">getMyApps</span><span class="params">(PackageManager pm)</span></span>&#123;</span><br><span class="line">        Intent intent = <span class="keyword">new</span> Intent(Intent.ACTION_MAIN);</span><br><span class="line">        intent.addCategory(Intent.CATEGORY_LAUNCHER);</span><br><span class="line">        List&lt;ResolveInfo&gt; myApps = pm.queryIntentActivities(intent,<span class="number">0</span>);</span><br><span class="line"></span><br><span class="line">        List&lt;ResolveInfo&gt; temp = <span class="keyword">new</span> ArrayList&lt;&gt;();</span><br><span class="line">        <span class="keyword">for</span> (ResolveInfo info : myApps) &#123;</span><br><span class="line">            Log.d(<span class="string">"lxf Launcher2"</span>, info.activityInfo.packageName);</span><br><span class="line">            String packName = info.activityInfo.packageName;</span><br><span class="line">            <span class="keyword">if</span> (packName.equals(<span class="string">"com.android.settings"</span>)</span><br><span class="line">                    || packName.equals(<span class="string">"com.android.browser"</span>)</span><br><span class="line">                    || packName.equals(<span class="string">"com.android.providers.downloads.ui"</span>)</span><br><span class="line">                    || packName.equals(<span class="string">"com.estrongs.android.pop"</span>)</span><br><span class="line">                    || packName.contains(<span class="string">"cn.izis"</span>)) &#123;</span><br><span class="line">                temp.add(info);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        myApps.clear();</span><br><span class="line">        myApps.addAll(temp);</span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> myApps;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onBindViewHolder</span><span class="params">(MyViewHolder holder, <span class="keyword">int</span> position)</span> </span>&#123;</span><br><span class="line">        ResolveInfo info = mApps.get(position);</span><br><span class="line">        holder.icon.setImageDrawable(info.loadIcon(pm));</span><br><span class="line">        holder.name.setText(info.loadLabel(pm));</span><br><span class="line"></span><br><span class="line">        holder.itemView.setTag(position);</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure></p>
+<p>取消RecyclerView滑动边界的阴影可以这么设置：</p>
+<blockquote>
+<p>android:overScrollMode=”never”</p>
+</blockquote>
+<h2 id="点击应用图标启动相应应用"><a href="#点击应用图标启动相应应用" class="headerlink" title="点击应用图标启动相应应用"></a>点击应用图标启动相应应用</h2><p>这个就是根据包名去启动对应的应用，有android功底的应该都懂，直接上代码：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">ComponentName componentName = <span class="keyword">new</span> ComponentName(resolveInfo.activityInfo.packageName,resolveInfo.activityInfo.name);</span><br><span class="line">Intent intent = <span class="keyword">new</span> Intent();</span><br><span class="line">intent.setComponent(componentName);</span><br><span class="line">startActivity(intent);</span><br></pre></td></tr></table></figure></p>
+<h2 id="监听应用的安装和卸载广播，更新桌面"><a href="#监听应用的安装和卸载广播，更新桌面" class="headerlink" title="监听应用的安装和卸载广播，更新桌面"></a>监听应用的安装和卸载广播，更新桌面</h2><p>这里我采用了一种简单粗暴的方式，收到应用安装或卸载的广播时，直接重新获取所有的app列表：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> <span class="class"><span class="keyword">class</span> <span class="title">MyReceiver</span> <span class="keyword">extends</span> <span class="title">BroadcastReceiver</span></span>&#123;</span><br><span class="line"></span><br><span class="line">        <span class="meta">@Override</span></span><br><span class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onReceive</span><span class="params">(Context context, Intent intent)</span> </span>&#123;</span><br><span class="line">            <span class="keyword">if</span> (intent == <span class="keyword">null</span> || intent.getAction() == <span class="keyword">null</span>)</span><br><span class="line">                <span class="keyword">return</span>;</span><br><span class="line">            <span class="keyword">if</span> (intent.getAction().equals(Intent.ACTION_PACKAGE_ADDED)</span><br><span class="line">                    ||intent.getAction().equals(Intent.ACTION_PACKAGE_REMOVED))&#123;</span><br><span class="line">                myApps.clear();</span><br><span class="line">                myApps.addAll(getMyApps(context.getPackageManager()));</span><br><span class="line">                System.out.println(<span class="string">"lxf"</span> + myApps.size());</span><br><span class="line">                appsAdapter.notifyDataSetChanged();</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure></p>
+<p>在manifest中注册广播：<br><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">receiver</span> <span class="attr">android:name</span>=<span class="string">".MainActivity$MyReceiver"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">intent-filter</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">action</span> <span class="attr">android:name</span>=<span class="string">"android.intent.action.PACKAGE_ADDED"</span>/&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">action</span> <span class="attr">android:name</span>=<span class="string">"android.intent.action.PACKAGE_REMOVED"</span>/&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">data</span> <span class="attr">android:scheme</span>=<span class="string">"package"</span>/&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">intent-filter</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">receiver</span>&gt;</span></span><br></pre></td></tr></table></figure></p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Android/" rel="tag"># Android</a>
+          
+            <a href="/tags/Framework/" rel="tag"># Framework</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/04/23/android-framework之旅（四）去除Usb权限弹窗/" rel="next" title="android framework之旅（四）去除Usb权限弹窗">
+                <i class="fa fa-chevron-left"></i> android framework之旅（四）去除Usb权限弹窗
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/uploads/photo.png"
+                alt="风少侠" />
+            
+              <p class="site-author-name" itemprop="name">风少侠</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">27</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">7</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">19</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/lunxinfeng" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://www.jianshu.com/u/41d7604ac57a" target="_blank" title="简书">
+                      
+                        <i class="fa fa-fw fa-paper-plane"></i>简书</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#环境"><span class="nav-number">1.</span> <span class="nav-text">环境</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#目标"><span class="nav-number">2.</span> <span class="nav-text">目标</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#实现方式"><span class="nav-number">3.</span> <span class="nav-text">实现方式</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#开机启动自己的桌面"><span class="nav-number">3.1.</span> <span class="nav-text">开机启动自己的桌面</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#设置自己的桌面背景"><span class="nav-number">3.2.</span> <span class="nav-text">设置自己的桌面背景</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#桌面上只放置自己需要的应用图标"><span class="nav-number">3.3.</span> <span class="nav-text">桌面上只放置自己需要的应用图标</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#点击应用图标启动相应应用"><span class="nav-number">3.4.</span> <span class="nav-text">点击应用图标启动相应应用</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#监听应用的安装和卸载广播，更新桌面"><span class="nav-number">3.5.</span> <span class="nav-text">监听应用的安装和卸载广播，更新桌面</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">风少侠</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Mist</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
