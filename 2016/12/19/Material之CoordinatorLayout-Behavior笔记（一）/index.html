@@ -1,0 +1,825 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Android,Material," />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="最新项目中用到了些Material效果，在此对自己的学习做个小结。   首先养成良好的学习习惯—–看源码： CoordinatorLayout1234567891011121314151617181920212223242526/** * CoordinatorLayout is a super-powered &amp;#123;@link android.widget.FrameLayout Fram">
+<meta name="keywords" content="Android,Material">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Material之CoordinatorLayout + Behavior笔记（一）">
+<meta property="og:url" content="http://yoursite.com/2016/12/19/Material之CoordinatorLayout-Behavior笔记（一）/index.html">
+<meta property="og:site_name" content="风少侠的个人博客">
+<meta property="og:description" content="最新项目中用到了些Material效果，在此对自己的学习做个小结。   首先养成良好的学习习惯—–看源码： CoordinatorLayout1234567891011121314151617181920212223242526/** * CoordinatorLayout is a super-powered &amp;#123;@link android.widget.FrameLayout Fram">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/1215918-82c345e3e94dec19.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/1215918-be6809dac7a5b3e0.gif?imageMogr2/auto-orient/strip">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/1215918-ffebe2efe40de972.gif?imageMogr2/auto-orient/strip">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/1215918-23de41d0e43c72b8.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/1215918-4bb1c9b9ef5e0bdb.gif?imageMogr2/auto-orient/strip">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/1215918-8df8e86ff727877c.gif?imageMogr2/auto-orient/strip">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/1215918-e79423f6f7d93de5.gif?imageMogr2/auto-orient/strip">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/1215918-946022ce80784e08.gif?imageMogr2/auto-orient/strip">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/1215918-22c675c74d224a67.gif?imageMogr2/auto-orient/strip">
+<meta property="og:updated_time" content="2018-04-23T22:31:30.496Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Material之CoordinatorLayout + Behavior笔记（一）">
+<meta name="twitter:description" content="最新项目中用到了些Material效果，在此对自己的学习做个小结。   首先养成良好的学习习惯—–看源码： CoordinatorLayout1234567891011121314151617181920212223242526/** * CoordinatorLayout is a super-powered &amp;#123;@link android.widget.FrameLayout Fram">
+<meta name="twitter:image" content="http://upload-images.jianshu.io/upload_images/1215918-82c345e3e94dec19.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2016/12/19/Material之CoordinatorLayout-Behavior笔记（一）/"/>
+
+
+
+
+
+  <title>Material之CoordinatorLayout + Behavior笔记（一） | 风少侠的个人博客</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">风少侠的个人博客</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2016/12/19/Material之CoordinatorLayout-Behavior笔记（一）/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="风少侠">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/uploads/photo.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="风少侠的个人博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Material之CoordinatorLayout + Behavior笔记（一）</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2016-12-19T11:25:04+08:00">
+                2016-12-19
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Android/" itemprop="url" rel="index">
+                    <span itemprop="name">Android</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>最新项目中用到了些Material效果，在此对自己的学习做个小结。</p>
+<p>  首先养成良好的学习习惯—–看源码：</p>
+<h3 id="CoordinatorLayout"><a href="#CoordinatorLayout" class="headerlink" title="CoordinatorLayout"></a>CoordinatorLayout</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * CoordinatorLayout is a super-powered &#123;<span class="doctag">@link</span> android.widget.FrameLayout FrameLayout&#125;.</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> * &lt;p&gt;CoordinatorLayout is intended for two primary use cases:&lt;/p&gt;</span></span><br><span class="line"><span class="comment"> * &lt;ol&gt;</span></span><br><span class="line"><span class="comment"> *     &lt;li&gt;As a top-level application decor or chrome layout&lt;/li&gt;</span></span><br><span class="line"><span class="comment"> *     &lt;li&gt;As a container for a specific interaction with one or more child views&lt;/li&gt;</span></span><br><span class="line"><span class="comment"> * &lt;/ol&gt;</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> * &lt;p&gt;By specifying &#123;<span class="doctag">@link</span> CoordinatorLayout.Behavior Behaviors&#125; for child views of a</span></span><br><span class="line"><span class="comment"> * CoordinatorLayout you can provide many different interactions within a single parent and those</span></span><br><span class="line"><span class="comment"> * views can also interact with one another. View classes can specify a default behavior when</span></span><br><span class="line"><span class="comment"> * used as a child of a CoordinatorLayout using the</span></span><br><span class="line"><span class="comment"> * &#123;<span class="doctag">@link</span> CoordinatorLayout.DefaultBehavior DefaultBehavior&#125; annotation.&lt;/p&gt;</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> * &lt;p&gt;Behaviors may be used to implement a variety of interactions and additional layout</span></span><br><span class="line"><span class="comment"> * modifications ranging from sliding drawers and panels to swipe-dismissable elements and buttons</span></span><br><span class="line"><span class="comment"> * that stick to other elements as they move and animate.&lt;/p&gt;</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> * &lt;p&gt;Children of a CoordinatorLayout may have an</span></span><br><span class="line"><span class="comment"> * &#123;<span class="doctag">@link</span> CoordinatorLayout.LayoutParams#setAnchorId(int) anchor&#125;. This view id must correspond</span></span><br><span class="line"><span class="comment"> * to an arbitrary descendant of the CoordinatorLayout, but it may not be the anchored child itself</span></span><br><span class="line"><span class="comment"> * or a descendant of the anchored child. This can be used to place floating views relative to</span></span><br><span class="line"><span class="comment"> * other arbitrary content panes.&lt;/p&gt;</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">CoordinatorLayout</span> <span class="keyword">extends</span> <span class="title">ViewGroup</span> <span class="keyword">implements</span> <span class="title">NestedScrollingParent</span> </span>&#123;</span><br></pre></td></tr></table></figure>
+<p>  大概的翻译如下：</p>
+<ul>
+<li>CoordinateLayout是一个超级FrameLayout。</li>
+<li>CoordinateLayout原意是用于以下情况：<ol>
+<li>作为<strong>顶层布局</strong>。</li>
+<li>作为一个容器，它的<strong>子View</strong>之间有特殊的<strong>相互作用（交互）</strong>。</li>
+</ol>
+</li>
+<li>通过为CoordinatorLayout的子views指定<strong>Behavior</strong>，在同一个父容器下可以提供不同的交互，并且那些子view可以和另一个子view相互作用，相互影响。通过<strong>@DefaultBehavior</strong>注释，CoordinatorLayout的子view可以使用一个默认的behavior。</li>
+<li>Behavior可以用来实现各种交互和 来自滑动抽屉、滑动删除元素和按钮关联其他元素产生的额外的布局修改。</li>
+<li>CoordinatorLayout的子view也许会有个anchor（锚点，即view显示在哪块区域），这个子view必须是CoordinatorLayout的<strong>直接子view</strong>，不能是孙子辈儿的view - -！<br>通过看CoordinatorLayout官方注释文档，了解到一个重要信息—Behavior，可以说CoordinatorLayout各种炫酷的交互效果，都是通过Behavior来控制的，除此之外，CoordinatorLayout类似于FrameLayout，那么接下来看重点：</li>
+</ul>
+<a id="more"></a>
+<h3 id="Behavior："><a href="#Behavior：" class="headerlink" title="Behavior："></a>Behavior：</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * Interaction behavior plugin for child views of &#123;<span class="doctag">@link</span> CoordinatorLayout&#125;.</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> * &lt;p&gt;A Behavior implements one or more interactions that a user can take on a child view.</span></span><br><span class="line"><span class="comment"> * These interactions may include drags, swipes, flings, or any other gestures.&lt;/p&gt;</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@param</span> &lt;V&gt; The View type that this Behavior operates on</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">abstract</span> <span class="class"><span class="keyword">class</span> <span class="title">Behavior</span>&lt;<span class="title">V</span> <span class="keyword">extends</span> <span class="title">View</span>&gt; </span>&#123;</span><br></pre></td></tr></table></figure>
+<p>老规矩：</p>
+<ul>
+<li>CoordinatorLayout的子view的交互行为插件。</li>
+<li>一个Behavior可以实现一个或更多的交互，用户可以将这些交互用在CoordinatorLayout的子view上，这些交互包括：<strong>拖拽、滑动、飞速滑动、或者其他任何手势</strong>。</li>
+</ul>
+<h3 id="基本使用："><a href="#基本使用：" class="headerlink" title="基本使用："></a>基本使用：</h3><p>  新建一个HelloWorld，选择BasicActivity，可以看到默认生成的布局中已经包含了CoordinatorLayout，说明Goolge官方非常推荐使用这种布局。<br>官方给出的Behavior实现类有4个：</p>
+<ul>
+<li>BottomSheetBehavior</li>
+<li>SwipeDismissBehavior</li>
+<li>FloatingActionButton中实现的Behavior</li>
+<li>ViewOffsetBehavior</li>
+</ul>
+<p><img src="http://upload-images.jianshu.io/upload_images/1215918-82c345e3e94dec19.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="Behavior实现类"></p>
+<h4 id="BottomSheetBehavior"><a href="#BottomSheetBehavior" class="headerlink" title="BottomSheetBehavior"></a>BottomSheetBehavior</h4><p>一般用于底部弹出框，类似于微信支付的效果，使用方法如下：</p>
+<p>xml布局<br><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">android.support.design.widget.CoordinatorLayout</span></span></span><br><span class="line"><span class="tag">  <span class="attr">......</span></span></span><br><span class="line"><span class="tag">&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="tag">&lt;<span class="name">android.support.v4.widget.NestedScrollView</span></span></span><br><span class="line"><span class="tag">        <span class="attr">android:id</span>=<span class="string">"@+id/nestedScrollView"</span></span></span><br><span class="line"><span class="tag">        <span class="attr">android:layout_width</span>=<span class="string">"match_parent"</span></span></span><br><span class="line"><span class="tag">        <span class="attr">android:layout_height</span>=<span class="string">"350dp"</span></span></span><br><span class="line"><span class="tag">        <span class="attr">android:background</span>=<span class="string">"@drawable/mv"</span></span></span><br><span class="line"><span class="tag">        <span class="attr">app:layout_behavior</span>=<span class="string">"@string/bottom_sheet_behavior"</span></span></span><br><span class="line"><span class="tag">        <span class="attr">app:behavior_peekHeight</span>=<span class="string">"0dp"</span></span></span><br><span class="line"><span class="tag">        <span class="attr">app:behavior_hideable</span>=<span class="string">"true"</span>&gt;</span></span><br><span class="line">        <span class="comment">&lt;!--中间可以随意写自己的布局--&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">android.support.v4.widget.NestedScrollView</span>&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="tag">&lt;<span class="name">android.support.design.widget.FloatingActionButton</span></span></span><br><span class="line"><span class="tag">        <span class="attr">android:id</span>=<span class="string">"@+id/fab"</span></span></span><br><span class="line"><span class="tag">        <span class="attr">android:layout_width</span>=<span class="string">"wrap_content"</span></span></span><br><span class="line"><span class="tag">        <span class="attr">android:layout_height</span>=<span class="string">"wrap_content"</span></span></span><br><span class="line"><span class="tag">        <span class="attr">android:layout_gravity</span>=<span class="string">"bottom|end"</span></span></span><br><span class="line"><span class="tag">        <span class="attr">android:layout_margin</span>=<span class="string">"@dimen/fab_margin"</span></span></span><br><span class="line"><span class="tag">        <span class="attr">app:layout_behavior</span>=<span class="string">"cn.lxf.behaviortext.FloatingBehavior"</span></span></span><br><span class="line"><span class="tag">        <span class="attr">app:srcCompat</span>=<span class="string">"@android:drawable/ic_dialog_email"</span> /&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;/<span class="name">android.support.design.widget.CoordinatorLayout</span>&gt;</span></span><br></pre></td></tr></table></figure></p>
+<p>Activity代码<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">scrollView = (NestedScrollView) findViewById(R.id.nestedScrollView);</span><br><span class="line">FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);</span><br><span class="line">fab.setOnClickListener(<span class="keyword">new</span> View.OnClickListener() &#123;</span><br><span class="line">     <span class="meta">@Override</span></span><br><span class="line">     <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onClick</span><span class="params">(View view)</span> </span>&#123;</span><br><span class="line">          BottomSheetBehavior bottomSheetBehavior = BottomSheetBehavior.from(scrollView);</span><br><span class="line">          bottomSheetBehavior.setState(bottomSheetBehavior.getState() == BottomSheetBehavior.STATE_COLLAPSED?BottomSheetBehavior.STATE_EXPANDED:BottomSheetBehavior.STATE_COLLAPSED);</span><br><span class="line">     &#125;</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure></p>
+<p>bottomSheetBehavior效果图：</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/1215918-be6809dac7a5b3e0.gif?imageMogr2/auto-orient/strip" alt="bottomSheetBehavior"></p>
+<p>实现的关键点：</p>
+<ul>
+<li>根布局为 CoordinatorLayout；</li>
+<li>为底部弹出框设置app:layout_behavior=”@string/bottom_sheet_behavior”；</li>
+<li>在代码中得到BottomSheetBehavior，并动态改变它的状态；</li>
+<li>至于FloatingActionButton跟随弹出框移动，关键点在于为FloatingActionButton设置app:layout_behavior=”cn.lxf.behaviortext.FloatingBehavior”；这是一个自定义的Behavior，文章后面会有讲解。</li>
+</ul>
+<h4 id="SwipeDismissBehavior"><a href="#SwipeDismissBehavior" class="headerlink" title="SwipeDismissBehavior"></a>SwipeDismissBehavior</h4><p>  官方实现为Snackbar，已经封装好，唯一的条件是<strong>根布局必须为CoordinatorLayout</strong>，否则没有效果。<br>  使用方式很简单：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Snackbar.make(view, <span class="string">"Replace with your own action"</span>, Snackbar.LENGTH_LONG).setAction(<span class="string">"Action"</span>, <span class="keyword">null</span>).show();</span><br></pre></td></tr></table></figure></p>
+<h4 id="FloatingActionButton-Behavior"><a href="#FloatingActionButton-Behavior" class="headerlink" title="FloatingActionButton.Behavior"></a>FloatingActionButton.Behavior</h4><p>FloatingActionButton默认使用FloatingActionButton.Behavior，同Snackbar一样，唯一需要注意的是根布局必须为CoordinatorLayout。<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@CoordinatorLayout</span>.DefaultBehavior(FloatingActionButton.Behavior.class)</span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">FloatingActionButton</span> <span class="keyword">extends</span> <span class="title">VisibilityAwareImageButton</span> </span>&#123;</span><br></pre></td></tr></table></figure></p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">android.support.design.widget.FloatingActionButton</span></span></span><br><span class="line"><span class="tag">        <span class="attr">android:id</span>=<span class="string">"@+id/fab"</span></span></span><br><span class="line"><span class="tag">        <span class="attr">android:layout_width</span>=<span class="string">"wrap_content"</span></span></span><br><span class="line"><span class="tag">        <span class="attr">android:layout_height</span>=<span class="string">"wrap_content"</span></span></span><br><span class="line"><span class="tag">        <span class="attr">android:layout_gravity</span>=<span class="string">"bottom|end"</span></span></span><br><span class="line"><span class="tag">        <span class="attr">android:layout_margin</span>=<span class="string">"@dimen/fab_margin"</span></span></span><br><span class="line"><span class="tag">        <span class="attr">app:srcCompat</span>=<span class="string">"@android:drawable/ic_dialog_email"</span> /&gt;</span></span><br></pre></td></tr></table></figure>
+<p>Snackbar + FloatingActionButton效果图：</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/1215918-ffebe2efe40de972.gif?imageMogr2/auto-orient/strip" alt="Snackbar + FloatingActionButton效果图"></p>
+<h4 id="ViewOffsetBehavior"><a href="#ViewOffsetBehavior" class="headerlink" title="ViewOffsetBehavior"></a>ViewOffsetBehavior</h4><p>  官方实现为AppBarLayout中的Beihavior。<br><img src="http://upload-images.jianshu.io/upload_images/1215918-23de41d0e43c72b8.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="AppBarLayout官方文档"><br>挑重点：</p>
+<ul>
+<li>AppBarLayout是一个实现了很多Material设计风格的<strong>垂直的LinearLayout</strong>。</li>
+<li>子view可以通过设置<strong>layout_scrollFlags</strong>来提供他们所需要的滚动方式。</li>
+<li>你需要设置你的<strong>Scrolling view的behavior</strong>（app:layout_behavior）为<strong>AppBarLayout.ScrollingViewBehavior</strong>来提醒AppBarLayout什么时候滚动。</li>
+<li><p>最下面为goolgle官方提供的一个例子。<br>话说第一次看到layout_scrollFlags属性的萌新必然会一脸懵逼，到底应该填什么呢（因为我当初就是这样…( ╯□╰ )），这里顺便介绍ScrollFlags的几个常量：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * The view will be scroll in direct relation to scroll events. This flag needs to be</span></span><br><span class="line"><span class="comment"> * set for any of the other flags to take effect. If any sibling views</span></span><br><span class="line"><span class="comment"> * before this one do not have this flag, then this value has no effect.</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">int</span> SCROLL_FLAG_SCROLL = <span class="number">0x1</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * When exiting (scrolling off screen) the view will be scrolled until it is</span></span><br><span class="line"><span class="comment"> * 'collapsed'. The collapsed height is defined by the view's minimum height.</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@see</span> ViewCompat#getMinimumHeight(View)</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@see</span> View#setMinimumHeight(int)</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">int</span> SCROLL_FLAG_EXIT_UNTIL_COLLAPSED = <span class="number">0x2</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * When entering (scrolling on screen) the view will scroll on any downwards</span></span><br><span class="line"><span class="comment"> * scroll event, regardless of whether the scrolling view is also scrolling. This</span></span><br><span class="line"><span class="comment"> * is commonly referred to as the 'quick return' pattern.</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">int</span> SCROLL_FLAG_ENTER_ALWAYS = <span class="number">0x4</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * An additional flag for 'enterAlways' which modifies the returning view to</span></span><br><span class="line"><span class="comment"> * only initially scroll back to it's collapsed height. Once the scrolling view has</span></span><br><span class="line"><span class="comment"> * reached the end of it's scroll range, the remainder of this view will be scrolled</span></span><br><span class="line"><span class="comment"> * into view. The collapsed height is defined by the view's minimum height.</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@see</span> ViewCompat#getMinimumHeight(View)</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@see</span> View#setMinimumHeight(int)</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">int</span> SCROLL_FLAG_ENTER_ALWAYS_COLLAPSED = <span class="number">0x8</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * Upon a scroll ending, if the view is only partially visible then it will be snapped</span></span><br><span class="line"><span class="comment"> * and scrolled to it's closest edge. For example, if the view only has it's bottom 25%</span></span><br><span class="line"><span class="comment"> * displayed, it will be scrolled off screen completely. Conversely, if it's bottom 75%</span></span><br><span class="line"><span class="comment"> * is visible then it will be scrolled fully into view.</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">int</span> SCROLL_FLAG_SNAP = <span class="number">0x10</span>;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p><strong>SCROLL_FLAG_SCROLL</strong>：对应xml布局中的scroll，如果要设置其他的滚动flag，这个flag<strong>必须要设置</strong>，否则无效。</p>
+</li>
+<li><strong>SCROLL_FLAG_EXIT_UNTIL_COLLAPSED</strong>：对应xml布局中的exitUntilCollapsed，设置该flag的view在向上滑动退出屏幕时，不会完全退出，会保留collapsed height（minHeight）高度。</li>
+<li><strong>SCROLL_FLAG_ENTER_ALWAYS</strong>：对应xml布局中的enterAlways，只要手指向下滑，设置该flag的view就会直接进入屏幕，不管NestedScrollView是否在滚动。</li>
+<li><strong>SCROLL_FLAG_ENTER_ALWAYS_COLLAPSED</strong> ：对应xml布局中的enterAlwaysCollapsed，是enterAlways的附加flag，使设置该flag的view在进入屏幕时最初只滑动显示到它的collapsed height（minHeight），一旦NestedScrollView滑到顶部，该view再滑动显示剩余的部分。</li>
+<li><strong>SCROLL_FLAG_SNAP</strong>：对应xml布局中的snap，设置该flag的view在滚动停止时，如果没有完全显示，会自动滚到到最近的一个边界（顶端、中线和下线）。</li>
+</ul>
+<p>scroll：</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/1215918-4bb1c9b9ef5e0bdb.gif?imageMogr2/auto-orient/strip" alt="scroll"></p>
+<p>scroll+exitUntilCollapsed：</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/1215918-8df8e86ff727877c.gif?imageMogr2/auto-orient/strip" alt="scroll+exitUntilCollapsed"></p>
+<p>scroll+enterAlways：</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/1215918-e79423f6f7d93de5.gif?imageMogr2/auto-orient/strip" alt="scroll+enterAlways"></p>
+<p>scroll+enterAlways+enterAlwaysCollapsed：</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/1215918-946022ce80784e08.gif?imageMogr2/auto-orient/strip" alt="scroll+enterAlways+enterAlwaysCollapsed"></p>
+<p>scroll+enterAlways+snap：</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/1215918-22c675c74d224a67.gif?imageMogr2/auto-orient/strip" alt="scroll+enterAlways+snap"></p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Android/" rel="tag"># Android</a>
+          
+            <a href="/tags/Material/" rel="tag"># Material</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2016/12/20/Material之CoordinatorLayout-Behavior笔记（二）/" rel="prev" title="Material之CoordinatorLayout + Behavior笔记（二）">
+                Material之CoordinatorLayout + Behavior笔记（二） <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/uploads/photo.png"
+                alt="风少侠" />
+            
+              <p class="site-author-name" itemprop="name">风少侠</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">27</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">7</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">19</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/lunxinfeng" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://www.jianshu.com/u/41d7604ac57a" target="_blank" title="简书">
+                      
+                        <i class="fa fa-fw fa-paper-plane"></i>简书</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#CoordinatorLayout"><span class="nav-number">1.</span> <span class="nav-text">CoordinatorLayout</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Behavior："><span class="nav-number">2.</span> <span class="nav-text">Behavior：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#基本使用："><span class="nav-number">3.</span> <span class="nav-text">基本使用：</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#BottomSheetBehavior"><span class="nav-number">3.1.</span> <span class="nav-text">BottomSheetBehavior</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#SwipeDismissBehavior"><span class="nav-number">3.2.</span> <span class="nav-text">SwipeDismissBehavior</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#FloatingActionButton-Behavior"><span class="nav-number">3.3.</span> <span class="nav-text">FloatingActionButton.Behavior</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#ViewOffsetBehavior"><span class="nav-number">3.4.</span> <span class="nav-text">ViewOffsetBehavior</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">风少侠</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Mist</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

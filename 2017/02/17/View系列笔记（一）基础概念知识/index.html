@@ -1,0 +1,792 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Android,View," />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="声明：此系列的部分内容出自《Android开发艺术探索》一书，是我当初学习时候的一些笔记和总结，在这里留个记录。　　View是android中所有控件的基类。 位置参数　　在Android系统中，左上角为坐标原点，x和y轴正方向分别是往右和下。View的位置由它的4个顶点来决定，即top，left，right，bottom。需要注意的是这4个点是相对坐标，相对于view的父容器来说的。获取方法">
+<meta name="keywords" content="Android,View">
+<meta property="og:type" content="article">
+<meta property="og:title" content="View系列笔记（一）基础概念知识">
+<meta property="og:url" content="http://yoursite.com/2017/02/17/View系列笔记（一）基础概念知识/index.html">
+<meta property="og:site_name" content="风少侠的个人博客">
+<meta property="og:description" content="声明：此系列的部分内容出自《Android开发艺术探索》一书，是我当初学习时候的一些笔记和总结，在这里留个记录。　　View是android中所有控件的基类。 位置参数　　在Android系统中，左上角为坐标原点，x和y轴正方向分别是往右和下。View的位置由它的4个顶点来决定，即top，left，right，bottom。需要注意的是这4个点是相对坐标，相对于view的父容器来说的。获取方法">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2018-04-23T22:33:07.121Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="View系列笔记（一）基础概念知识">
+<meta name="twitter:description" content="声明：此系列的部分内容出自《Android开发艺术探索》一书，是我当初学习时候的一些笔记和总结，在这里留个记录。　　View是android中所有控件的基类。 位置参数　　在Android系统中，左上角为坐标原点，x和y轴正方向分别是往右和下。View的位置由它的4个顶点来决定，即top，left，right，bottom。需要注意的是这4个点是相对坐标，相对于view的父容器来说的。获取方法">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2017/02/17/View系列笔记（一）基础概念知识/"/>
+
+
+
+
+
+  <title>View系列笔记（一）基础概念知识 | 风少侠的个人博客</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">风少侠的个人博客</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/02/17/View系列笔记（一）基础概念知识/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="风少侠">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/uploads/photo.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="风少侠的个人博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">View系列笔记（一）基础概念知识</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-02-17T12:30:39+08:00">
+                2017-02-17
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Android/" itemprop="url" rel="index">
+                    <span itemprop="name">Android</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>　　声明：此系列的部分内容出自《Android开发艺术探索》一书，是我当初学习时候的一些笔记和总结，在这里留个记录。<br>　　View是android中所有控件的基类。</p>
+<h1 id="位置参数"><a href="#位置参数" class="headerlink" title="位置参数"></a>位置参数</h1><p>　　在Android系统中，<strong>左上角为坐标原点，x和y轴正方向分别是往右和下</strong>。View的位置由它的4个顶点来决定，即top，left，right，bottom。需要注意的是这4个点是<strong>相对坐标</strong>，相对于view的父容器来说的。获取方法：</p>
+<ul>
+<li>top: getTop()</li>
+<li>left: getLeft()</li>
+<li>right: getRight()</li>
+<li>bottom: getBottom()</li>
+</ul>
+<p>　　从Android3.0开始，View增加了4个额外的参数：x，y，translationX，translationY。其中x和y指view左上角的坐标，translationX和translationY指view左上角相对于父容器的偏移量。这4个参数也都是<strong>相对坐标</strong>，他们之间的相互关系如下：</p>
+<ul>
+<li>x = left + translationX;</li>
+<li>y = top + translationY;</li>
+</ul>
+<p>　　即：在view发生平移的过程中，left和top始终是不变的，指view原始位置的左上角坐标，发生改变的只是x，y，translationX，translationY这4个参数。</p>
+<h1 id="角度"><a href="#角度" class="headerlink" title="角度"></a>角度</h1><p>  在Andorid系统中，角度增大的方向为<strong>顺时针方向</strong>。</p>
+<h1 id="触摸事件"><a href="#触摸事件" class="headerlink" title="触摸事件"></a>触摸事件</h1><a id="more"></a>
+<h2 id="MotionEvent"><a href="#MotionEvent" class="headerlink" title="MotionEvent"></a>MotionEvent</h2><p>　　手指的触摸事件一般可以分为两种（姑且把单击和长按当成一种，滑动和多点触控当成一种吧，起码触发的事件是差不多的）：</p>
+<ul>
+<li>手指按下，不滑动，放开：DOWN—&gt;UP。</li>
+<li>手指按下，滑动一段距离，再松手：DOWN—&gt;MOVE—&gt;…—&gt;MOVE—&gt;UP。</li>
+</ul>
+<p>　　通过MotionEvent对象我们可以得到点击位置的坐标：</p>
+<ul>
+<li>getX()和getY()：得到的是相对当前view左上角的坐标。</li>
+<li>getRawX()和getRawY()：得到的是相对手机屏幕左上角的坐标。</li>
+</ul>
+<h2 id="TouchSlop"><a href="#TouchSlop" class="headerlink" title="TouchSlop"></a>TouchSlop</h2><p>　　即系统所能识别出的被认为是滑动的最小距离。常量，和硬件设备有关，可以通过ViewConfiguration.get(context).getScaledTouchSlop()得到，手指移动小于这个值得话则认为这次操作不是滑动。</p>
+<h1 id="VelocityTracker"><a href="#VelocityTracker" class="headerlink" title="VelocityTracker"></a>VelocityTracker</h1><p>　　用来测量某个触摸事件的速度。<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line">	<span class="meta">@Override</span></span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">onTouchEvent</span><span class="params">(MotionEvent event)</span> </span>&#123;</span><br><span class="line">        <span class="comment">/**</span></span><br><span class="line"><span class="comment">         * 某个触摸时间的速度测量：</span></span><br><span class="line"><span class="comment">         * 1.通过obtain()方法获得velocityTracker变量，并添加需要测量的事件</span></span><br><span class="line"><span class="comment">         * 2.通过computeCurrentVelocity计算速度（参数单位为ms），再通过getter方法获取速度值(右下滑为正数，反之为负数)</span></span><br><span class="line"><span class="comment">         * 3.释放velocityTracker对象。</span></span><br><span class="line"><span class="comment">         */</span></span><br><span class="line">        VelocityTracker velocityTracker = VelocityTracker.obtain();</span><br><span class="line">        velocityTracker.addMovement(event);</span><br><span class="line"></span><br><span class="line">        velocityTracker.computeCurrentVelocity(<span class="number">1000</span>);<span class="comment">//秒速</span></span><br><span class="line">        <span class="keyword">int</span> v_x = (<span class="keyword">int</span>) velocityTracker.getXVelocity();</span><br><span class="line">        <span class="keyword">int</span> v_y = (<span class="keyword">int</span>) velocityTracker.getYVelocity();</span><br><span class="line"></span><br><span class="line">        LogUtils.i(TAG,<span class="string">"\t\tX:"</span> + v_x + <span class="string">"\t\tY:"</span> + v_y);</span><br><span class="line"></span><br><span class="line">        velocityTracker.recycle();</span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">true</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line"><span class="number">02</span>-<span class="number">17</span> <span class="number">11</span>:<span class="number">26</span>:<span class="number">55.483</span> <span class="number">27154</span>-<span class="number">27154</span>/lxf.androiddemos I/TestView: 		X:<span class="number">5656</span>		Y:<span class="number">1203</span></span><br><span class="line"><span class="number">02</span>-<span class="number">17</span> <span class="number">11</span>:<span class="number">26</span>:<span class="number">55.500</span> <span class="number">27154</span>-<span class="number">27154</span>/lxf.androiddemos I/TestView: 		X:<span class="number">6255</span>		Y:<span class="number">1202</span></span><br><span class="line"><span class="number">02</span>-<span class="number">17</span> <span class="number">11</span>:<span class="number">26</span>:<span class="number">55.509</span> <span class="number">27154</span>-<span class="number">27154</span>/lxf.androiddemos I/TestView: 		X:<span class="number">0</span>		Y:<span class="number">0</span></span><br><span class="line"><span class="number">02</span>-<span class="number">17</span> <span class="number">11</span>:<span class="number">26</span>:<span class="number">55.510</span> <span class="number">27154</span>-<span class="number">27154</span>/lxf.androiddemos I/TestView: 		X:<span class="number">0</span>		Y:<span class="number">0</span></span><br><span class="line"><span class="number">02</span>-<span class="number">17</span> <span class="number">11</span>:<span class="number">27</span>:<span class="number">01.207</span> <span class="number">27154</span>-<span class="number">27154</span>/lxf.androiddemos I/TestView: 		X:<span class="number">0</span>		Y:<span class="number">0</span></span><br><span class="line"><span class="number">02</span>-<span class="number">17</span> <span class="number">11</span>:<span class="number">27</span>:<span class="number">01.248</span> <span class="number">27154</span>-<span class="number">27154</span>/lxf.androiddemos I/TestView: 		X:-<span class="number">421</span>		Y:<span class="number">49</span></span><br><span class="line"><span class="number">02</span>-<span class="number">17</span> <span class="number">11</span>:<span class="number">27</span>:<span class="number">01.265</span> <span class="number">27154</span>-<span class="number">27154</span>/lxf.androiddemos I/TestView: 		X:-<span class="number">2978</span>		Y:<span class="number">372</span></span><br><span class="line"><span class="number">02</span>-<span class="number">17</span> <span class="number">11</span>:<span class="number">27</span>:<span class="number">01.282</span> <span class="number">27154</span>-<span class="number">27154</span>/lxf.androiddemos I/TestView: 		X:-<span class="number">3426</span>		Y:<span class="number">426</span></span><br></pre></td></tr></table></figure></p>
+<h1 id="GestureDetector"><a href="#GestureDetector" class="headerlink" title="GestureDetector"></a>GestureDetector</h1><p>　　手势检测，用来辅助检测用户的滑动、单击、双击、长按等行为。<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//1.实现OnGestureListener接口</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">TestView</span> <span class="keyword">extends</span> <span class="title">View</span> <span class="keyword">implements</span> <span class="title">GestureDetector</span>.<span class="title">OnGestureListener</span></span>&#123;</span><br><span class="line"><span class="comment">//2.获得GestureDetector对象,</span></span><br><span class="line">gestureDetector = <span class="keyword">new</span> GestureDetector(getContext(),<span class="keyword">this</span>);</span><br><span class="line"><span class="comment">//如果要监听双击，可以实现DoubleTapListener接口</span></span><br><span class="line">gestureDetector.setOnDoubleTapListener(mDoubleTapListener);</span><br><span class="line">...</span><br><span class="line"><span class="comment">//3.接管onTouchEvent(event)方法。</span></span><br><span class="line"><span class="meta">@Override</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">onTouchEvent</span><span class="params">(MotionEvent event)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> gestureDetector.onTouchEvent(event);</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//4.在接口的相应回调方法中实现自己的逻辑。</span></span><br><span class="line">...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<h1 id="View的滑动"><a href="#View的滑动" class="headerlink" title="View的滑动"></a>View的滑动</h1><h2 id="scrollTo-scrollBy"><a href="#scrollTo-scrollBy" class="headerlink" title="scrollTo/scrollBy"></a>scrollTo/scrollBy</h2><p>　　scrollBy内部实际上就是调用的scrollTo方法，它实现了view基于<strong>当前位置</strong>的相对滑动，而scrollTo是相对于<strong>初始位置</strong>滚动某段距离，可以变向理解为绝对滑动。<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">scrollBy</span><span class="params">(<span class="keyword">int</span> x, <span class="keyword">int</span> y)</span> </span>&#123;</span><br><span class="line">       scrollTo(mScrollX + x, mScrollY + y);</span><br><span class="line">   &#125;</span><br></pre></td></tr></table></figure></p>
+<p>　　在滑动过程中，mScrollX的值总是等于view的左边缘（left）和view的内容的左边缘在水平方向上的距离，mScrollY同理。<strong>scrollTo/scrollBy只能改变view的内容位置而不能改变view在布局中的位置。</strong></p>
+<h2 id="使用动画"><a href="#使用动画" class="headerlink" title="使用动画"></a>使用动画</h2><p>　　使用动画使view平移的方式有两种：</p>
+<ul>
+<li><p>补间动画：实际上是对view的影像进行操作，并不会改变view本身的位置、内容等参数。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">TranslateAnimation animation = <span class="keyword">new</span> TranslateAnimation(<span class="number">0</span>,<span class="number">100</span>,<span class="number">0</span>,<span class="number">0</span>);</span><br><span class="line">setAnimation(animation);</span><br><span class="line">animation.start();</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>属性动画：直接操作view的属性，可以改变view自身，注意ObjectAnimator实际上是在操纵对象的setter方法，因此使用时需保证该属性有setter方法。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ObjectAnimator.ofInt(targetView,<span class="string">"translationX"</span>,<span class="number">0</span>,<span class="number">100</span>).setDuration(<span class="number">500</span>).start();</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h3 id="改变LayoutParams"><a href="#改变LayoutParams" class="headerlink" title="改变LayoutParams"></a>改变LayoutParams</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">ViewGroup.MarginLayoutParams params = (ViewGroup.MarginLayoutParams) getLayoutParams();</span><br><span class="line">params.leftMargin += <span class="number">100</span>;</span><br><span class="line">setLayoutParams(params);</span><br><span class="line"><span class="comment">//或requestLayout();</span></span><br></pre></td></tr></table></figure>
+<h1 id="弹性滑动"><a href="#弹性滑动" class="headerlink" title="弹性滑动"></a>弹性滑动</h1><h2 id="使用Scroller"><a href="#使用Scroller" class="headerlink" title="使用Scroller"></a>使用Scroller</h2><p>　　Scroller的典型用法：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">scroller = <span class="keyword">new</span> Scroller(getContext());</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">smoothScrollTo</span><span class="params">(<span class="keyword">int</span> x, <span class="keyword">int</span> y)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">int</span> scrollX = getScrollX();</span><br><span class="line">    <span class="keyword">int</span> delayX = x - scrollX;</span><br><span class="line">    scroller.startScroll(scrollX, <span class="number">0</span>, delayX, <span class="number">0</span>, <span class="number">1000</span>);<span class="comment">//仅仅保存相应参数</span></span><br><span class="line">    invalidate();<span class="comment">//draw方法中会调用computeScroll</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="meta">@Override</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">computeScroll</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (scroller.computeScrollOffset()) &#123;</span><br><span class="line">        scrollTo(scroller.getCurrX(), scroller.getCurrY());</span><br><span class="line">        postInvalidate();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>　　Scroller本身并不能使View滑动，它需要配合View的computeScroll方法才能实现弹性滑动的效果。它不断让view重绘，每一次重绘距离view的起始滑动会有一个时间间隔，通过这个时间间隔Scroller可以得到view的当前滑动位置，通过scrollTo()完成滑动。</p>
+<h2 id="使用属性动画"><a href="#使用属性动画" class="headerlink" title="使用属性动画"></a>使用属性动画</h2><p>　　值动画：其实属性动画的根本就是属性<strong>值的改变</strong>。<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">ValueAnimator animator = ValueAnimator.ofFloat(<span class="number">0</span>,<span class="number">1</span>).setDuration(<span class="number">1000</span>);</span><br><span class="line">    animator.addUpdateListener(<span class="keyword">new</span> ValueAnimator.AnimatorUpdateListener() &#123;</span><br><span class="line">        <span class="meta">@Override</span></span><br><span class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onAnimationUpdate</span><span class="params">(ValueAnimator animation)</span> </span>&#123;</span><br><span class="line">            <span class="keyword">float</span> flag = animation.getAnimatedFraction();</span><br><span class="line">            scrollTo(startX + (<span class="keyword">int</span>)(delayX * flag),<span class="number">0</span>);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;);</span><br><span class="line">animator.start();</span><br></pre></td></tr></table></figure></p>
+<p>　　其实所谓弹性滑动，就是将一次滑动分成了若干个短距离滑动。</p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Android/" rel="tag"># Android</a>
+          
+            <a href="/tags/View/" rel="tag"># View</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/01/23/Pl2303笔记/" rel="next" title="Pl2303笔记">
+                <i class="fa fa-chevron-left"></i> Pl2303笔记
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/02/22/RecyclerView的item选中放大/" rel="prev" title="RecyclerView的item选中放大">
+                RecyclerView的item选中放大 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/uploads/photo.png"
+                alt="风少侠" />
+            
+              <p class="site-author-name" itemprop="name">风少侠</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">27</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">7</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">19</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/lunxinfeng" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://www.jianshu.com/u/41d7604ac57a" target="_blank" title="简书">
+                      
+                        <i class="fa fa-fw fa-paper-plane"></i>简书</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#位置参数"><span class="nav-number">1.</span> <span class="nav-text">位置参数</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#角度"><span class="nav-number">2.</span> <span class="nav-text">角度</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#触摸事件"><span class="nav-number">3.</span> <span class="nav-text">触摸事件</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#MotionEvent"><span class="nav-number">3.1.</span> <span class="nav-text">MotionEvent</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#TouchSlop"><span class="nav-number">3.2.</span> <span class="nav-text">TouchSlop</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#VelocityTracker"><span class="nav-number">4.</span> <span class="nav-text">VelocityTracker</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#GestureDetector"><span class="nav-number">5.</span> <span class="nav-text">GestureDetector</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#View的滑动"><span class="nav-number">6.</span> <span class="nav-text">View的滑动</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#scrollTo-scrollBy"><span class="nav-number">6.1.</span> <span class="nav-text">scrollTo/scrollBy</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#使用动画"><span class="nav-number">6.2.</span> <span class="nav-text">使用动画</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#改变LayoutParams"><span class="nav-number">6.2.1.</span> <span class="nav-text">改变LayoutParams</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#弹性滑动"><span class="nav-number">7.</span> <span class="nav-text">弹性滑动</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#使用Scroller"><span class="nav-number">7.1.</span> <span class="nav-text">使用Scroller</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#使用属性动画"><span class="nav-number">7.2.</span> <span class="nav-text">使用属性动画</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">风少侠</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Mist</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

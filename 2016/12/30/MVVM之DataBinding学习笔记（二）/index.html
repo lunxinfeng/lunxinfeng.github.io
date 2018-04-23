@@ -1,0 +1,862 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Android,MVVM,DataBinding," />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="进阶使用数据更新　　在很多情况下，我们需要动态去设置相关数据，DataBinding为我们提供了两种方式来实现它。　　方法一  实体类继承BaseObservable，或者自己实现Observable 在需要刷新的属性的get方法上添加@Bindable注解，此时会自动生成BR类。（这里有个坑，很多时候BR文件不会自动生成，此时需要重启AS…请让我先默默地日一波dog） 在相应的set方法里调用n">
+<meta name="keywords" content="Android,MVVM,DataBinding">
+<meta property="og:type" content="article">
+<meta property="og:title" content="MVVM之DataBinding学习笔记（二）">
+<meta property="og:url" content="http://yoursite.com/2016/12/30/MVVM之DataBinding学习笔记（二）/index.html">
+<meta property="og:site_name" content="风少侠的个人博客">
+<meta property="og:description" content="进阶使用数据更新　　在很多情况下，我们需要动态去设置相关数据，DataBinding为我们提供了两种方式来实现它。　　方法一  实体类继承BaseObservable，或者自己实现Observable 在需要刷新的属性的get方法上添加@Bindable注解，此时会自动生成BR类。（这里有个坑，很多时候BR文件不会自动生成，此时需要重启AS…请让我先默默地日一波dog） 在相应的set方法里调用n">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/1215918-fad3579a6c47a687.gif?imageMogr2/auto-orient/strip">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/1215918-775130717168c69d.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:updated_time" content="2018-04-23T22:32:23.892Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="MVVM之DataBinding学习笔记（二）">
+<meta name="twitter:description" content="进阶使用数据更新　　在很多情况下，我们需要动态去设置相关数据，DataBinding为我们提供了两种方式来实现它。　　方法一  实体类继承BaseObservable，或者自己实现Observable 在需要刷新的属性的get方法上添加@Bindable注解，此时会自动生成BR类。（这里有个坑，很多时候BR文件不会自动生成，此时需要重启AS…请让我先默默地日一波dog） 在相应的set方法里调用n">
+<meta name="twitter:image" content="http://upload-images.jianshu.io/upload_images/1215918-fad3579a6c47a687.gif?imageMogr2/auto-orient/strip">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2016/12/30/MVVM之DataBinding学习笔记（二）/"/>
+
+
+
+
+
+  <title>MVVM之DataBinding学习笔记（二） | 风少侠的个人博客</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">风少侠的个人博客</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2016/12/30/MVVM之DataBinding学习笔记（二）/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="风少侠">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/uploads/photo.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="风少侠的个人博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">MVVM之DataBinding学习笔记（二）</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2016-12-30T12:09:43+08:00">
+                2016-12-30
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Android/" itemprop="url" rel="index">
+                    <span itemprop="name">Android</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="进阶使用"><a href="#进阶使用" class="headerlink" title="进阶使用"></a>进阶使用</h1><h2 id="数据更新"><a href="#数据更新" class="headerlink" title="数据更新"></a>数据更新</h2><p>　　在很多情况下，我们需要动态去设置相关数据，DataBinding为我们提供了两种方式来实现它。<br>　　<strong>方法一</strong></p>
+<ol>
+<li>实体类继承BaseObservable，或者自己实现Observable</li>
+<li>在需要刷新的属性的get方法上添加@Bindable注解，此时会自动生成BR类。（这里有个坑，很多时候BR文件不会自动生成，此时需要重启AS…请让我先默默地日一波dog）</li>
+<li>在相应的set方法里调用notifyPropertyChanged(BR.xxx)进行刷新。<a id="more"></a>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> lxf.androiddemos.model;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> android.databinding.BaseObservable;</span><br><span class="line"><span class="keyword">import</span> android.databinding.Bindable;</span><br><span class="line"><span class="keyword">import</span> android.view.View;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> lxf.androiddemos.BR;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">UserEntity</span> <span class="keyword">extends</span> <span class="title">BaseObservable</span></span>&#123;</span><br><span class="line">    <span class="keyword">private</span> String name;</span><br><span class="line">    <span class="keyword">private</span> String sex;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">int</span> age;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">int</span> type;</span><br><span class="line"></span><br><span class="line">    ...</span><br><span class="line"></span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">addAge</span><span class="params">(View view)</span> </span>&#123;</span><br><span class="line">        setAge(getAge() + <span class="number">1</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Bindable</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">getAge</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> age;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setAge</span><span class="params">(<span class="keyword">int</span> age)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.age = age;</span><br><span class="line"><span class="comment">//        notifyChange();//刷新所有可刷新数据</span></span><br><span class="line">        notifyPropertyChanged(BR.age);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<p>　　<strong>方法二</strong></p>
+<ol>
+<li>实体类继承BaseObservable，或者自己实现Observable</li>
+<li>使用ObservableField&lt;&gt;，泛型可以填入自己需要的类型，注意必须要初始化。对于基本数据类型也可以直接使用ObservableBoolean, ObservableByte, ObservableChar, ObservableShort, ObservableInt, ObservableLong, ObservableFloat, ObservableDouble和ObservableParcelable。</li>
+<li>通过set和get方法为ObservableField设值和取值</li>
+</ol>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> lxf.androiddemos.model;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> android.databinding.BaseObservable;</span><br><span class="line"><span class="keyword">import</span> android.databinding.ObservableField;</span><br><span class="line"><span class="keyword">import</span> android.view.View;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">UserEntity</span> <span class="keyword">extends</span> <span class="title">BaseObservable</span></span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> ObservableField&lt;String&gt; address = <span class="keyword">new</span> ObservableField&lt;&gt;();</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">changeAddress</span><span class="params">(View view)</span></span>&#123;</span><br><span class="line">        address.set(<span class="string">"change:"</span> + address.get());</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="自定义属性绑定适配器和回调"><a href="#自定义属性绑定适配器和回调" class="headerlink" title="自定义属性绑定适配器和回调"></a>自定义属性绑定适配器和回调</h2><h3 id="自动寻找setter"><a href="#自动寻找setter" class="headerlink" title="自动寻找setter"></a>自动寻找setter</h3><p>　　DataBinding在遇到属性绑定时，会自动去寻找该属性的set方法，找到就会调用，找不到就报错。<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&lt;ImageView</span><br><span class="line">    android:layout_width=<span class="string">"50dp"</span></span><br><span class="line">    android:layout_height=<span class="string">"50dp"</span></span><br><span class="line">    app:imageResource=<span class="string">"@&#123;R.mipmap.ic_launcher&#125;"</span>/&gt;</span><br></pre></td></tr></table></figure></p>
+<p>　　比如上面这段代码，我们知道ImageView中是没有imageResource这个属性的，但是有setImageResource(int resId)方法，因此这段代码是可以正常运行的。利用这种特性，可以为一些自定义控件增加setter方法，使其支持DataBinding。</p>
+<h3 id="BindingMethods"><a href="#BindingMethods" class="headerlink" title="@BindingMethods"></a>@BindingMethods</h3><p>　　当xml属性名称和源码中set方法名称不一致时，可以通过这种方式来进行绑定。先看一个官方的实现：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@BindingMethods</span>(&#123;</span><br><span class="line">		...</span><br><span class="line">        <span class="meta">@BindingMethod</span>(type = TextView.class, attribute = <span class="string">"android:inputType"</span>, method = <span class="string">"setRawInputType"</span>),</span><br><span class="line">		...</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure></p>
+<p>　　这段代码的意思就是将TextView的android:inputType属性绑定到setRawInputType方法，其实也可以通俗的认为是为原本的setter方法起了一个别名。</p>
+<h3 id="BindingAdapter"><a href="#BindingAdapter" class="headerlink" title="@BindingAdapter"></a>@BindingAdapter</h3><p>　　很多时候，源码中并没有提供set方法，比如ImageView，我们希望通过设置url来达到加载图片的目的，我们可以通过@BindAdapter来实现。<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line">&lt;?xml version=<span class="string">"1.0"</span> encoding=<span class="string">"utf-8"</span>?&gt;</span><br><span class="line">&lt;layout xmlns:android=<span class="string">"http://schemas.android.com/apk/res/android"</span></span><br><span class="line">    xmlns:app=<span class="string">"http://schemas.android.com/apk/res-auto"</span>&gt;</span><br><span class="line"></span><br><span class="line">    &lt;!--如果本页不需要绑定数据，data标签可以省略--&gt;</span><br><span class="line">    &lt;data <span class="class"><span class="keyword">class</span></span>=<span class="string">"DataBingMain"</span>&gt;</span><br><span class="line">        &lt;<span class="keyword">import</span> type=<span class="string">"lxf.androiddemos.R"</span>/&gt;</span><br><span class="line">        &lt;variable</span><br><span class="line">            name=<span class="string">"user"</span></span><br><span class="line">            type=<span class="string">"lxf.androiddemos.model.UserEntity"</span>/&gt;</span><br><span class="line">    &lt;/data&gt;</span><br><span class="line"></span><br><span class="line">    &lt;LinearLayout</span><br><span class="line">        ...</span><br><span class="line">        &gt;</span><br><span class="line"></span><br><span class="line">        &lt;ImageView</span><br><span class="line">            android:layout_width=<span class="string">"100dp"</span></span><br><span class="line">            android:layout_height=<span class="string">"100dp"</span></span><br><span class="line">            app:url=<span class="string">"@&#123;user.img&#125;"</span></span><br><span class="line">            app:placeHolder=<span class="string">"@&#123;R.mipmap.ic_launcher&#125;"</span>/&gt;</span><br><span class="line">    &lt;/LinearLayout&gt;</span><br><span class="line">&lt;/layout&gt;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">UserEntity</span> <span class="keyword">extends</span> <span class="title">BaseObservable</span></span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> String img;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@BindingAdapter</span>(value = &#123;<span class="string">"url"</span>,<span class="string">"placeHolder"</span>&#125;,requireAll = <span class="keyword">false</span>)</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">setImage</span><span class="params">(ImageView imageView ,String url,<span class="keyword">int</span> placeHolder)</span></span>&#123;</span><br><span class="line">        Glide.with(imageView.getContext()).load(url).placeholder(placeHolder).into(imageView);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>这里有几点需要注意：</p>
+<ul>
+<li>xml文件中一定不要忘记各种类的import（除java.lang包外均需导入），否则你一定会碰到databinding程序包不存在这个错误。</li>
+<li>设置@BindAdapter注解的方法需要是static的，否则编译也会报错。</li>
+<li>你可以把这个方法设置在一个专门的工具类中，不是说必须要在这个model实体类里。</li>
+<li>@BindAdapter包含value和requireAll两个属性，value是一个String[]，包含你自定义的属性。requireAll意思是是否需要设置你在value中声明的全部属性，默认为true。如果设定为false，那么没赋值的自定义属性会传默认值。</li>
+</ul>
+<p>　　到这里，我们来回头看一下之前在<strong>事件绑定</strong>中留下的那个坑——onTextChanged，其实这是官方提前为我们封装好的：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@BindingAdapter</span>(value = &#123;<span class="string">"android:beforeTextChanged"</span>, <span class="string">"android:onTextChanged"</span>,</span><br><span class="line">            <span class="string">"android:afterTextChanged"</span>, <span class="string">"android:textAttrChanged"</span>&#125;, requireAll = <span class="keyword">false</span>)</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">setTextWatcher</span><span class="params">(TextView view, <span class="keyword">final</span> BeforeTextChanged before,</span></span></span><br><span class="line"><span class="function"><span class="params">            <span class="keyword">final</span> OnTextChanged on, <span class="keyword">final</span> AfterTextChanged after,</span></span></span><br><span class="line"><span class="function"><span class="params">            <span class="keyword">final</span> InverseBindingListener textAttrChanged)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">final</span> TextWatcher newValue;</span><br><span class="line">        <span class="keyword">if</span> (before == <span class="keyword">null</span> &amp;&amp; after == <span class="keyword">null</span> &amp;&amp; on == <span class="keyword">null</span> &amp;&amp; textAttrChanged == <span class="keyword">null</span>) &#123;</span><br><span class="line">            newValue = <span class="keyword">null</span>;</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            newValue = <span class="keyword">new</span> TextWatcher() &#123;</span><br><span class="line">                <span class="meta">@Override</span></span><br><span class="line">                <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">beforeTextChanged</span><span class="params">(CharSequence s, <span class="keyword">int</span> start, <span class="keyword">int</span> count, <span class="keyword">int</span> after)</span> </span>&#123;</span><br><span class="line">                    <span class="keyword">if</span> (before != <span class="keyword">null</span>) &#123;</span><br><span class="line">                        before.beforeTextChanged(s, start, count, after);</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;</span><br><span class="line"></span><br><span class="line">                <span class="meta">@Override</span></span><br><span class="line">                <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onTextChanged</span><span class="params">(CharSequence s, <span class="keyword">int</span> start, <span class="keyword">int</span> before, <span class="keyword">int</span> count)</span> </span>&#123;</span><br><span class="line">                    <span class="keyword">if</span> (on != <span class="keyword">null</span>) &#123;</span><br><span class="line">                        on.onTextChanged(s, start, before, count);</span><br><span class="line">                    &#125;</span><br><span class="line">                    <span class="keyword">if</span> (textAttrChanged != <span class="keyword">null</span>) &#123;</span><br><span class="line">                        textAttrChanged.onChange();</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;</span><br><span class="line"></span><br><span class="line">                <span class="meta">@Override</span></span><br><span class="line">                <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">afterTextChanged</span><span class="params">(Editable s)</span> </span>&#123;</span><br><span class="line">                    <span class="keyword">if</span> (after != <span class="keyword">null</span>) &#123;</span><br><span class="line">                        after.afterTextChanged(s);</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">final</span> TextWatcher oldValue = ListenerUtil.trackListener(view, newValue, R.id.textWatcher);</span><br><span class="line">        <span class="keyword">if</span> (oldValue != <span class="keyword">null</span>) &#123;</span><br><span class="line">            view.removeTextChangedListener(oldValue);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span> (newValue != <span class="keyword">null</span>) &#123;</span><br><span class="line">            view.addTextChangedListener(newValue);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure></p>
+<p>　　可以看到，当on!=null时，会调用传统的onTextChanged方法。</p>
+<h3 id="BindingConversion"><a href="#BindingConversion" class="headerlink" title="@BindingConversion"></a>@BindingConversion</h3><p>　　方法注释，当自定义的属性和setter方法中需要的参数类型不符时进行转换。<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&lt;Button</span><br><span class="line">    android:layout_width=<span class="string">"wrap_content"</span></span><br><span class="line">    android:layout_height=<span class="string">"wrap_content"</span></span><br><span class="line">    android:background=<span class="string">"@&#123;`#de325e`&#125;"</span></span><br><span class="line">    /&gt;</span><br></pre></td></tr></table></figure></p>
+<p>　　上面这种写法，直接编译是会报错的，因为setBackground接收的是一个Drawable对象，而我们传入的是个string，所以我们此处可以用@BindingConversion来转换一下（PS：我知道传统写法是可以直接传字符串颜色值的，我只是举个简单例子）。<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@BindingConversion</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> Drawable <span class="title">colorToDrawable</span><span class="params">(String color)</span></span>&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">new</span> ColorDrawable(Color.parseColor(color));</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>　　DataBinding在碰到这种参数类型不对的问题时，会自动去检索看看有没有相关的@BindingConversion方法，如果有的话则会调用，需要注意，这个方法也需要是static的。</p>
+<h2 id="接口回调"><a href="#接口回调" class="headerlink" title="接口回调"></a>接口回调</h2><h3 id="model的回调"><a href="#model的回调" class="headerlink" title="model的回调"></a>model的回调</h3><p>　　当属性值变化时的回调。<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">user.addOnPropertyChangedCallback(<span class="keyword">new</span> Observable.OnPropertyChangedCallback() &#123;</span><br><span class="line">            <span class="meta">@Override</span></span><br><span class="line">            <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onPropertyChanged</span><span class="params">(Observable sender, <span class="keyword">int</span> propertyId)</span> </span>&#123;</span><br><span class="line">                <span class="keyword">if</span> (propertyId == BR.age)&#123;</span><br><span class="line">                    Toast.makeText(getApplicationContext(),<span class="string">"age刷新了"</span>,Toast.LENGTH_SHORT).show();</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;);</span><br></pre></td></tr></table></figure></p>
+<h3 id="ViewDatabinding的回调"><a href="#ViewDatabinding的回调" class="headerlink" title="ViewDatabinding的回调"></a>ViewDatabinding的回调</h3><p>　　当ViewDataBinding执行executePendingBindings()尺寸必须再次评估时的回调。可以设置一些view的展示动画等。<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">dataBinding.addOnRebindCallback(<span class="keyword">new</span> OnRebindCallback() &#123;</span><br><span class="line">            <span class="meta">@Override</span></span><br><span class="line">            <span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">onPreBind</span><span class="params">(ViewDataBinding binding)</span> </span>&#123;</span><br><span class="line">                <span class="keyword">return</span> <span class="keyword">super</span>.onPreBind(binding);</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">            <span class="meta">@Override</span></span><br><span class="line">            <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onCanceled</span><span class="params">(ViewDataBinding binding)</span> </span>&#123;</span><br><span class="line">                <span class="keyword">super</span>.onCanceled(binding);</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">            <span class="meta">@Override</span></span><br><span class="line">            <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onBound</span><span class="params">(ViewDataBinding binding)</span> </span>&#123;</span><br><span class="line">                <span class="keyword">super</span>.onBound(binding);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;);</span><br></pre></td></tr></table></figure></p>
+<h2 id="双向绑定"><a href="#双向绑定" class="headerlink" title="双向绑定"></a>双向绑定</h2><h3 id="基本数据"><a href="#基本数据" class="headerlink" title="基本数据"></a>基本数据</h3><p>　　双向绑定意思不仅数据绑定UI，同时UI更新时可以刷新数据，语法为@={},举个例子：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&lt;EditText</span><br><span class="line">          android:layout_width=<span class="string">"match_parent"</span></span><br><span class="line">          android:layout_height=<span class="string">"wrap_content"</span></span><br><span class="line">          android:onTextChanged=<span class="string">"@&#123;util.onTextChanged&#125;"</span></span><br><span class="line">          android:text=<span class="string">"@=&#123;user.address&#125;"</span></span><br><span class="line">          /&gt;</span><br></pre></td></tr></table></figure></p>
+<p>　　这样在程序运行后，editText会自动显示user.address的初始值，改变editText，则user.address也会同步改变，可以想象，如果我们将user.address绑定另一个TextView，则TextView的内容会跟随editText的变化而变化。</p>
+<h3 id="隐式属性监听"><a href="#隐式属性监听" class="headerlink" title="隐式属性监听"></a>隐式属性监听</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">&lt;ImageView</span><br><span class="line">     android:layout_width=<span class="string">"100dp"</span></span><br><span class="line">     android:layout_height=<span class="string">"100dp"</span></span><br><span class="line">     android:visibility=<span class="string">"@&#123;checkbox.checked?View.VISIBLE:View.GONE&#125;"</span></span><br><span class="line">     app:placeHolder=<span class="string">"@&#123;R.mipmap.ic_launcher&#125;"</span></span><br><span class="line">     app:url=<span class="string">"@&#123;user.img&#125;"</span> /&gt;</span><br><span class="line"> &lt;CheckBox</span><br><span class="line">     android:id=<span class="string">"@+id/checkbox"</span></span><br><span class="line">     android:layout_width=<span class="string">"wrap_content"</span></span><br><span class="line">     android:layout_height=<span class="string">"wrap_content"</span> /&gt;</span><br></pre></td></tr></table></figure>
+<p>　　可以看ImageView的visibility属性，通过CheckBox的checked属性来控制自身的显示和隐藏，这是官方给出的一种支持，同时官方还支持下面这些属性：</p>
+<ul>
+<li><strong>AbsListView</strong> android:selectedItemPosition</li>
+<li><strong>CalendarView</strong> android:date</li>
+<li><strong>CompoundButton</strong> android:checked</li>
+<li><strong>DatePicker</strong> android:year, android:month, android:day (yes, these are synthetic, but we had a listener, so we thought you’d want to use them)</li>
+<li><strong>NumberPicker</strong> android:value</li>
+<li><strong>RadioGroup</strong> android:checkedButton</li>
+<li><strong>RatingBar</strong> android:rating</li>
+<li><strong>SeekBar</strong> android:progress</li>
+<li><strong>TabHost</strong> android:currentTab (you probably don’t care, but we had the listener)</li>
+<li><strong>TextView</strong> android:text</li>
+<li><strong>TimePicker</strong> android:hour, android:minute (again, synthetic, but we had the listener)</li>
+</ul>
+<h3 id="自定义双向绑定"><a href="#自定义双向绑定" class="headerlink" title="自定义双向绑定"></a>自定义双向绑定</h3><p>　　双向绑定其实就是正向绑定+反向绑定，前面讲的全部是正向绑定，截下来我们来看看怎么定义反向绑定。</p>
+<h4 id="绑定方法（-InverseBindingMethods）"><a href="#绑定方法（-InverseBindingMethods）" class="headerlink" title="绑定方法（@InverseBindingMethods）"></a>绑定方法（@InverseBindingMethods）</h4><p>　　首先先来了解几个名词：</p>
+<ul>
+<li><p>@InverseBindingMethods：其实就是元素为@InverseBindingMethod的一个数组，用来注解<strong>类</strong>。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Target</span>(ElementType.TYPE)</span><br><span class="line"><span class="keyword">public</span> <span class="meta">@interface</span> InverseBindingMethods &#123;</span><br><span class="line">    InverseBindingMethod[] value();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>@InverseBindingMethod：反向绑定方法，用来确定怎么去监听view属性的变化和回调哪一个getter方法。包含以下4个属性：</p>
+<ul>
+<li>type：包含attribute的view类型。</li>
+<li>attribute:支持双向绑定的属性（string格式）。</li>
+<li>event:可以省略，用来通知DataBinding系统attribute已经改变，默认为attribute + “AttrChanged”。（UI通知数据）</li>
+<li>method:可以省略，用来从view获取数据的方法，不设定的话会自动寻找”is” 或 “get” + attribute方法。（数据刷新）</li>
+</ul>
+</li>
+</ul>
+<p>　　event调用时机需要通过@BindingAdapter进行设置。</p>
+<ul>
+<li>InverseBindingListener：反向绑定监听器，当使用双向绑定时，会在你的layout自动生成的binding类中自动生成一个InverseBindingListener的实现（拗口吗？好像有一点点。。不理解的可以去看看源码）。</li>
+</ul>
+<p>　　看完这几个名词是不是已经凌乱了？（话说我当时也差点哭了。。），我们来看个官方例子消化一下：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@InverseBindingMethods</span>(&#123;</span><br><span class="line">        <span class="meta">@InverseBindingMethod</span>(type = CompoundButton.class, attribute = <span class="string">"android:checked"</span>),</span><br><span class="line">&#125;)<span class="comment">//1.这里需要双向绑定的是checked属性，event和method都省略了。</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">CompoundButtonBindingAdapter</span> </span>&#123;</span><br><span class="line">	...</span><br><span class="line">	<span class="comment">//2.设置什么时候调用event</span></span><br><span class="line">	<span class="meta">@BindingAdapter</span>(value = &#123;<span class="string">"android:onCheckedChanged"</span>, <span class="string">"android:checkedAttrChanged"</span>&#125;,</span><br><span class="line">            requireAll = <span class="keyword">false</span>)</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">setListeners</span><span class="params">(CompoundButton view, <span class="keyword">final</span> OnCheckedChangeListener listener,</span></span></span><br><span class="line"><span class="function"><span class="params">            <span class="keyword">final</span> InverseBindingListener attrChange)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (attrChange == <span class="keyword">null</span>) &#123;</span><br><span class="line">            view.setOnCheckedChangeListener(listener);</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            view.setOnCheckedChangeListener(<span class="keyword">new</span> OnCheckedChangeListener() &#123;</span><br><span class="line">                <span class="meta">@Override</span></span><br><span class="line">                <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onCheckedChanged</span><span class="params">(CompoundButton buttonView, <span class="keyword">boolean</span> isChecked)</span> </span>&#123;</span><br><span class="line">                    <span class="keyword">if</span> (listener != <span class="keyword">null</span>) &#123;</span><br><span class="line">                        listener.onCheckedChanged(buttonView, isChecked);</span><br><span class="line">                    &#125;</span><br><span class="line">                    attrChange.onChange();</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">	<span class="comment">//3.我们在layout中使用双向绑定</span></span><br><span class="line">		&lt;CheckBox</span><br><span class="line">            android:id=<span class="string">"@+id/checkbox"</span></span><br><span class="line">            android:layout_width=<span class="string">"wrap_content"</span></span><br><span class="line">            android:layout_height=<span class="string">"wrap_content"</span></span><br><span class="line">            android:checked=<span class="string">"@=&#123;user.checked&#125;"</span>/&gt;</span><br><span class="line"></span><br><span class="line">	<span class="comment">//4.layout的binding类中自动生成的InverseBindingListener实现。</span></span><br><span class="line">	<span class="comment">// Inverse Binding Event Handlers</span></span><br><span class="line">    <span class="keyword">private</span> android.databinding.InverseBindingListener checkboxandroidCheck = <span class="keyword">new</span> android.databinding.InverseBindingListener() &#123;</span><br><span class="line">        <span class="meta">@Override</span></span><br><span class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onChange</span><span class="params">()</span> </span>&#123;<span class="comment">//这段逻辑其实就是用来更新user实体类中的checked字段的</span></span><br><span class="line">            <span class="comment">// Inverse of user.checked.get()</span></span><br><span class="line">            <span class="comment">//         is user.checked.set((java.lang.Boolean) callbackArg_0)</span></span><br><span class="line">            <span class="keyword">boolean</span> callbackArg_0 = checkbox.isChecked();<span class="comment">//其实就是method</span></span><br><span class="line">            <span class="comment">// localize variables for thread safety</span></span><br><span class="line">            <span class="comment">// user.checked != null</span></span><br><span class="line">            <span class="keyword">boolean</span> checkedUserObjectnul = <span class="keyword">false</span>;</span><br><span class="line">            <span class="comment">// user.checked</span></span><br><span class="line">            android.databinding.ObservableField&lt;java.lang.Boolean&gt; checkedUser = <span class="keyword">null</span>;</span><br><span class="line">            <span class="comment">// user</span></span><br><span class="line">            lxf.androiddemos.model.UserEntity user = mUser;</span><br><span class="line">            <span class="comment">// user.checked.get()</span></span><br><span class="line">            java.lang.Boolean CheckedUser1 = <span class="keyword">null</span>;</span><br><span class="line">            <span class="comment">// user != null</span></span><br><span class="line">            <span class="keyword">boolean</span> userObjectnull = <span class="keyword">false</span>;</span><br><span class="line"></span><br><span class="line">            userObjectnull = (user) != (<span class="keyword">null</span>);</span><br><span class="line">            <span class="keyword">if</span> (userObjectnull) &#123;</span><br><span class="line">              checkedUser = user.checked;</span><br><span class="line"></span><br><span class="line">                checkedUserObjectnul = (checkedUser) != (<span class="keyword">null</span>);</span><br><span class="line">                <span class="keyword">if</span> (checkedUserObjectnul) &#123;</span><br><span class="line">                checkedUser.set((java.lang.Boolean) (callbackArg_0));</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;;</span><br></pre></td></tr></table></figure></p>
+<p>　　整个反向绑定的流程下来其实就是：</p>
+<ol>
+<li>定义需要反向绑定的属性（checked），并配置event（checkedAttrChanged）和method（isChecked）。</li>
+<li>系统会自动根据event找到对应的方法（setLinstener），配置好调用时机。</li>
+<li>开发者在layout中使用双向绑定。</li>
+<li>自动在binding类中生成一个InverseBindingListener的实现。<h4 id="绑定适配器（-InverseBindingAdapter）"><a href="#绑定适配器（-InverseBindingAdapter）" class="headerlink" title="绑定适配器（@InverseBindingAdapter）"></a>绑定适配器（@InverseBindingAdapter）</h4>　　下面再来看个新名词…( ╯□╰ )：</li>
+</ol>
+<ul>
+<li>@InverseBindingAdapter：反向绑定适配器，用来注解<strong>方法</strong>。只包含attribute和event两个属性，含义同上：<ul>
+<li>attribute：支持双向绑定的属性（string格式）。</li>
+<li>event：可以省略，用来通知DataBinding系统attribute已经改变，默认为attribute + “AttrChanged”。需要通过@BindingAdapter进行设置调用时机。</li>
+</ul>
+</li>
+</ul>
+<p>　　@InverseBindingAdapter注解的方法本身就相当于获取数据的getter方法（类似于@BindingAdapter注解的方法本身就相当于setter方法）。</p>
+<p>　　官方案例（双向绑定android:text）：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//1.这一步相当于做了两个操作：确定绑定的属性和event；指定getter方法</span></span><br><span class="line"><span class="meta">@InverseBindingAdapter</span>(attribute = <span class="string">"android:text"</span>, event = <span class="string">"android:textAttrChanged"</span>)</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> String <span class="title">getTextString</span><span class="params">(TextView view)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> view.getText().toString();</span><br><span class="line">    &#125;</span><br><span class="line"><span class="comment">//2.根据event找到对应方法，配置event的调用时机。</span></span><br><span class="line"><span class="meta">@BindingAdapter</span>(value = &#123;<span class="string">"android:beforeTextChanged"</span>, <span class="string">"android:onTextChanged"</span>,</span><br><span class="line">            <span class="string">"android:afterTextChanged"</span>, <span class="string">"android:textAttrChanged"</span>&#125;, requireAll = <span class="keyword">false</span>)</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">setTextWatcher</span><span class="params">(TextView view, <span class="keyword">final</span> BeforeTextChanged before,</span></span></span><br><span class="line"><span class="function"><span class="params">            <span class="keyword">final</span> OnTextChanged on, <span class="keyword">final</span> AfterTextChanged after,</span></span></span><br><span class="line"><span class="function"><span class="params">            <span class="keyword">final</span> InverseBindingListener textAttrChanged)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">final</span> TextWatcher newValue;</span><br><span class="line">        <span class="keyword">if</span> (before == <span class="keyword">null</span> &amp;&amp; after == <span class="keyword">null</span> &amp;&amp; on == <span class="keyword">null</span> &amp;&amp; textAttrChanged == <span class="keyword">null</span>) &#123;</span><br><span class="line">            newValue = <span class="keyword">null</span>;</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            newValue = <span class="keyword">new</span> TextWatcher() &#123;</span><br><span class="line">                ...</span><br><span class="line">                <span class="meta">@Override</span></span><br><span class="line">                <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onTextChanged</span><span class="params">(CharSequence s, <span class="keyword">int</span> start, <span class="keyword">int</span> before, <span class="keyword">int</span> count)</span> </span>&#123;</span><br><span class="line">                    <span class="keyword">if</span> (on != <span class="keyword">null</span>) &#123;</span><br><span class="line">                        on.onTextChanged(s, start, before, count);</span><br><span class="line">                    &#125;</span><br><span class="line">                    <span class="keyword">if</span> (textAttrChanged != <span class="keyword">null</span>) &#123;</span><br><span class="line">                        textAttrChanged.onChange();</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;</span><br><span class="line">                ....</span><br><span class="line">            &#125;;</span><br><span class="line">        &#125;</span><br><span class="line">       ...</span><br><span class="line">    &#125;</span><br><span class="line">	<span class="comment">//3.使用双向绑定</span></span><br><span class="line">		&lt;EditText</span><br><span class="line">            android:layout_width=<span class="string">"match_parent"</span></span><br><span class="line">            android:layout_height=<span class="string">"wrap_content"</span></span><br><span class="line">            android:onTextChanged=<span class="string">"@&#123;util.onTextChanged&#125;"</span></span><br><span class="line">            android:text=<span class="string">"@=&#123;user.address&#125;"</span> /&gt;</span><br><span class="line">	<span class="comment">//4.binding类中自动生成InverseBindingListener的实现。</span></span><br><span class="line"><span class="keyword">private</span> android.databinding.InverseBindingListener mboundView10androidT = <span class="keyword">new</span> android.databinding.InverseBindingListener() &#123;</span><br><span class="line">        <span class="meta">@Override</span></span><br><span class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onChange</span><span class="params">()</span> </span>&#123;</span><br><span class="line">            <span class="comment">// Inverse of user.address.get()</span></span><br><span class="line">            <span class="comment">//         is user.address.set((java.lang.String) callbackArg_0)</span></span><br><span class="line">            java.lang.String callbackArg_0 = android.databinding.adapters.TextViewBindingAdapter.getTextString(mboundView10);<span class="comment">//getter方法</span></span><br><span class="line">            <span class="comment">// localize variables for thread safety</span></span><br><span class="line">            <span class="comment">// user.address != null</span></span><br><span class="line">            <span class="keyword">boolean</span> addressUserObjectnul = <span class="keyword">false</span>;</span><br><span class="line">            <span class="comment">// user</span></span><br><span class="line">            lxf.androiddemos.model.UserEntity user = mUser;</span><br><span class="line">            <span class="comment">// user.address</span></span><br><span class="line">            android.databinding.ObservableField&lt;java.lang.String&gt; addressUser = <span class="keyword">null</span>;</span><br><span class="line">            <span class="comment">// user.address.get()</span></span><br><span class="line">            java.lang.String AddressUser1 = <span class="keyword">null</span>;</span><br><span class="line">            <span class="comment">// user != null</span></span><br><span class="line">            <span class="keyword">boolean</span> userObjectnull = <span class="keyword">false</span>;</span><br><span class="line"></span><br><span class="line">		  	userObjectnull = (user) != (<span class="keyword">null</span>);</span><br><span class="line">            <span class="keyword">if</span> (userObjectnull) &#123;</span><br><span class="line">                addressUser = user.address;</span><br><span class="line">                addressUserObjectnul = (addressUser) != (<span class="keyword">null</span>);</span><br><span class="line">                <span class="keyword">if</span> (addressUserObjectnul) &#123;</span><br><span class="line">					 addressUser.set((java.lang.String) (callbackArg_0));</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;;</span><br></pre></td></tr></table></figure></p>
+<p>　　一大堆的代码看下来，其实绑定方法和绑定适配器两种方法的最终效果是一样的，实现过程也是大同小异，这里就不赘述了，和上面的绑定方法基本一致。</p>
+<h4 id="比葫芦画瓢"><a href="#比葫芦画瓢" class="headerlink" title="比葫芦画瓢"></a>比葫芦画瓢</h4><p>　　我们来自定义实现这样一个效果，点击改变自定义view的颜色，同时将色值在另一个TextView中展示出来（虽然没什么卵用，仅仅当个案例吧），效果图如下（请自觉忽略其他的东西。。）：</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/1215918-fad3579a6c47a687.gif?imageMogr2/auto-orient/strip" alt="效果图"></p>
+<p>　　实现过程：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//1.自定义ColorPicker，并为color属性添加getter和setter方法</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ColorPicker</span> <span class="keyword">extends</span> <span class="title">View</span> </span>&#123;</span><br><span class="line">	...</span><br><span class="line">    <span class="keyword">private</span> String mColor;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">getColor</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> mColor;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setColor</span><span class="params">(String mColor)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.mColor = mColor;</span><br><span class="line">        paint.setColor(Color.parseColor(mColor));</span><br><span class="line">        invalidate();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    ...</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//2.自定义反向绑定</span></span><br><span class="line"><span class="meta">@InverseBindingMethods</span>(&#123;</span><br><span class="line">        <span class="meta">@InverseBindingMethod</span>(type = ColorPicker.class,attribute = <span class="string">"color"</span>)</span><br><span class="line">&#125;)</span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ColorPickerAdapter</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@BindingAdapter</span>(value = &#123;<span class="string">"colorAttrChanged"</span>&#125;,requireAll = <span class="keyword">false</span>)</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">setListener</span><span class="params">(ColorPicker picker, <span class="keyword">final</span> InverseBindingListener attrChange)</span></span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (attrChange!=<span class="keyword">null</span>)&#123;</span><br><span class="line">            picker.setOnColorChangeListener(<span class="keyword">new</span> ColorPicker.OnColorChangeListener() &#123;</span><br><span class="line">                <span class="meta">@Override</span></span><br><span class="line">                <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onColorChange</span><span class="params">(ColorPicker picker, String color)</span> </span>&#123;</span><br><span class="line">                    <span class="comment">//...</span></span><br><span class="line"></span><br><span class="line">                    attrChange.onChange();</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//3.在layout中使用双向绑定</span></span><br><span class="line">&lt;lxf.androiddemos.test.ColorPicker</span><br><span class="line">     android:layout_width=<span class="string">"100dp"</span></span><br><span class="line">     android:layout_height=<span class="string">"100dp"</span></span><br><span class="line">     app:color=<span class="string">"@=&#123;user.color&#125;"</span> /&gt;</span><br></pre></td></tr></table></figure></p>
+<p>　　上面给出了关键代码，刚接触DataBinding的萌新如果理解不了可以去文末下载Demo看看，只是一个很简单的案例，应该没什么问题。<br>　　接下来我们用@InverseBindingAdapter来实现同样的效果：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ColorPickerAdapter</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@InverseBindingAdapter</span>(attribute = <span class="string">"color"</span>)</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> String <span class="title">getColor</span><span class="params">(ColorPicker picker)</span></span>&#123;</span><br><span class="line">        <span class="keyword">return</span> picker.getColor();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@BindingAdapter</span>(value = &#123;<span class="string">"colorAttrChanged"</span>&#125;,requireAll = <span class="keyword">false</span>)</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">setListener</span><span class="params">(ColorPicker picker, <span class="keyword">final</span> InverseBindingListener attrChange)</span></span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (attrChange!=<span class="keyword">null</span>)&#123;</span><br><span class="line">            picker.setOnColorChangeListener(<span class="keyword">new</span> ColorPicker.OnColorChangeListener() &#123;</span><br><span class="line">                <span class="meta">@Override</span></span><br><span class="line">                <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onColorChange</span><span class="params">(ColorPicker picker, String color)</span> </span>&#123;</span><br><span class="line">                    <span class="comment">//...</span></span><br><span class="line"></span><br><span class="line">                    attrChange.onChange();</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>　　另外关于一些情况下双向绑定存在的死循环问题，只要在setter方法中判断一下新老值不同即可。</p>
+<h2 id="依赖注入"><a href="#依赖注入" class="headerlink" title="依赖注入"></a>依赖注入</h2><p>　　DataBindingComponent，一般用于一个@BindingAdapter方法需要有多种实现时（比如说测试。。），我们来看一下前面那个修改年龄age的例子：<br> <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br></pre></td><td class="code"><pre><span class="line"> <span class="comment">//原来的方式</span></span><br><span class="line">  <span class="meta">@BindingAdapter</span>(value = &#123;<span class="string">"url"</span>,<span class="string">"placeHolder"</span>&#125;,requireAll = <span class="keyword">false</span>)</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">setImage</span><span class="params">(ImageView imageView , String url, <span class="keyword">int</span> placeHolder)</span></span>&#123;</span><br><span class="line">        ImgLoadUtil.load(imageView,url,placeHolder);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//运用DataBindingComponent</span></span><br><span class="line"><span class="comment">//1.如果需要多种实现，可以先建一个抽象的adapter，注意方法为非静态的</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">abstract</span> <span class="class"><span class="keyword">class</span> <span class="title">AppAdapter</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@BindingAdapter</span>(value = &#123;<span class="string">"url"</span>,<span class="string">"placeHolder"</span>&#125;,requireAll = <span class="keyword">false</span>)</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">abstract</span> <span class="keyword">void</span> <span class="title">setImage</span><span class="params">(ImageView imageView , String url, <span class="keyword">int</span> placeHolder)</span></span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//2.添加抽象adapter的实现，这里我们只写了一个</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ImgAdapter</span> <span class="keyword">extends</span> <span class="title">AppAdapter</span> </span>&#123;</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setImage</span><span class="params">(ImageView imageView, String url, <span class="keyword">int</span> placeHolder)</span> </span>&#123;</span><br><span class="line">        ImgLoadUtil.load(imageView,url,placeHolder);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Img2Adapter</span> <span class="keyword">extends</span> <span class="title">AppAdapter</span> </span>&#123;</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setImage</span><span class="params">(ImageView imageView, String url, <span class="keyword">int</span> placeHolder)</span> </span>&#123;</span><br><span class="line">        ...</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//3.添加DataBindingComponent的实现（非静态的@BindingAdapter注解方法会自动在DataBindingComponent中生成相应的getter方法）。</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">MyComponent</span> <span class="keyword">implements</span> <span class="title">android</span>.<span class="title">databinding</span>.<span class="title">DataBindingComponent</span> </span>&#123;</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> AppAdapter <span class="title">getAppAdapter</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">new</span> ImgAdapter();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">My2Component</span> <span class="keyword">implements</span> <span class="title">android</span>.<span class="title">databinding</span>.<span class="title">DataBindingComponent</span> </span>&#123;</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> AppAdapter <span class="title">getAppAdapter</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">new</span> Img2Adapter();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//4.Activity中调用</span></span><br><span class="line">        <span class="comment">//DataBingMain dataBinding = DataBindingUtil.setContentView(this, R.layout.activity_databinding);</span></span><br><span class="line">        <span class="comment">//DataBindingUtil.setDefaultComponent(new MyComponent());</span></span><br><span class="line">        DataBingMain dataBinding = DataBindingUtil.setContentView(<span class="keyword">this</span>, R.layout.activity_databinding,<span class="keyword">new</span> MyComponent());</span><br></pre></td></tr></table></figure></p>
+<p> 　　最终效果是一模一样的。</p>
+<h1 id="遇到的坑"><a href="#遇到的坑" class="headerlink" title="遇到的坑"></a>遇到的坑</h1><ul>
+<li><p>Error:(8, 36) 错误: 程序包lxf.androiddemos.databinding不存在</p>
+<blockquote>
+<p>遇到这种情况一般都是xml中的问题，比如data标签中引入的包名不对，或者是布局里面使用了什么错误的属性，等等。。。数据量大的时候，这种错误一般比较难找，简直就是日了dog。</p>
+</blockquote>
+</li>
+<li><p>需要更新数据时，为getter方法设置@Bindable，很多时候BR文件不会生成，需要重启AS，默默地再日一波dog。</p>
+</li>
+<li>最好不要使用clean project，否则R文件和BR文件会被清掉，R文件会自动重新生成，至于BR文件…那只dog，麻烦你再过来一下。</li>
+</ul>
+<hr>
+<h1 id="更新（2018-1-5）"><a href="#更新（2018-1-5）" class="headerlink" title="更新（2018-1-5）"></a>更新（2018-1-5）</h1><p>最近打开一个历史项目，报了一堆BR文件找不到的异常，最终再错误日志的最后看到这么一个错误：</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/1215918-775130717168c69d.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="databinding.png"></p>
+<p>查了好久最后发现是因为在xml文件里@{}代码块中使用了中文，貌似这个问题只有在window系统下会出现，记录一下，缅怀我失去的四五个小时。<br><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">cn.izis.util.ZYTextView</span></span></span><br><span class="line"><span class="tag">            <span class="attr">android:layout_width</span>=<span class="string">"match_parent"</span></span></span><br><span class="line"><span class="tag">            <span class="attr">android:layout_height</span>=<span class="string">"50dp"</span></span></span><br><span class="line"><span class="tag">            <span class="attr">android:gravity</span>=<span class="string">"center"</span></span></span><br><span class="line"><span class="tag">            <span class="attr">android:text</span>=<span class="string">"@&#123;`题目讲解:` + model.firstChess&#125;"</span></span></span><br><span class="line"><span class="tag">            <span class="attr">android:textColor</span>=<span class="string">"@color/title"</span></span></span><br><span class="line"><span class="tag">            <span class="attr">android:textSize</span>=<span class="string">"18sp"</span> /&gt;</span></span><br><span class="line"></span><br><span class="line">//正确写法</span><br><span class="line"><span class="tag">&lt;<span class="name">cn.izis.util.ZYTextView</span></span></span><br><span class="line"><span class="tag">            <span class="attr">android:layout_width</span>=<span class="string">"match_parent"</span></span></span><br><span class="line"><span class="tag">            <span class="attr">android:layout_height</span>=<span class="string">"50dp"</span></span></span><br><span class="line"><span class="tag">            <span class="attr">android:gravity</span>=<span class="string">"center"</span></span></span><br><span class="line"><span class="tag">            <span class="attr">android:text</span>=<span class="string">"@&#123;@string/courseTeach + model.firstChess&#125;"</span></span></span><br><span class="line"><span class="tag">            <span class="attr">android:textColor</span>=<span class="string">"@color/title"</span></span></span><br><span class="line"><span class="tag">            <span class="attr">android:textSize</span>=<span class="string">"18sp"</span> /&gt;</span></span><br></pre></td></tr></table></figure></p>
+<p><strong>Demo：</strong><a href="https://github.com/lunxinfeng/AndroidDemos" target="_blank" rel="noopener">此Demo会持续更新自己的学习历程，欢迎star</a><br><a href="http://msdx.github.io/androiddoc/docs/reference/android/databinding/Bindable.html" target="_blank" rel="noopener">官方文档</a></p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Android/" rel="tag"># Android</a>
+          
+            <a href="/tags/MVVM/" rel="tag"># MVVM</a>
+          
+            <a href="/tags/DataBinding/" rel="tag"># DataBinding</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2016/12/29/MVVM之DataBinding学习笔记（一）/" rel="next" title="MVVM之DataBinding学习笔记（一）">
+                <i class="fa fa-chevron-left"></i> MVVM之DataBinding学习笔记（一）
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/01/23/Pl2303笔记/" rel="prev" title="Pl2303笔记">
+                Pl2303笔记 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/uploads/photo.png"
+                alt="风少侠" />
+            
+              <p class="site-author-name" itemprop="name">风少侠</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">27</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">7</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">19</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/lunxinfeng" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://www.jianshu.com/u/41d7604ac57a" target="_blank" title="简书">
+                      
+                        <i class="fa fa-fw fa-paper-plane"></i>简书</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#进阶使用"><span class="nav-number">1.</span> <span class="nav-text">进阶使用</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#数据更新"><span class="nav-number">1.1.</span> <span class="nav-text">数据更新</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#自定义属性绑定适配器和回调"><span class="nav-number">1.2.</span> <span class="nav-text">自定义属性绑定适配器和回调</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#自动寻找setter"><span class="nav-number">1.2.1.</span> <span class="nav-text">自动寻找setter</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#BindingMethods"><span class="nav-number">1.2.2.</span> <span class="nav-text">@BindingMethods</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#BindingAdapter"><span class="nav-number">1.2.3.</span> <span class="nav-text">@BindingAdapter</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#BindingConversion"><span class="nav-number">1.2.4.</span> <span class="nav-text">@BindingConversion</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#接口回调"><span class="nav-number">1.3.</span> <span class="nav-text">接口回调</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#model的回调"><span class="nav-number">1.3.1.</span> <span class="nav-text">model的回调</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#ViewDatabinding的回调"><span class="nav-number">1.3.2.</span> <span class="nav-text">ViewDatabinding的回调</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#双向绑定"><span class="nav-number">1.4.</span> <span class="nav-text">双向绑定</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#基本数据"><span class="nav-number">1.4.1.</span> <span class="nav-text">基本数据</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#隐式属性监听"><span class="nav-number">1.4.2.</span> <span class="nav-text">隐式属性监听</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#自定义双向绑定"><span class="nav-number">1.4.3.</span> <span class="nav-text">自定义双向绑定</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#绑定方法（-InverseBindingMethods）"><span class="nav-number">1.4.3.1.</span> <span class="nav-text">绑定方法（@InverseBindingMethods）</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#绑定适配器（-InverseBindingAdapter）"><span class="nav-number">1.4.3.2.</span> <span class="nav-text">绑定适配器（@InverseBindingAdapter）</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#比葫芦画瓢"><span class="nav-number">1.4.3.3.</span> <span class="nav-text">比葫芦画瓢</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#依赖注入"><span class="nav-number">1.5.</span> <span class="nav-text">依赖注入</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#遇到的坑"><span class="nav-number">2.</span> <span class="nav-text">遇到的坑</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#更新（2018-1-5）"><span class="nav-number">3.</span> <span class="nav-text">更新（2018-1-5）</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">风少侠</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Mist</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
