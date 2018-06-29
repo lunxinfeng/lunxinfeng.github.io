@@ -249,6 +249,1077 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/06/29/android-opencv之旅（四）查找轮廓，获取外包矩形/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="风少侠">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/uploads/photo.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="风少侠的个人博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/06/29/android-opencv之旅（四）查找轮廓，获取外包矩形/" itemprop="url">android opencv之旅（四）查找轮廓，获取外包矩形</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-06-29T15:10:57+08:00">
+                2018-06-29
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Android/" itemprop="url" rel="index">
+                    <span itemprop="name">Android</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <p>棋盘边界是一个黑色的正方形，为了定位这个正方形，我们先查找出图片中的所有轮廓。</p>
+<h1 id="查找轮廓"><a href="#查找轮廓" class="headerlink" title="查找轮廓"></a>查找轮廓</h1><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">List&lt;MatOfPoint&gt; contourList = <span class="keyword">new</span> ArrayList&lt;&gt;();</span><br><span class="line">Imgproc.findContours(src, contourList, hierarchy, mode, method);</span><br></pre></td></tr></table></figure>
+<p>参数列表：</p>
+<ul>
+<li>src：源Mat，推荐使用二值化后的Mat</li>
+<li>contourList：检测到的轮廓列表，每个轮廓用MatOfPoint类表示</li>
+<li>hiararchy：我们检测轮廓的时候，有时候轮廓会有嵌套关系，这时候我们称外面的轮廓为parent，内部的轮廓为child。此时轮廓之间就有了一定的关系，我们称之为层次结构。
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2018/06/29/android-opencv之旅（四）查找轮廓，获取外包矩形/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/06/22/android-opencv之旅（二）初步了解Mat/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="风少侠">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/uploads/photo.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="风少侠的个人博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/06/22/android-opencv之旅（二）初步了解Mat/" itemprop="url">android opencv之旅（二）初步了解Mat</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-06-22T15:10:57+08:00">
+                2018-06-22
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Android/" itemprop="url" rel="index">
+                    <span itemprop="name">Android</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <h1 id="图像的存储"><a href="#图像的存储" class="headerlink" title="图像的存储"></a>图像的存储</h1><p>我们平时看到的图像，对于计算机来说只是一堆亮度各异的点，不同的图像所包含的信息量也是不同的，很明显彩色图像就要比灰度图像包含的信息多很多，因为彩色图像是多通道的（比如RGB图像是三通道、RGBA图像为四通道），而灰度图像是单通道的。简单来说，一个M <em> N的图像就是一个M </em> N的矩阵（灰度图像）。<br>OpenCV正是使用Mat对象来存储图像，该对象保存了行数、列数、数据等可以唯一标识该图像的信息。</p>
+<h2 id="灰度图像"><a href="#灰度图像" class="headerlink" title="灰度图像"></a>灰度图像</h2><p>在灰度图像中，数字代表颜色的亮度。当以整数表示时，范围为0 ~ 255，其中0代表纯黑色，255代表纯白色。如果用浮点数来表示，那么像素值就以0 ~ 1 之间的数值表示，0代表纯黑色，1代表纯白色。<br>我们随便打印一张灰度图像的第一个像素点：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">log(<span class="string">"i:"</span> + i + <span class="string">";j:"</span> + j + <span class="string">"---"</span> + Arrays.toString(mat.get(i,j)));</span><br></pre></td></tr></table></figure></p>
+<blockquote>
+<p>06-06 08:01:19.150 14629-14629/com.lxf.ndkdemo I/System.out: i:0;j:0—[47.0]</p>
+</blockquote>
+<p>说明该图像为单通道，该点亮度为47.0 。</p>
+<h2 id="彩色图像"><a href="#彩色图像" class="headerlink" title="彩色图像"></a>彩色图像</h2><p>在彩色图像中，比如RGB图像，第一个通道代表蓝色，第二个通道代表绿色，第三个通道代表红色，即BGR。如果是RGBA图像，则第四个通道代表透明度。</p>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2018/06/22/android-opencv之旅（二）初步了解Mat/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/06/22/android-opencv之旅（三）灰化和阈值化处理/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="风少侠">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/uploads/photo.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="风少侠的个人博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/06/22/android-opencv之旅（三）灰化和阈值化处理/" itemprop="url">android opencv之旅（三）灰化和阈值化处理</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-06-22T15:10:57+08:00">
+                2018-06-22
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Android/" itemprop="url" rel="index">
+                    <span itemprop="name">Android</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <p>我们知道了灰度图像比彩色图像包含的信息量要小很多，所以很多情况下我们可以把图像灰化以后再处理，可以减小计算量。</p>
+<h1 id="灰化"><a href="#灰化" class="headerlink" title="灰化"></a>灰化</h1><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Mat dst = <span class="keyword">new</span> Mat();</span><br><span class="line">Imgproc.cvtColor(temp, dst, Imgproc.COLOR_BGR2GRAY);</span><br></pre></td></tr></table></figure>
+<p>cvtColor函数是opencv中的图片色彩转换的函数，最后一个参数代表转换类型，BGR、BGRA、GRAY等之间的相互转换。</p>
+<h1 id="阈值化"><a href="#阈值化" class="headerlink" title="阈值化"></a>阈值化</h1><p>阈值化也可以称为二值化，把每个像素值都和一个预定的阈值比较，再根据结果调整像素值。<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Imgproc.threshold(src, dst, thresh, maxval, type);</span><br></pre></td></tr></table></figure></p>
+<p>参数列表：</p>
+<ul>
+<li>src：源Mat，一般传入一个单通道的灰度图像的Mat。</li>
+<li>dst：目标Mat，二值化后要写入的Mat。</li>
+<li>thresh：自定义的阈值。</li>
+<li>maxval：最大值，符合条件的像素将值调整为该值。</li>
+<li>type：二值化的几种类型。</li>
+</ul>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2018/06/22/android-opencv之旅（三）灰化和阈值化处理/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/06/22/android-opencv之旅（一）导入AndroidStudio/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="风少侠">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/uploads/photo.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="风少侠的个人博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/06/22/android-opencv之旅（一）导入AndroidStudio/" itemprop="url">android opencv之旅（一）导入AndroidStudio</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-06-22T15:10:57+08:00">
+                2018-06-22
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Android/" itemprop="url" rel="index">
+                    <span itemprop="name">Android</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <h1 id="需求"><a href="#需求" class="headerlink" title="需求"></a>需求</h1><p>公司最近又有了一项新的需求：定位一张截图里面的棋盘区域，并识别其中的黑白子数目。类似于下面这张图：<br><img src="https://upload-images.jianshu.io/upload_images/1215918-f41efb0b48f51488.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="隐智围棋.jpg"></p>
+<p>一说图片识别，立马想到了大名鼎鼎的opencv，正好趁此机会学习一波，前后折腾了三四天，总算初步入门，运用内置的一些基础算法实现了上述需求，在此整理记录一下。</p>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2018/06/22/android-opencv之旅（一）导入AndroidStudio/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/06/12/android5.0区域截图/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="风少侠">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/uploads/photo.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="风少侠的个人博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/06/12/android5.0区域截图/" itemprop="url">android5.0区域截图</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-06-12T15:10:42+08:00">
+                2018-06-12
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Android/" itemprop="url" rel="index">
+                    <span itemprop="name">Android</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <p>需求总是推动着我进步/(ㄒoㄒ)/~~，最近有了个新的需求：实现一个对桌面局部区域截屏的效果。还记得以前在4.4的版本上实现截屏分享，使用的是View的cacheDrawable，缺点是截不到状态栏、Activity的上层Dialog等，也无法在后台服务中截屏。一直听说5.0之后Google开放了截屏录屏的API，刚好手上有5.1版本的源码，走一波～</p>
+<h1 id="相关类"><a href="#相关类" class="headerlink" title="相关类"></a>相关类</h1><p>MediaProjection：可以用来捕获屏幕内容或系统声音，可以通过MediaProjectionManager的createScreenCaptureIntent方法创建的Intent来启动。<br>MediaProjectionManager：MediaProjection的管理类。通过Context.getSystemService()方法获取实例，参数传Context.MEDIA_PROJECTION_SERVICE。<br>VirtualDisplay：VirtualDisplay将屏幕内容渲染在一个Surface上，当进程终止时会被自动的释放。当不再使用他时，你也应该调用release() 方法来释放资源。通过调用DisplayManager 类的 createVirtualDisplay()方法来创建。</p>
+<h1 id="基本流程"><a href="#基本流程" class="headerlink" title="基本流程"></a>基本流程</h1><ul>
+<li>请求用户授予捕获屏幕内容的权限</li>
+<li>获取MediaProjection实例</li>
+<li>获取VirtualDisplay实例</li>
+<li>通过ImageReader获取截图</li>
+<li>对图片进行区域裁剪<h2 id="请求权限"><a href="#请求权限" class="headerlink" title="请求权限"></a>请求权限</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">manager = (MediaProjectionManager) application.getSystemService(Context.MEDIA_PROJECTION_SERVICE);</span><br><span class="line">startActivityForResult(manager.createScreenCaptureIntent(), <span class="number">1</span>);</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>首先获取MediaProjectionManager对象，然后通过createScreenCaptureIntent方法获取请求权限的Intent，并通过startActivityForResult启动。</p>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2018/06/12/android5.0区域截图/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/05/22/android将自己的应用和系统应用共享UID/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="风少侠">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/uploads/photo.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="风少侠的个人博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/05/22/android将自己的应用和系统应用共享UID/" itemprop="url">android将自己的应用和系统应用共享UID</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-05-22T15:10:23+08:00">
+                2018-05-22
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Android/" itemprop="url" rel="index">
+                    <span itemprop="name">Android</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <p>有时候我们需要在自己的应用中使用一些系统相关权限，比如USB权限，如果我们自己的应用所在进程和系统进程为同一个UID，就会默认拥有该权限，不需要用户自己去授予，很多情况下会方便很多。</p>
+<h1 id="什么是UID"><a href="#什么是UID" class="headerlink" title="什么是UID"></a>什么是UID</h1><blockquote>
+<p>众所周知，Pid是进程ID，Uid是用户ID，只是Android和计算机不一样，计算机每个用户都具有一个Uid，哪个用户start的程序，这个程序的Uid就是那个那个用户，而Android中每个程序都有一个Uid，默认情况下，Android会给每个程序分配一个普通级别互不相同的 Uid，如果用互相调用，只能是Uid相同才行，这就使得共享数据具有了一定安全性，每个软件之间是不能随意获得数据的。</p>
+</blockquote>
+<p>更多关于UID和PID的相关知识可以通过<a href="http://blog.sina.com.cn/s/blog_62ef2f140101j6q2.html" target="_blank" rel="noopener">这篇博客</a>简单了解下。</p>
+<h1 id="设置自己的应用UID为系统进程的UID"><a href="#设置自己的应用UID为系统进程的UID" class="headerlink" title="设置自己的应用UID为系统进程的UID"></a>设置自己的应用UID为系统进程的UID</h1><p>系统进程UID有三种：</p>
+<ul>
+<li>android:sharedUserId=”android.uid.system”</li>
+<li>android:sharedUserId=”android.uid.shared”</li>
+<li>android:sharedUserId=”android.media”<br>我们这里取第一种来实验下，其他两种实现的方式都一样。<h2 id="声明UID"><a href="#声明UID" class="headerlink" title="声明UID"></a>声明UID</h2>首先我们需要在manifest中声明该应用的UID：<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">&lt;?xml version="1.0" encoding="utf-8"?&gt;</span><br><span class="line"><span class="tag">&lt;<span class="name">manifest</span> <span class="attr">xmlns:android</span>=<span class="string">"http://schemas.android.com/apk/res/android"</span></span></span><br><span class="line"><span class="tag">    <span class="attr">package</span>=<span class="string">"cn.izis.chessdeskrobot"</span></span></span><br><span class="line"><span class="tag">    <span class="attr">android:sharedUserId</span>=<span class="string">"android.uid.system"</span></span></span><br><span class="line"><span class="tag">    &gt;</span></span><br><span class="line">...</span><br><span class="line"><span class="tag">&lt;/<span class="name">manifest</span>&gt;</span></span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h2 id="签名打包"><a href="#签名打包" class="headerlink" title="签名打包"></a>签名打包</h2><p>签名打包的前提是要有系统的签名文件，一般位于源码的build/target/product/security目录，有的厂商自定制的系统会放在其他目录，比如我用的Nanopc3在如下目录，具体可以全局搜索一下，一开始我也使用的是build目录下的，结果打包后怎么也装不上，后来发现vendor目录下也有一个/(ㄒoㄒ)/~~：<br><img src="https://upload-images.jianshu.io/upload_images/1215918-bfaa784bb4ca25e4.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="签名文件.png"></p>
+<p>其中android:sharedUserId=”android.uid.system”对应platform.pk8、platform.x509.pem两个文件。<br>下面说一下导入系统签名常用的三种方式：</p>
+<ul>
+<li>对已经生成的apk重签名</li>
+<li>对应用自身的签名文件重签名</li>
+<li>通过mk文件编译</li>
+</ul>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2018/05/22/android将自己的应用和系统应用共享UID/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/05/17/android-framework之旅（七）替换开机动画/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="风少侠">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/uploads/photo.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="风少侠的个人博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/05/17/android-framework之旅（七）替换开机动画/" itemprop="url">android framework之旅（七）替换开机动画</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-05-17T15:10:03+08:00">
+                2018-05-17
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Android/" itemprop="url" rel="index">
+                    <span itemprop="name">Android</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>本来这篇文章不打算写的，因为网上教程很多，只是修改动画部分的话也不涉及修改代码，只是替换/system/media/bootanimation.zip文件就可以了，但是自己在替换掉该文件后却无法显示动画，后来发现是因为直接右键压缩的文件，改成命令操作就可以了：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">zip -Z store bootanimation.zip part0/*.png part1/*.png desc.txt</span><br></pre></td></tr></table></figure></p>
+<p>至于原理没作深究，毕竟不常用，在此留个记录先．</p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/05/08/android-framework之旅（六）Usb多串口同时打开/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -341,31 +1412,17 @@
 
       
         
-          
-            <p>这篇文章起源于之前遗留的一个问题（<a href="https://www.jianshu.com/p/189816294b37），公司的产品需要使用开发板做host与多个串口通信，多个串口同时打开会发生crash，必须先连接成功一个，再插另一根线连接另一个，很不方便，当时想尽办法并没有解决，最近在研究framework的时候有了新的发现。" target="_blank" rel="noopener">https://www.jianshu.com/p/189816294b37），公司的产品需要使用开发板做host与多个串口通信，多个串口同时打开会发生crash，必须先连接成功一个，再插另一根线连接另一个，很不方便，当时想尽办法并没有解决，最近在研究framework的时候有了新的发现。</a></p>
+          <p>这篇文章起源于之前遗留的一个问题（<a href="https://www.jianshu.com/p/189816294b37），公司的产品需要使用开发板做host与多个串口通信，多个串口同时打开会发生crash，必须先连接成功一个，再插另一根线连接另一个，很不方便，当时想尽办法并没有解决，最近在研究framework的时候有了新的发现。" target="_blank" rel="noopener">https://www.jianshu.com/p/189816294b37），公司的产品需要使用开发板做host与多个串口通信，多个串口同时打开会发生crash，必须先连接成功一个，再插另一根线连接另一个，很不方便，当时想尽办法并没有解决，最近在研究framework的时候有了新的发现。</a></p>
 <h1 id="环境"><a href="#环境" class="headerlink" title="环境"></a>环境</h1><p>操作系统：ubuntu 16.04<br>源码版本：5.1.1</p>
 <h1 id="目标"><a href="#目标" class="headerlink" title="目标"></a>目标</h1><p>android系统做host与多个串口同时通信。</p>
 <h1 id="发现过程"><a href="#发现过程" class="headerlink" title="发现过程"></a>发现过程</h1><p>当时在使用pl2303出现这个问题时，我曾一度怀疑是芯片厂商提供的jar包代码有bug，因为我使用官方的demo打开多个串口时也有相同的问题，但是没有源码，向台湾厂家反应也毫无回应，最后不了了之。<br>最近这个问题又被提起，心想干脆不使用厂家封装好的jar包，自己用系统api来试试能不能通信，没想到刚写了几行代码就发现了问题：<br><figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">MainActivity</span> : <span class="type">AppCompatActivity</span></span>() &#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">override</span> <span class="function"><span class="keyword">fun</span> <span class="title">onCreate</span><span class="params">(savedInstanceState: <span class="type">Bundle</span>?)</span></span> &#123;</span><br><span class="line">        <span class="keyword">super</span>.onCreate(savedInstanceState)</span><br><span class="line">        setContentView(R.layout.activity_main)</span><br><span class="line"></span><br><span class="line">        <span class="keyword">val</span> usbManager:UsbManager = getSystemService(Context.USB_SERVICE) <span class="keyword">as</span> UsbManager</span><br><span class="line">        btnDeviceList.setOnClickListener &#123;</span><br><span class="line">            <span class="keyword">val</span> deviceList = usbManager.deviceList</span><br><span class="line">            println(<span class="string">"设备数目：<span class="subst">$&#123;deviceList.size&#125;</span>"</span>)</span><br><span class="line">            deviceList.forEach &#123; println(it) &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<p>非常简单的一段代码，只是检测一下当前连接多少设备，并将设备信息依次打印出来，我分别试了连接一个设备和连接两个设备，下面看下日志：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">05-08 06:32:19.059 2101-2101/com.lxf.usbdemo I/System.out: 设备数目：1</span><br><span class="line">05-08 06:32:19.060 2101-2101/com.lxf.usbdemo I/System.out: /dev/bus/usb/001/003=UsbDevice[mName=/dev/bus/usb/001/003,mVendorId=1659,mProductId=8963,mClass=0,mSubclass=0,mProtocol=0,mManufacturerName=Prolific Technology Inc. ,mProductName=USB-Serial Controller D,mSerialNumber=null,mConfigurations=[</span><br><span class="line">05-08 06:32:19.060 2101-2101/com.lxf.usbdemo I/System.out: UsbConfiguration[mId=1,mName=null,mAttributes=160,mMaxPower=50,mInterfaces=[</span><br><span class="line">05-08 06:32:19.060 2101-2101/com.lxf.usbdemo I/System.out: UsbInterface[mId=0,mAlternateSetting=0,mName=null,mClass=255,mSubclass=0,mProtocol=0,mEndpoints=[</span><br><span class="line">05-08 06:32:19.060 2101-2101/com.lxf.usbdemo I/System.out: UsbEndpoint[mAddress=129,mAttributes=3,mMaxPacketSize=10,mInterval=1]</span><br><span class="line">05-08 06:32:19.060 2101-2101/com.lxf.usbdemo I/System.out: UsbEndpoint[mAddress=2,mAttributes=2,mMaxPacketSize=64,mInterval=0]</span><br><span class="line">05-08 06:32:19.060 2101-2101/com.lxf.usbdemo I/System.out: UsbEndpoint[mAddress=131,mAttributes=2,mMaxPacketSize=64,mInterval=0]]]]</span><br></pre></td></tr></table></figure></p>
-<p>这是一台设备的信息，当时我看到时心里是毫无波动的，因为除了看出来连接成功了其他啥也看不懂/(ㄒoㄒ)/~~，然后看两台设备的日志：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">05-08 06:34:47.284 2101-2101/com.lxf.usbdemo I/System.out: 设备数目：2</span><br><span class="line">05-08 06:34:47.284 2101-2101/com.lxf.usbdemo I/System.out: /dev/bus/usb/001/004=UsbDevice[mName=/dev/bus/usb/001/004,mVendorId=1659,mProductId=8963,mClass=0,mSubclass=0,mProtocol=0,mManufacturerName=Prolific Technology Inc. ,mProductName=USB-Serial Controller D,mSerialNumber=null,mConfigurations=[</span><br><span class="line">05-08 06:34:47.285 2101-2101/com.lxf.usbdemo I/System.out: UsbConfiguration[mId=1,mName=null,mAttributes=128,mMaxPower=50,mInterfaces=[]]</span><br><span class="line">05-08 06:34:47.285 2101-2101/com.lxf.usbdemo I/System.out: /dev/bus/usb/001/003=UsbDevice[mName=/dev/bus/usb/001/003,mVendorId=1659,mProductId=8963,mClass=0,mSubclass=0,mProtocol=0,mManufacturerName=Prolific Technology Inc. ,mProductName=USB-Serial Controller D,mSerialNumber=null,mConfigurations=[</span><br><span class="line">05-08 06:34:47.285 2101-2101/com.lxf.usbdemo I/System.out: UsbConfiguration[mId=1,mName=null,mAttributes=160,mMaxPower=50,mInterfaces=[</span><br><span class="line">05-08 06:34:47.285 2101-2101/com.lxf.usbdemo I/System.out: UsbInterface[mId=0,mAlternateSetting=0,mName=null,mClass=255,mSubclass=0,mProtocol=0,mEndpoints=[</span><br><span class="line">05-08 06:34:47.285 2101-2101/com.lxf.usbdemo I/System.out: UsbEndpoint[mAddress=129,mAttributes=3,mMaxPacketSize=10,mInterval=1]</span><br><span class="line">05-08 06:34:47.285 2101-2101/com.lxf.usbdemo I/System.out: UsbEndpoint[mAddress=2,mAttributes=2,mMaxPacketSize=64,mInterval=0]</span><br><span class="line">05-08 06:34:47.285 2101-2101/com.lxf.usbdemo I/System.out: UsbEndpoint[mAddress=131,mAttributes=2,mMaxPacketSize=64,mInterval=0]]]]</span><br></pre></td></tr></table></figure></p>
-<p>2台设备的日志信息居然和1台设备的信息差不多，仔细看发现第一台设备的mInterfaces属性为空，回想之前发生crash的错误信息，于是大胆怀疑是系统源码的问题，毕竟这次是完全使用系统api的。</p>
-<h1 id="解决过程"><a href="#解决过程" class="headerlink" title="解决过程"></a>解决过程</h1><p>android启动后会加载SystemServer来启动很多系统服务，我们看下SystemServer的结构：<br><img src="https://upload-images.jianshu.io/upload_images/1215918-64e8f396a563d368.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="SystemServer.png"></p>
-<p>方法并不多，一看就懂，在启动服务的方法中搜索一下我们关心的usb服务：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> (mPackageManager.hasSystemFeature(PackageManager.FEATURE_USB_HOST)</span><br><span class="line">                        || mPackageManager.hasSystemFeature(</span><br><span class="line">                                PackageManager.FEATURE_USB_ACCESSORY)) &#123;</span><br><span class="line">                    <span class="comment">// Manage USB host and device support</span></span><br><span class="line">                    mSystemServiceManager.startService(USB_SERVICE_CLASS);</span><br><span class="line">                &#125;</span><br><span class="line"></span><br><span class="line">...</span><br><span class="line"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> String USB_SERVICE_CLASS =</span><br><span class="line">            <span class="string">"com.android.server.usb.UsbService$Lifecycle"</span>;</span><br></pre></td></tr></table></figure></p>
-<p>然后我们打开UsbService：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * UsbService manages all USB related state, including both host and device support.</span></span><br><span class="line"><span class="comment"> * Host related events and calls are delegated to UsbHostManager, and device related</span></span><br><span class="line"><span class="comment"> * support is delegated to UsbDeviceManager.</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">UsbService</span> <span class="keyword">extends</span> <span class="title">IUsbManager</span>.<span class="title">Stub</span> </span>&#123;</span><br></pre></td></tr></table></figure></p>
-<p>翻译一下，UsbService管理所有的USB相关状态，支持做主机（host）和设备（device）。做主机时相关事件和回调由UsbHostManager管理，做设备时相关事件和回调由UsbDeviceManager管理。<br>于是打开USBHostManager，发现了一些我们熟悉的东西：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">private</span> UsbDevice mNewDevice;</span><br><span class="line"><span class="keyword">private</span> UsbConfiguration mNewConfiguration;</span><br><span class="line"><span class="keyword">private</span> UsbInterface mNewInterface;</span><br><span class="line"><span class="keyword">private</span> ArrayList&lt;UsbConfiguration&gt; mNewConfigurations;</span><br><span class="line"><span class="keyword">private</span> ArrayList&lt;UsbInterface&gt; mNewInterfaces;</span><br><span class="line"><span class="keyword">private</span> ArrayList&lt;UsbEndpoint&gt; mNewEndpoints;</span><br></pre></td></tr></table></figure></p>
-<p>很明显，这就是我们开始在日志中看到的相关信息。再看下结构图：<br><img src="https://upload-images.jianshu.io/upload_images/1215918-bba5aa93075841b9.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="UsbHostManager.png"></p>
-<p>说下比较重要的几个方法：</p>
-<ul>
-<li><strong>systemReady</strong>：该类的起点，运行monitorUsbHostBus，一个native方法。</li>
-<li><strong>beginUsbDeviceAdded</strong>：有新的设备时由monitorUsbHostBus()调用，接下来会继续由jni调用<strong>addUsbConfiguration、addUsbInterface、addUsbEndpoint</strong>方法添加相应参数信息，并最后调用<strong>endUsbDeviceAdded</strong>方法。</li>
-<li><strong>usbDeviceRemoved</strong>：移除设备时由monitorUsbHostBus()调用。</li>
-</ul>
-<p>联想我们开始发现的mInterfaces为空问题，看下addUsbConfiguration、addUsbInterface、addUsbEndpoint三个方法：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/* Called from JNI in monitorUsbHostBus() to report new USB configuration for the device</span></span><br><span class="line"><span class="comment">       currently being added.  Returns true if successful, false in case of error.</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">addUsbConfiguration</span><span class="params">(<span class="keyword">int</span> id, String name, <span class="keyword">int</span> attributes, <span class="keyword">int</span> maxPower)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (mNewConfiguration != <span class="keyword">null</span>) &#123;</span><br><span class="line">            mNewConfiguration.setInterfaces(</span><br><span class="line">                    mNewInterfaces.toArray(<span class="keyword">new</span> UsbInterface[mNewInterfaces.size()]));</span><br><span class="line">            mNewInterfaces.clear();</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        mNewConfiguration = <span class="keyword">new</span> UsbConfiguration(id, name, attributes, maxPower);</span><br><span class="line">        mNewConfigurations.add(mNewConfiguration);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/* Called from JNI in monitorUsbHostBus() to report new USB interface for the device</span></span><br><span class="line"><span class="comment">       currently being added.  Returns true if successful, false in case of error.</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">addUsbInterface</span><span class="params">(<span class="keyword">int</span> id, String name, <span class="keyword">int</span> altSetting,</span></span></span><br><span class="line"><span class="function"><span class="params">            <span class="keyword">int</span> Class, <span class="keyword">int</span> subClass, <span class="keyword">int</span> protocol)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (mNewInterface != <span class="keyword">null</span>) &#123;</span><br><span class="line">            mNewInterface.setEndpoints(</span><br><span class="line">                    mNewEndpoints.toArray(<span class="keyword">new</span> UsbEndpoint[mNewEndpoints.size()]));</span><br><span class="line">            mNewEndpoints.clear();</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        mNewInterface = <span class="keyword">new</span> UsbInterface(id, altSetting, name, Class, subClass, protocol);</span><br><span class="line">        mNewInterfaces.add(mNewInterface);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/* Called from JNI in monitorUsbHostBus() to report new USB endpoint for the device</span></span><br><span class="line"><span class="comment">       currently being added.  Returns true if successful, false in case of error.</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">addUsbEndpoint</span><span class="params">(<span class="keyword">int</span> address, <span class="keyword">int</span> attributes, <span class="keyword">int</span> maxPacketSize, <span class="keyword">int</span> interval)</span> </span>&#123;</span><br><span class="line">        mNewEndpoints.add(<span class="keyword">new</span> UsbEndpoint(address, attributes, maxPacketSize, interval));</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure></p>
-<p>发现在添加相应usb信息时会判断mNewConfiguration和mNewInterface是否为null，如果不为null则会进行mNewInterfaces.clear()操作，而在endUsbDeviceAdded方法中并没有将mNewConfiguration和mNewInterface重置为null的操作，意味着除了第一次检测到usb接入，后续的都会执行clear操作。<br>因此尝试在add相关信息之前将mNewConfiguration和mNewInterface重置为null，所以在beginUsbDeviceAdded方法的最后添加代码：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">mNewConfiguration = <span class="keyword">null</span>;</span><br><span class="line">mNewInterface = <span class="keyword">null</span>;</span><br><span class="line">System.out.println(<span class="string">"UsbHostManager  by lxf"</span>);</span><br></pre></td></tr></table></figure></p>
-<p>重新编译services模块后刷入开发板，重新运行测试代码，日志是这样的：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">05</span>-<span class="number">08</span> <span class="number">07</span>:<span class="number">48</span>:<span class="number">16.489</span> <span class="number">2101</span>-<span class="number">2101</span>/com.lxf.usbdemo I/System.out: 设备数目：<span class="number">2</span></span><br><span class="line"><span class="number">05</span>-<span class="number">08</span> <span class="number">07</span>:<span class="number">48</span>:<span class="number">16.490</span> <span class="number">2101</span>-<span class="number">2101</span>/com.lxf.usbdemo I/System.out: /dev/bus/usb/<span class="number">001</span>/<span class="number">005</span>=UsbDevice[mName=/dev/bus/usb/<span class="number">001</span>/<span class="number">005</span>,mVendorId=<span class="number">1659</span>,mProductId=<span class="number">8963</span>,mClass=<span class="number">0</span>,mSubclass=<span class="number">0</span>,mProtocol=<span class="number">0</span>,mManufacturerName=Prolific Technology Inc. ,mProductName=USB-Serial Controller D,mSerialNumber=<span class="keyword">null</span>,mConfigurations=[</span><br><span class="line"><span class="number">05</span>-<span class="number">08</span> <span class="number">07</span>:<span class="number">48</span>:<span class="number">16.490</span> <span class="number">2101</span>-<span class="number">2101</span>/com.lxf.usbdemo I/System.out: UsbConfiguration[mId=<span class="number">1</span>,mName=<span class="keyword">null</span>,mAttributes=<span class="number">128</span>,mMaxPower=<span class="number">50</span>,mInterfaces=[</span><br><span class="line"><span class="number">05</span>-<span class="number">08</span> <span class="number">07</span>:<span class="number">48</span>:<span class="number">16.490</span> <span class="number">2101</span>-<span class="number">2101</span>/com.lxf.usbdemo I/System.out: UsbInterface[mId=<span class="number">0</span>,mAlternateSetting=<span class="number">0</span>,mName=<span class="keyword">null</span>,mClass=<span class="number">255</span>,mSubclass=<span class="number">0</span>,mProtocol=<span class="number">0</span>,mEndpoints=[</span><br><span class="line"><span class="number">05</span>-<span class="number">08</span> <span class="number">07</span>:<span class="number">48</span>:<span class="number">16.490</span> <span class="number">2101</span>-<span class="number">2101</span>/com.lxf.usbdemo I/System.out: UsbEndpoint[mAddress=<span class="number">129</span>,mAttributes=<span class="number">3</span>,mMaxPacketSize=<span class="number">10</span>,mInterval=<span class="number">1</span>]</span><br><span class="line"><span class="number">05</span>-<span class="number">08</span> <span class="number">07</span>:<span class="number">48</span>:<span class="number">16.490</span> <span class="number">2101</span>-<span class="number">2101</span>/com.lxf.usbdemo I/System.out: UsbEndpoint[mAddress=<span class="number">2</span>,mAttributes=<span class="number">2</span>,mMaxPacketSize=<span class="number">64</span>,mInterval=<span class="number">0</span>]</span><br><span class="line"><span class="number">05</span>-<span class="number">08</span> <span class="number">07</span>:<span class="number">48</span>:<span class="number">16.490</span> <span class="number">2101</span>-<span class="number">2101</span>/com.lxf.usbdemo I/System.out: UsbEndpoint[mAddress=<span class="number">131</span>,mAttributes=<span class="number">2</span>,mMaxPacketSize=<span class="number">64</span>,mInterval=<span class="number">0</span>]]]]</span><br><span class="line"><span class="number">05</span>-<span class="number">08</span> <span class="number">07</span>:<span class="number">48</span>:<span class="number">16.491</span> <span class="number">2101</span>-<span class="number">2101</span>/com.lxf.usbdemo I/System.out: /dev/bus/usb/<span class="number">001</span>/<span class="number">003</span>=UsbDevice[mName=/dev/bus/usb/<span class="number">001</span>/<span class="number">003</span>,mVendorId=<span class="number">1659</span>,mProductId=<span class="number">8963</span>,mClass=<span class="number">0</span>,mSubclass=<span class="number">0</span>,mProtocol=<span class="number">0</span>,mManufacturerName=Prolific Technology Inc. ,mProductName=USB-Serial Controller D,mSerialNumber=<span class="keyword">null</span>,mConfigurations=[</span><br><span class="line"><span class="number">05</span>-<span class="number">08</span> <span class="number">07</span>:<span class="number">48</span>:<span class="number">16.491</span> <span class="number">2101</span>-<span class="number">2101</span>/com.lxf.usbdemo I/System.out: UsbConfiguration[mId=<span class="number">1</span>,mName=<span class="keyword">null</span>,mAttributes=<span class="number">160</span>,mMaxPower=<span class="number">50</span>,mInterfaces=[</span><br><span class="line"><span class="number">05</span>-<span class="number">08</span> <span class="number">07</span>:<span class="number">48</span>:<span class="number">16.491</span> <span class="number">2101</span>-<span class="number">2101</span>/com.lxf.usbdemo I/System.out: UsbInterface[mId=<span class="number">0</span>,mAlternateSetting=<span class="number">0</span>,mName=<span class="keyword">null</span>,mClass=<span class="number">255</span>,mSubclass=<span class="number">0</span>,mProtocol=<span class="number">0</span>,mEndpoints=[</span><br><span class="line"><span class="number">05</span>-<span class="number">08</span> <span class="number">07</span>:<span class="number">48</span>:<span class="number">16.491</span> <span class="number">2101</span>-<span class="number">2101</span>/com.lxf.usbdemo I/System.out: UsbEndpoint[mAddress=<span class="number">129</span>,mAttributes=<span class="number">3</span>,mMaxPacketSize=<span class="number">10</span>,mInterval=<span class="number">1</span>]</span><br><span class="line"><span class="number">05</span>-<span class="number">08</span> <span class="number">07</span>:<span class="number">48</span>:<span class="number">16.491</span> <span class="number">2101</span>-<span class="number">2101</span>/com.lxf.usbdemo I/System.out: UsbEndpoint[mAddress=<span class="number">2</span>,mAttributes=<span class="number">2</span>,mMaxPacketSize=<span class="number">64</span>,mInterval=<span class="number">0</span>]</span><br><span class="line"><span class="number">05</span>-<span class="number">08</span> <span class="number">07</span>:<span class="number">48</span>:<span class="number">16.491</span> <span class="number">2101</span>-<span class="number">2101</span>/com.lxf.usbdemo I/System.out: UsbEndpoint[mAddress=<span class="number">131</span>,mAttributes=<span class="number">2</span>,mMaxPacketSize=<span class="number">64</span>,mInterval=<span class="number">0</span>]]]]</span><br></pre></td></tr></table></figure></p>
-<p>发现确实两个设备的信息都打印出来了，于是激动的去测试多个串口同时打开的问题，并没有发生crash，并且可以连接上，附一张图，绿色提示表示连接成功了。<br><img src="https://upload-images.jianshu.io/upload_images/1215918-0c548c10b17ad337.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="多串口.jpg"></p>
-
-          
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2018/05/08/android-framework之旅（六）Usb多串口同时打开/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
         
       
     </div>
@@ -701,1130 +1758,11 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/04/23/android-framework之旅（三）编译调试单个模块/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="风少侠">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/uploads/photo.png">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="风少侠的个人博客">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/04/23/android-framework之旅（三）编译调试单个模块/" itemprop="url">android framework之旅（三）编译调试单个模块</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-04-23T06:23:08+08:00">
-                2018-04-23
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Android/" itemprop="url" rel="index">
-                    <span itemprop="name">Android</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <p>在开发过程中，我们需要不断修改代码，并进行调试，而源码的整体编译耗时太长，我们不可能每次测试的时候都要重新生成镜像，重新烧系统，那我估计人会发疯的，所以这两天研究了下怎么单独编译模块并push到真机看到效果，过程还是比较曲折的，记录一下～</p>
-<h1 id="环境"><a href="#环境" class="headerlink" title="环境"></a>环境</h1><p>操作系统：ubuntu 16.04<br>开发板：NanoPC T3<br>源码版本：5.1.1</p>
-<h1 id="编译单个模块"><a href="#编译单个模块" class="headerlink" title="编译单个模块"></a>编译单个模块</h1><p>为了验证我们的工作，我在Laucher的onCreate方法中加了这么一句话：</p>
-<blockquote>
-<p>System.out.println(“test tag add by lxf”);</p>
-</blockquote>
-<p>首先还是初始化环境和选择目标版本：</p>
-<blockquote>
-<p>source build/envsetup.sh<br>lunch &lt;自己要编译的版本&gt;</p>
-</blockquote>
-<p>执行初始化之后在当前目录我们可以得到一些其他指令，比较常用的就是mm和mmm指令（其实是我只用过这两个），mm表示编译当前目录，mmm表示编译指定目录，只要目录下又Android.mk文件即可。<br>比如我们编译桌面模块（我使用开发板的桌面为Launcher2，有的为Launcher3）：</p>
-<blockquote>
-<p>mmm packages/apps/Launcher2/</p>
-</blockquote>
-<p>编译过程中会提示你具体的生成目录：</p>
-<blockquote>
-<p>…<br>Install: out/target/product/nanopi3/system/priv-app/Launcher2/Launcher2.apk<br>…<br>Install: out/target/product/nanopi3/system/priv-app/Launcher2/arm/Launcher2.odex</p>
-</blockquote>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2018/04/23/android-framework之旅（三）编译调试单个模块/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/04/17/android-framework之旅（二）NanoPC-T3源码编译并烧入真机/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="风少侠">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/uploads/photo.png">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="风少侠的个人博客">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/04/17/android-framework之旅（二）NanoPC-T3源码编译并烧入真机/" itemprop="url">android framework之旅（二）NanoPC-T3源码编译并烧入真机</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-04-17T07:41:56+08:00">
-                2018-04-17
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Android/" itemprop="url" rel="index">
-                    <span itemprop="name">Android</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <p>这几天捣鼓了下源码的编译和烧入真机，终于闲下来有空总结一下，总体来说源码的编译还比较顺利。</p>
-<h1 id="编译环境"><a href="#编译环境" class="headerlink" title="编译环境"></a>编译环境</h1><p>编译的环境具体要求可以查看官方的<a href="https://source.android.google.cn/setup/build/requirements" target="_blank" rel="noopener">文档</a>，不想看英文的直接看下面：</p>
-<h2 id="硬件环境"><a href="#硬件环境" class="headerlink" title="硬件环境"></a>硬件环境</h2><ul>
-<li>编译2.3.x之后的版本需要64位系统，之前的版本可以用32位系统。</li>
-<li>最少100G的硬盘空间下载源码和额外的150G去编译它，如果需要开启ccache，则需要更大的空间。（关于这一点我实测5.1.1源码下载加编译，共150G就勉强够了，当然我没开启ccache）</li>
-<li>如果用虚拟机的话最少需要16G的RAM。<h2 id="软件环境"><a href="#软件环境" class="headerlink" title="软件环境"></a>软件环境</h2><h3 id="操作系统"><a href="#操作系统" class="headerlink" title="操作系统"></a>操作系统</h3>android源码的编译目前只支持Linux和Ｍac OS操作系统，编译的不同的android版本需要不同的操作系统版本（大于这个版本即可），这里以Linux系统为例，mac的参考<a href="https://source.android.google.cn/setup/build/requirements#older-versions" target="_blank" rel="noopener">这里</a>。</li>
-<li>Android 6.0 (Marshmallow) - AOSP master: Ubuntu 14.04 (Trusty)</li>
-<li>Android 2.3.x (Gingerbread) - Android 5.x (Lollipop): Ubuntu 12.04 (Precise)</li>
-<li>Android 1.5 (Cupcake) - Android 2.2.x (Froyo): Ubuntu 10.04 (Lucid)</li>
-</ul>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2018/04/17/android-framework之旅（二）NanoPC-T3源码编译并烧入真机/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/04/09/android-framework之旅（一）下载源码/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="风少侠">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/uploads/photo.png">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="风少侠的个人博客">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/04/09/android-framework之旅（一）下载源码/" itemprop="url">android framework之旅（一）下载源码</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-04-09T01:13:31+08:00">
-                2018-04-09
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Android/" itemprop="url" rel="index">
-                    <span itemprop="name">Android</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <p>公司产品需要和硬件通信，最近有需求要去掉每次USB插入时的弹窗授权提示，研究了两天最后发现最完美的解决方法居然是修改android系统源码，So～开始我的入坑之旅。</p>
-<h1 id="准备工作"><a href="#准备工作" class="headerlink" title="准备工作"></a>准备工作</h1><p>Android源码的编译目前是只支持Mac和Linux的，考虑到编译时的性能问题，我没有使用虚拟机，而是装了win10和ubuntu双系统，安装方法可以自行百度，近乎傻瓜式操作。<br>源码的下载要用到git工具，所以还要先安装git：</p>
-<blockquote>
-<p>sudo apt-get install git</p>
-</blockquote>
-<p>配置用户名和邮箱，不配置的话下载源码的时候也会提醒你进行配置：</p>
-<blockquote>
-<p>git config –global user.name “your name”<br>git config –global user.email “you email”</p>
-</blockquote>
-<p>安装curl（一个http命令行工具），用于下载repo工具：</p>
-<blockquote>
-<p>sudo apt-get install curl</p>
-</blockquote>
-<h1 id="下载源码"><a href="#下载源码" class="headerlink" title="下载源码"></a>下载源码</h1><p>android源码较大，在国内Google被墙的情况下，建议使用国内镜像下载，当然你有科学的上网姿势也可以～～镜像的话有清华镜像和中科大镜像，这里我使用的是清华镜像。<br>网络上关于使用清华镜像下载android源码的教程很多，但是很多比较老，有很多坑，比如清华镜像站在16年就已经停用了git协议，只支持https，别问我怎么知道的/(ㄒoㄒ)/~~，建议直接查看清华镜像站的<a href="https://mirrors.tuna.tsinghua.edu.cn/help/AOSP/" target="_blank" rel="noopener">官方使用帮助</a>。<br>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2018/04/09/android-framework之旅（一）下载源码/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/03/21/View系列笔记（二）事件分发机制/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="风少侠">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/uploads/photo.png">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="风少侠的个人博客">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/03/21/View系列笔记（二）事件分发机制/" itemprop="url">View系列笔记（二）事件分发机制</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-03-21T17:10:53+08:00">
-                2018-03-21
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Android/" itemprop="url" rel="index">
-                    <span itemprop="name">Android</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <p>本文基于Android SDK 26。</p>
-<p>我们知道，android的view是树形结构，当我们点击一个位置时，会有多个view可以作出响应，那此时这个点击事件应该交给谁处理，这就需要用到事件分发机制。</p>
-<h1 id="ViewGroup事件分发"><a href="#ViewGroup事件分发" class="headerlink" title="ViewGroup事件分发"></a>ViewGroup事件分发</h1><p>在了解事件分发机制之前，我们先来声明一个概念：事件序列。</p>
-<blockquote>
-<p>同一个事件序列是指从手指接触屏幕的一刻起，到手指离开屏幕的那一刻结束，这个过程中所产生的一系列事件。包括一个down事件+n个move事件+一个up事件。</p>
-</blockquote>
-<p>所谓事件分发，其实就是产生一个MotionEvent事件产生后，Android系统将这个事件在层层View之间传递和处理的过程。主要涉及到三个方法：</p>
-<ul>
-<li>boolean dispatchTouchEvent(MotionEvent)：用来进行事件的分发，如果事件能够传递到该view，则该方法一定会被触发，返回结果受该view的onTouchEvent()和下个view的dispatchTouchEvent()影响，表示是否消耗该事件。</li>
-<li>boolean onInterceptTouchEvent(MotionEvent)：用来表示是否拦截这个事件。如果拦截，则在<strong>这个事件序列</strong>中不会再调用该方法。注意此方法是ViewGroup特有的。</li>
-<li>boolean onTouchEvent(MotionEvent)：用来处理点击事件，返回结果表示是否消耗当前事件。如果不消耗，在<strong>同一个事件序列</strong>中，该view无法再次收到事件。</li>
-</ul>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2018/03/21/View系列笔记（二）事件分发机制/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/03/13/Kotlin中使用Dagger2/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="风少侠">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/uploads/photo.png">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="风少侠的个人博客">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/03/13/Kotlin中使用Dagger2/" itemprop="url">Kotlin中使用Dagger2</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-03-13T09:00:38+08:00">
-                2018-03-13
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Kotlin-Android/" itemprop="url" rel="index">
-                    <span itemprop="name">Kotlin,Android</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <p>Dagger2有Google接手开发的一个基于JSR-330标准的依赖注入框架，它会在编译期间自动生成相关代码，负责依赖对象的创建，达到解耦目的。</p>
-<h1 id="kotlin中配置Dagger2"><a href="#kotlin中配置Dagger2" class="headerlink" title="kotlin中配置Dagger2"></a>kotlin中配置Dagger2</h1><p>在app模块的build.gradle文件中进行如下配置，关于<a href="https://kotlinlang.org/docs/reference/kapt.html" target="_blank" rel="noopener">kapt的相关知识</a>。<br><figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">apply plugin: <span class="string">'com.android.application'</span></span><br><span class="line">apply plugin: <span class="string">'kotlin-android'</span></span><br><span class="line">apply plugin: <span class="string">'kotlin-android-extensions'</span></span><br><span class="line">apply plugin: <span class="string">'kotlin-kapt'</span></span><br><span class="line"></span><br><span class="line">android &#123;</span><br><span class="line">    ...</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">dependencies &#123;</span><br><span class="line">    ...</span><br><span class="line">    implementation <span class="string">'com.google.dagger:dagger:2.11'</span></span><br><span class="line">    kapt <span class="string">'com.google.dagger:dagger-compiler:2.11'</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<p>相关常用注解：</p>
-<ul>
-<li>@Inject</li>
-<li>@Component</li>
-<li>@Module</li>
-<li>@Provides</li>
-<li>@Qualifier和@Named</li>
-<li>@Scope和@Singleton<h1 id="Inject"><a href="#Inject" class="headerlink" title="@Inject"></a>@Inject</h1>@Inject注解只是JSR-330中定义的注解，在javax.inject包中。 这个注解本身并没有作用，它需要依赖于注入框架才具有意义，可以用来标记<strong>构造函数、属性和方法</strong>。<h2 id="标记构造函数"><a href="#标记构造函数" class="headerlink" title="标记构造函数"></a>标记构造函数</h2></li>
-<li>被标记的构造函数可以有0个或多个<strong>依赖</strong>作为参数。</li>
-<li>同一个类中最多只可以标记一个构造函数。
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2018/03/13/Kotlin中使用Dagger2/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/02/24/Kotlin学习笔记（四）约定（一）/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="风少侠">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/uploads/photo.png">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="风少侠的个人博客">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/02/24/Kotlin学习笔记（四）约定（一）/" itemprop="url">Kotlin学习笔记（四）约定(一)</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-02-24T12:50:38+08:00">
-                2018-02-24
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Kotlin/" itemprop="url" rel="index">
-                    <span itemprop="name">Kotlin</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <p>  约定，指使用与常规方法调用语法不同的、更简洁的符号，调用有着特殊命名的函数。举个例子：如果你在类中定义了一个名为plus的特殊方法（需要用operator关键字来声明该方法），那么按照约定，你就可以在该类的实例上使用+运算符。</p>
-<h1 id="算术运算符约定"><a href="#算术运算符约定" class="headerlink" title="算术运算符约定"></a>算术运算符约定</h1><h2 id="二元算术运算符"><a href="#二元算术运算符" class="headerlink" title="二元算术运算符"></a>二元算术运算符</h2><table>
-<thead>
-<tr>
-<th>表达式</th>
-<th>函数名</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>a + b</td>
-<td>plus</td>
-</tr>
-<tr>
-<td>a - b</td>
-<td>minus</td>
-</tr>
-<tr>
-<td>a * b</td>
-<td>times</td>
-</tr>
-<tr>
-<td>a / b</td>
-<td>div</td>
-</tr>
-<tr>
-<td>a % b</td>
-<td>rem</td>
-</tr>
-</tbody>
-</table>
-<p>  我们使用运算符时，<strong>实际上调用的是与之对应的函数。</strong> 注意事项：</p>
-<ul>
-<li>这种自定义的运算符，基本与标准数字类型的运算符具有<strong>相同的优先级</strong>，a+b*c时会先执行乘法（times函数）。</li>
-<li>不支持交换性，即a+b和b+a是不同的，如果需要支持交换性，可以定义一个额外的运算符函数。<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">fun</span> <span class="title">main</span><span class="params">(args: <span class="type">Array</span>&lt;<span class="type">String</span>&gt;)</span></span> &#123;</span><br><span class="line">    <span class="keyword">val</span> p1 = Point(<span class="number">1</span>, <span class="number">10</span>)</span><br><span class="line">    <span class="keyword">val</span> p2 = Point(<span class="number">2</span>, <span class="number">20</span>)</span><br><span class="line">    println(p1 + p2) <span class="comment">//Point(x=3, y=30)</span></span><br><span class="line">    println(p1 - p2) <span class="comment">//Point(x=-1, y=-10)</span></span><br><span class="line">    println(p1 * p2) <span class="comment">//Point(x=2, y=200)</span></span><br><span class="line">    println(p1 / p2) <span class="comment">//Point(x=0, y=0)</span></span><br><span class="line">    println(p1 % p2) <span class="comment">//Point(x=1, y=10)</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">data</span> <span class="class"><span class="keyword">class</span> <span class="title">Point</span></span>(<span class="keyword">private</span> <span class="keyword">val</span> x: <span class="built_in">Int</span>, <span class="keyword">private</span> <span class="keyword">val</span> y: <span class="built_in">Int</span>) &#123;</span><br><span class="line">    <span class="keyword">operator</span> <span class="function"><span class="keyword">fun</span> <span class="title">plus</span><span class="params">(p: <span class="type">Point</span>)</span></span>: Point &#123;</span><br><span class="line">        <span class="keyword">return</span> Point(x + p.x, y + p.y)</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">operator</span> <span class="function"><span class="keyword">fun</span> <span class="title">minus</span><span class="params">(p: <span class="type">Point</span>)</span></span>: Point &#123;</span><br><span class="line">        <span class="keyword">return</span> Point(x - p.x, y - p.y)</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">operator</span> <span class="function"><span class="keyword">fun</span> <span class="title">times</span><span class="params">(p: <span class="type">Point</span>)</span></span>: Point &#123;</span><br><span class="line">        <span class="keyword">return</span> Point(x * p.x, y * p.y)</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">operator</span> <span class="function"><span class="keyword">fun</span> <span class="title">div</span><span class="params">(p: <span class="type">Point</span>)</span></span>: Point &#123;</span><br><span class="line">        <span class="keyword">return</span> Point(x / p.x, y / p.y)</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">operator</span> <span class="function"><span class="keyword">fun</span> <span class="title">rem</span><span class="params">(p: <span class="type">Point</span>)</span></span>: Point &#123;</span><br><span class="line">        <span class="keyword">return</span> Point(x % p.x, y % p.y)</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-</li>
-</ul>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2018/02/24/Kotlin学习笔记（四）约定（一）/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/02/01/Kotlin学习笔记（三）类与对象/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="风少侠">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/uploads/photo.png">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="风少侠的个人博客">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/02/01/Kotlin学习笔记（三）类与对象/" itemprop="url">Kotlin学习笔记（三）类与对象</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-02-01T16:55:33+08:00">
-                2018-02-01
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Kotlin/" itemprop="url" rel="index">
-                    <span itemprop="name">Kotlin</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <h1 id="类"><a href="#类" class="headerlink" title="类"></a>类</h1><h4 id="类的声明"><a href="#类的声明" class="headerlink" title="类的声明"></a>类的声明</h4><p>类的定义：类通过class关键字来声明，类声明由类名、类头（指定其类型参数、主 构造函数等）和由大括号包围的类体构成。类头和类体都是可选的； 如果一个类没有类体，可以省略花括号。类具有一个唯一的主构造函数，只需在类名后面写上参数，如果需要函数体，可以写在init块中。<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//如果非抽象类没有声明任何主、次构造函数，会自动生成一个无参构造函数</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Student</span></span></span><br><span class="line"><span class="class"></span></span><br><span class="line">class Student2 constructor(name:String,age: Int)&#123;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//如果主构造函数没有任何注解或可见性修饰符，可以省略constructor关键字。构造函数默认是public的，如需私有，自己添加private等可见性修饰符。</span></span><br><span class="line">class Student3(name:String,age: Int)&#123;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">class Student4(name: String,age: Int)&#123;</span><br><span class="line">    init &#123;</span><br><span class="line">        <span class="comment">//主构造函数体</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//如果类有一个主构造函数，每个次构造函数需要委托给主构造函数， 可以直接委托或者通过别的次构造函数间接委托。委托到同一个类的另一个构造函数 用 this 关键字即可：</span></span><br><span class="line">class Person(val name: String) &#123;</span><br><span class="line">    constructor(name: String, parent: Person) : <span class="keyword">this</span>(name) &#123;</span><br><span class="line">          parent.children.add(<span class="keyword">this</span>)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2018/02/01/Kotlin学习笔记（三）类与对象/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
   <nav class="pagination">
-    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><a class="extend next" rel="next" href="/page/2/"><i class="fa fa-angle-right"></i></a>
+    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><span class="space">&hellip;</span><a class="page-number" href="/page/4/">4</a><a class="extend next" rel="next" href="/page/2/"><i class="fa fa-angle-right"></i></a>
   </nav>
 
 
@@ -1874,7 +1812,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">27</span>
+                  <span class="site-state-item-count">34</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -1896,7 +1834,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">20</span>
+                  <span class="site-state-item-count">21</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>
